@@ -6,20 +6,21 @@ package task;
  */
 public class Test {
     public static void main(String[] args) {
-        testDelayScheduleTask();
+        testTaskPool();
     }
 
-    public static void testDelayScheduleTask() {
-        long beginTime = System.currentTimeMillis();
-        System.out.println("begin time :" + System.currentTimeMillis());
-        DelayScheduleTask timedTask = new DelayScheduleTask(2000, 1000,new Runnable() {
-            @Override
-            public void run() {
-                long currentTimeMillis = System.currentTimeMillis();
-                System.out.println("执行这个操作 time :" + currentTimeMillis);
-                System.out.println("时间差 time:" + (currentTimeMillis - beginTime) + "ms");
-            }
+
+    public static void testTaskPool() {
+        long begin = System.currentTimeMillis();
+
+        TaskPool taskPool = new TaskPool();
+        OptDelayScheduleTask optDelayScheduleTask = new OptDelayScheduleTask(1000, 2000, () -> {
+            System.out.println("任务1：time:" + (System.currentTimeMillis()-begin));
         });
-        timedTask.start();
+        OptDelayScheduleTask optDelayScheduleTask2 = new OptDelayScheduleTask(2000, 4000, () -> {
+            System.out.println("任务2：time:" +  (System.currentTimeMillis()-begin));
+        });
+        taskPool.submit(optDelayScheduleTask);
+        taskPool.submit(optDelayScheduleTask2);
     }
 }
