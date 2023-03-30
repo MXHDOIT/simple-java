@@ -20,3 +20,13 @@ public class ScheduledThreadPoolExecutorTest {
         },1,3, TimeUnit.SECONDS);
     }
 }
+
+/**
+ * ScheduledFutureTask：包装任务
+ *
+ * DelayedWorkQueue:延迟队列，存放任务
+ *
+ *
+ *
+ *
+ */
