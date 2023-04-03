@@ -5,83 +5,80 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
+/**
+ * 时间槽
+ */
 public class TimerTaskList implements Delayed {
 
     /**
-     * TimerTaskList 环形链表使用一个虚拟根节点root
-     */
-    private TimerTaskEntry root = new TimerTaskEntry(null, -1);
-    /**
-     * bucket的过期时间
+     * 过期时间
      */
     private AtomicLong expiration = new AtomicLong(-1L);
 
+    /**
+     * 根节点
+     */
+    private TimerTask root = new TimerTask(-1L, null);
+
     {
+        root.pre = root;
         root.next = root;
-        root.prev = root;
     }
 
+    /**
+     * 设置过期时间
+     */
+    public boolean setExpiration(long expire) {
+        return expiration.getAndSet(expire) != expire;
+    }
+
+    /**
+     * 获取过期时间
+     */
     public long getExpiration() {
         return expiration.get();
     }
 
     /**
-     * 设置bucket的过期时间,设置成功返回true
-     *
-     * @param expirationMs
-     * @return
+     * 新增任务
      */
-    boolean setExpiration(long expirationMs) {
-        return expiration.getAndSet(expirationMs) != expirationMs;
-    }
-
-    public boolean addTask(TimerTaskEntry entry) {
-        boolean done = false;
-        while (!done) {
-            // 如果TimerTaskEntry已经在别的list中就先移除,同步代码块外面移除,避免死锁,一直到成功为止
-            entry.remove();
-            synchronized (this) {
-                if (entry.timedTaskList == null) {
-                    // 加到链表的末尾
-                    entry.timedTaskList = this;
-                    TimerTaskEntry tail = root.prev;
-                    entry.prev = tail;
-                    entry.next = root;
-                    tail.next = entry;
-                    root.prev = entry;
-                    done = true;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 从 TimedTaskList 移除指定的 timerTaskEntry
-     *
-     * @param entry
-     */
-    public void remove(TimerTaskEntry entry) {
+    public void addTask(TimerTask timerTask) {
         synchronized (this) {
-            if (entry.getTimedTaskList().equals(this)) {
-                entry.next.prev = entry.prev;
-                entry.prev.next = entry.next;
-                entry.next = null;
-                entry.prev = null;
-                entry.timedTaskList = null;
+            if (timerTask.timerTaskList == null) {
+                timerTask.timerTaskList = this;
+                TimerTask tail = root.pre;
+                timerTask.next = root;
+                timerTask.pre = tail;
+                tail.next = timerTask;
+                root.pre = timerTask;
             }
         }
     }
 
     /**
-     * 移除所有
+     * 移除任务
      */
-    public synchronized void clear(Consumer<TimerTaskEntry> entry) {
-        TimerTaskEntry head = root.next;
-        while (!head.equals(root)) {
-            remove(head);
-            entry.accept(head);
-            head = root.next;
+    public void removeTask(TimerTask timerTask) {
+        synchronized (this) {
+            if (timerTask.timerTaskList.equals(this)) {
+                timerTask.next.pre = timerTask.pre;
+                timerTask.pre.next = timerTask.next;
+                timerTask.timerTaskList = null;
+                timerTask.next = null;
+                timerTask.pre = null;
+            }
+        }
+    }
+
+    /**
+     * 重新分配
+     */
+    public synchronized void flush(Consumer<TimerTask> flush) {
+        TimerTask timerTask = root.next;
+        while (!timerTask.equals(root)) {
+            this.removeTask(timerTask);
+            flush.accept(timerTask);
+            timerTask = root.next;
         }
         expiration.set(-1L);
     }
@@ -91,18 +88,6 @@ public class TimerTaskList implements Delayed {
         return Math.max(0, unit.convert(expiration.get() - System.currentTimeMillis(), TimeUnit.MILLISECONDS));
     }
 
-    public TimerTaskEntry getRoot() {
-        return root;
-    }
-
-    public void setRoot(TimerTaskEntry root) {
-        this.root = root;
-    }
-
-    public void setExpiration(AtomicLong expiration) {
-        this.expiration = expiration;
-    }
-
     @Override
     public int compareTo(Delayed o) {
         if (o instanceof TimerTaskList) {
@@ -110,5 +95,4 @@ public class TimerTaskList implements Delayed {
         }
         return 0;
     }
-
 }

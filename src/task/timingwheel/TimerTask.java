@@ -1,55 +1,58 @@
 package task.timingwheel;
 
-public class TimerTask implements Runnable {
+/**
+ * 任务
+ */
+public class TimerTask {
 
     /**
-     * 延时时间
+     * 延迟时间
      */
     private long delayMs;
+
     /**
-     * 任务所在的entry
+     * 任务
      */
-    private TimerTaskEntry timerTaskEntry;
+    private Runnable task;
 
-    private String desc;
+    /**
+     * 时间槽
+     */
+    protected TimerTaskList timerTaskList;
 
-    public TimerTask(String desc, long delayMs) {
-        this.desc = desc;
-        this.delayMs = delayMs;
-        this.timerTaskEntry = null;
+    /**
+     * 下一个节点
+     */
+    protected TimerTask next;
+
+    /**
+     * 上一个节点
+     */
+    protected TimerTask pre;
+
+    /**
+     * 描述
+     */
+    public String desc;
+
+    public TimerTask(long delayMs, Runnable task) {
+        this.delayMs = System.currentTimeMillis() + delayMs;
+        this.task = task;
+        this.timerTaskList = null;
+        this.next = null;
+        this.pre = null;
     }
 
-    public TimerTaskEntry getTimerTaskEntry() {
-        return timerTaskEntry;
+    public Runnable getTask() {
+        return task;
     }
 
     public long getDelayMs() {
         return delayMs;
     }
 
-    public void setDelayMs(long delayMs) {
-        this.delayMs = delayMs;
-    }
-
-    public String getDesc() {
+    @Override
+    public String toString() {
         return desc;
     }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public synchronized void setTimerTaskEntry(TimerTaskEntry entry) {
-        // 如果这个TimerTask已经被一个已存在的TimerTaskEntry持有,先移除一个
-        if (timerTaskEntry != null && timerTaskEntry != entry) {
-            timerTaskEntry.remove();
-        }
-        timerTaskEntry = entry;
-    }
-
-    @Override
-    public void run() {
-//        log.info("============={}任务执行", desc);
-    }
-
 }

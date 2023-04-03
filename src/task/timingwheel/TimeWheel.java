@@ -2,128 +2,63 @@ package task.timingwheel;
 
 import java.util.concurrent.DelayQueue;
 
+/**
+ * 时间轮
+ */
 public class TimeWheel {
 
     /**
-     * 基本时间跨度
+     * 一个时间槽的范围
      */
     private long tickMs;
+
     /**
-     * 时间单位个数
+     * 时间轮大小
      */
     private int wheelSize;
+
     /**
-     * 总体时间跨度
+     * 时间跨度
      */
     private long interval;
+
     /**
-     * 当前所处时间
+     * 时间槽
+     */
+    private TimerTaskList[] timerTaskLists;
+
+    /**
+     * 当前时间
      */
     private long currentTime;
-    /**
-     * 定时任务列表
-     */
-    private TimerTaskList[] buckets;
+
     /**
      * 上层时间轮
      */
     private volatile TimeWheel overflowWheel;
+
     /**
-     * 一个Timer只有一个DelayQueue,协助推进时间轮
+     * 一个Timer只有一个delayQueue
      */
     private DelayQueue<TimerTaskList> delayQueue;
 
-
     public TimeWheel(long tickMs, int wheelSize, long currentTime, DelayQueue<TimerTaskList> delayQueue) {
+        this.currentTime = currentTime;
         this.tickMs = tickMs;
         this.wheelSize = wheelSize;
         this.interval = tickMs * wheelSize;
-        this.currentTime = currentTime;
-        this.buckets = new TimerTaskList[wheelSize];
+        this.timerTaskLists = new TimerTaskList[wheelSize];
+        //currentTime为tickMs的整数倍 这里做取整操作
         this.currentTime = currentTime - (currentTime % tickMs);
         this.delayQueue = delayQueue;
         for (int i = 0; i < wheelSize; i++) {
-            buckets[i] = new TimerTaskList();
+            timerTaskLists[i] = new TimerTaskList();
         }
     }
 
-    public long getTickMs() {
-        return tickMs;
-    }
-
-    public void setTickMs(long tickMs) {
-        this.tickMs = tickMs;
-    }
-
-    public int getWheelSize() {
-        return wheelSize;
-    }
-
-    public void setWheelSize(int wheelSize) {
-        this.wheelSize = wheelSize;
-    }
-
-    public long getInterval() {
-        return interval;
-    }
-
-    public void setInterval(long interval) {
-        this.interval = interval;
-    }
-
-    public long getCurrentTime() {
-        return currentTime;
-    }
-
-    public void setCurrentTime(long currentTime) {
-        this.currentTime = currentTime;
-    }
-
-    public TimerTaskList[] getBuckets() {
-        return buckets;
-    }
-
-    public void setBuckets(TimerTaskList[] buckets) {
-        this.buckets = buckets;
-    }
-
-    public void setOverflowWheel(TimeWheel overflowWheel) {
-        this.overflowWheel = overflowWheel;
-    }
-
-    public DelayQueue<TimerTaskList> getDelayQueue() {
-        return delayQueue;
-    }
-
-    public void setDelayQueue(DelayQueue<TimerTaskList> delayQueue) {
-        this.delayQueue = delayQueue;
-    }
-
-    public boolean add(TimerTaskEntry entry) {
-        long expiration = entry.getExpireMs();
-        if (expiration < tickMs + currentTime) {
-            // 定时任务到期
-            return false;
-        } else if (expiration < currentTime + interval) {
-            // 扔进当前时间轮的某个槽里,只有时间大于某个槽,才会放进去
-            long virtualId = (expiration / tickMs);
-            int index = (int) (virtualId % wheelSize);
-            TimerTaskList bucket = buckets[index];
-            bucket.addTask(entry);
-            // 设置bucket 过期时间
-            if (bucket.setExpiration(virtualId * tickMs)) {
-                // 设好过期时间的bucket需要入队
-                delayQueue.offer(bucket);
-                return true;
-            }
-        } else {
-            // 当前轮不能满足,需要扔到上一轮
-            TimeWheel timeWheel = getOverflowWheel();
-            return timeWheel.add(entry);
-        }
-        return false;
-    }
-
+    /**
+     * 创建或者获取上层时间轮
+     */
     private TimeWheel getOverflowWheel() {
         if (overflowWheel == null) {
             synchronized (this) {
@@ -136,17 +71,42 @@ public class TimeWheel {
     }
 
     /**
-     * 推进指针
-     *
-     * @param timestamp
+     * 添加任务到时间轮
      */
-    public void advanceLock(long timestamp) {
-        if (timestamp > currentTime + tickMs) {
+    public boolean addTask(TimerTask timerTask) {
+        long expiration = timerTask.getDelayMs();
+        //过期任务直接执行
+        if (expiration < currentTime + tickMs) {
+            return false;
+        } else if (expiration < currentTime + interval) {
+            //当前时间轮可以容纳该任务 加入时间槽
+            Long virtualId = expiration / tickMs;
+            int index = (int) (virtualId % wheelSize);
+            System.out.println("tickMs:" + tickMs + "------index:" + index + "------expiration:" + expiration);
+            TimerTaskList timerTaskList = timerTaskLists[index];
+            timerTaskList.addTask(timerTask);
+            if (timerTaskList.setExpiration(virtualId * tickMs)) {
+                //添加到delayQueue中
+                delayQueue.offer(timerTaskList);
+            }
+        } else {
+            //放到上一层的时间轮
+            TimeWheel timeWheel = getOverflowWheel();
+            timeWheel.addTask(timerTask);
+        }
+        return true;
+    }
+
+    /**
+     * 推进时间
+     */
+    public void advanceClock(long timestamp) {
+        if (timestamp >= currentTime + tickMs) {
             currentTime = timestamp - (timestamp % tickMs);
             if (overflowWheel != null) {
-                this.getOverflowWheel().advanceLock(timestamp);
+                //推进上层时间轮时间
+                this.getOverflowWheel().advanceClock(timestamp);
             }
         }
     }
-
 }
