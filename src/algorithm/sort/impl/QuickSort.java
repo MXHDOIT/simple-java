@@ -1,17 +1,15 @@
-package algorithm.sort;
+package algorithm.sort.impl;
 
-public class QuickSort {
-    public static void main(String[] args) {
-        int[] arr = {1, 5, 2, 4, 10, 2};
-        sort(arr);
-        System.out.println(arr);
-    }
+import algorithm.sort.Sort;
 
-    public static void sort(int[] nums) {
+public class QuickSort implements Sort {
+
+    @Override
+    public  void sort(int[] nums) {
         sort(nums, 0, nums.length - 1);
     }
 
-    public static void sort(int[] nums, int left, int right) {
+    private void sort(int[] nums, int left, int right) {
         if (left >= right) {
             return;
         }
