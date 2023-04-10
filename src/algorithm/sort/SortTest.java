@@ -1,6 +1,9 @@
 package algorithm.sort;
 
+import algorithm.sort.impl.BubbleSort;
+import algorithm.sort.impl.HeadSort;
 import algorithm.sort.impl.InsertSort;
+import algorithm.sort.impl.MergeSort;
 import algorithm.sort.impl.QuickSort;
 import algorithm.sort.impl.SelectPlusSort;
 import algorithm.sort.impl.SelectSort;
@@ -25,7 +28,13 @@ public class SortTest {
         //选择排序
 //        sort = new SelectSort();
         //双端选择排序
-        sort = new SelectPlusSort();
+//        sort = new SelectPlusSort();
+        //冒泡排序
+//        sort = new BubbleSort();
+        //归并排序
+//        sort = new MergeSort();
+        //堆排序
+        sort = new HeadSort();
         sort.sort(arr);
         System.out.println(Arrays.toString(arr));
     }
