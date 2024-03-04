@@ -31,8 +31,20 @@ public class Solution {
 //        int threeSumClosest = new Solution().threeSumClosest(new int[]{-1, 2, 1, -4}, 1);
 //        System.out.println(threeSumClosest);
 
-        int lviii = new Solution().romanToIntOptimized("MCMXCIV");
-        System.out.println(lviii);
+//        int lviii = new Solution().romanToIntOptimized("MCMXCIV");
+//        System.out.println(lviii);
+
+        boolean match = new Solution().isMatch("aa", "a*");
+        System.out.println(match);
+    }
+
+    /**
+     * 正则表达式匹配.
+     * '.' 匹配任意单个字符
+     * '*' 匹配零个或多个前面的那一个元素
+     */
+    public boolean isMatch(String s, String p) {
+        return false;
     }
 
     /**
@@ -43,7 +55,7 @@ public class Solution {
             return null;
         }
         int length = lists.length;
-        Queue<ListNode> queue = new PriorityQueue<ListNode>(length,Comparator.comparing(e -> e.val));
+        Queue<ListNode> queue = new PriorityQueue<ListNode>(length, Comparator.comparing(e -> e.val));
         for (int i = 0; i < length; i++) {
             if (lists[i] != null) {
                 queue.add(lists[i]);
