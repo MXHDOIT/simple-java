@@ -2,7 +2,9 @@ package exercise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: maxinhang.
@@ -23,10 +25,102 @@ public class Solution {
 //        String commonPrefix = new Solution().longestCommonPrefix(new String[]{"dog", "racecar", "car"});
 //        System.out.println(commonPrefix);
 
-        int threeSumClosest = new Solution().threeSumClosest(new int[]{-1, 2, 1, -4}, 1);
-        System.out.println(threeSumClosest);
+//        int threeSumClosest = new Solution().threeSumClosest(new int[]{-1, 2, 1, -4}, 1);
+//        System.out.println(threeSumClosest);
+
+        int lviii = new Solution().romanToIntOptimized("MCMXCIV");
+        System.out.println(lviii);
     }
 
+    /**
+     * 罗马数字转整形.
+     * <p>
+     * I 1 V 5 X 10 L 50 C 100 D 500 M 1000
+     */
+    public int romanToInt(String s) {
+        int result = 0;
+        Map<String, Integer> romanToIntMap = getRomanToIntMap();
+        int length = s.length();
+        int index = 0;
+        while (index < length) {
+            if (index + 1 == length) {
+                String sub = s.substring(index, index + 1);
+                Integer num = romanToIntMap.get(sub);
+                result += num;
+                index++;
+            } else {
+                String sub = s.substring(index, index + 2);
+                if (romanToIntMap.containsKey(sub)) {
+                    Integer num = romanToIntMap.get(sub);
+                    result += num;
+                    index += 2;
+                } else {
+                    sub = s.substring(index, index + 1);
+                    Integer num = romanToIntMap.get(sub);
+                    result += num;
+                    index++;
+                }
+            }
+        }
+        return result;
+    }
+
+    private Map<String, Integer> getRomanToIntMap() {
+        Map<String, Integer> romanToIntMap = new HashMap<>();
+        romanToIntMap.put("I", 1);
+        romanToIntMap.put("V", 5);
+        romanToIntMap.put("X", 10);
+        romanToIntMap.put("L", 50);
+        romanToIntMap.put("C", 100);
+        romanToIntMap.put("D", 500);
+        romanToIntMap.put("M", 1000);
+        romanToIntMap.put("IV", 4);
+        romanToIntMap.put("IX", 9);
+        romanToIntMap.put("XL", 40);
+        romanToIntMap.put("XC", 90);
+        romanToIntMap.put("CD", 400);
+        romanToIntMap.put("CM", 900);
+        return romanToIntMap;
+    }
+
+    public int romanToIntOptimized(String s) {
+        int result = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int currentNum = getValue(s.charAt(i));
+            if (i == s.length() - 1) {
+                result += currentNum;
+            } else {
+                int nextNum = getValue(s.charAt(i + 1));
+                if (nextNum > currentNum) {
+                    result -= currentNum;
+                }else {
+                    result += currentNum;
+                }
+            }
+        }
+        return result;
+    }
+
+    private int getValue(char ch) {
+        switch (ch) {
+            case 'I':
+                return 1;
+            case 'V':
+                return 5;
+            case 'X':
+                return 10;
+            case 'L':
+                return 50;
+            case 'C':
+                return 100;
+            case 'D':
+                return 500;
+            case 'M':
+                return 1000;
+            default:
+                return 0;
+        }
+    }
 
     /**
      * 最接近的三数之和.
