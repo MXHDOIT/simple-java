@@ -1,6 +1,7 @@
 package exercise;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,8 +20,56 @@ public class Solution {
 //        List<List<Integer>> permute = new Solution().permute(new int[]{1, 2, 3});
 //        System.out.println(permute);
 
-        String commonPrefix = new Solution().longestCommonPrefix(new String[]{"dog","racecar","car"});
-        System.out.println(commonPrefix);
+//        String commonPrefix = new Solution().longestCommonPrefix(new String[]{"dog", "racecar", "car"});
+//        System.out.println(commonPrefix);
+
+        int threeSumClosest = new Solution().threeSumClosest(new int[]{-1, 2, 1, -4}, 1);
+        System.out.println(threeSumClosest);
+    }
+
+
+    /**
+     * 最接近的三数之和.
+     */
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int length = nums.length;
+        int result = nums[0] + nums[1] + nums[2];
+        for (int i = 0; i < length - 2; i++) {
+            int left = i + 1;
+            int right = length - 1;
+            while (left != right) {
+                // 判断最小值
+                int min = nums[i] + nums[left] + nums[left + 1];
+                if (target < min) {
+                    if (Math.abs(result - target) > Math.abs(min - target)) result = min;
+                    break;
+                }
+                //判断最大值
+                int max = nums[i] + nums[right] + nums[right - 1];
+                if (target > max) {
+                    if (Math.abs(result - target) > Math.abs(max - target)) result = max;
+                    break;
+                }
+
+                int total = nums[i] + nums[left] + nums[right];
+                if (Math.abs(total - target) < Math.abs(result - target)) {
+                    result = total;
+                }
+
+                if (total == target) {
+                    return total;
+                } else if (total < target) {
+                    left++;
+                    while (left != right && nums[left] == nums[left - 1]) left++;
+                } else {
+                    right--;
+                    while (left != right && nums[right] == nums[right + 1]) right--;
+                }
+            }
+            while (i < nums.length - 2 && nums[i] == nums[i + 1]) i++;
+        }
+        return result;
     }
 
 
