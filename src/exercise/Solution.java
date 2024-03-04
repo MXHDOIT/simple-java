@@ -2,9 +2,12 @@ package exercise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * @author: maxinhang.
@@ -30,6 +33,54 @@ public class Solution {
 
         int lviii = new Solution().romanToIntOptimized("MCMXCIV");
         System.out.println(lviii);
+    }
+
+    /**
+     * 合并K个升序链表.
+     */
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        int length = lists.length;
+        Queue<ListNode> queue = new PriorityQueue<ListNode>(length,Comparator.comparing(e -> e.val));
+        for (int i = 0; i < length; i++) {
+            if (lists[i] != null) {
+                queue.add(lists[i]);
+            }
+        }
+
+        ListNode head = new ListNode(-1);
+        ListNode currentNode = head;
+
+        while (!queue.isEmpty()) {
+            ListNode node = queue.poll();
+            ListNode nextNode = node.next;
+            if (nextNode != null) {
+                queue.add(nextNode);
+            }
+            currentNode.next = node;
+            currentNode = node;
+        }
+
+        return head.next;
+    }
+
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 
     /**
@@ -93,7 +144,7 @@ public class Solution {
                 int nextNum = getValue(s.charAt(i + 1));
                 if (nextNum > currentNum) {
                     result -= currentNum;
-                }else {
+                } else {
                     result += currentNum;
                 }
             }
