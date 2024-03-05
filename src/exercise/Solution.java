@@ -2,12 +2,15 @@ package exercise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * @author: maxinhang.
@@ -37,8 +40,51 @@ public class Solution {
 //        boolean match = new Solution().isMatch("aa", "a*");
 //        System.out.println(match);
 
-        List<String> stringList = new Solution().letterCombinations("3");
-        System.out.println(stringList);
+//        List<String> stringList = new Solution().letterCombinations("3");
+//        System.out.println(stringList);
+
+
+    }
+
+    /**
+     * 网络延迟时间.
+     */
+    public int networkDelayTime(int[][] times, int n, int k) {
+        final int INF = Integer.MAX_VALUE / 2; // 防止加法溢出
+        //邻接表
+        int[][] g = new int[n][n];
+        for (int[] row : g) {
+            Arrays.fill(row, INF);
+        }
+        for (int[] time : times) {
+            g[time[0] - 1][time[1] - 1] = time[2];
+        }
+        int[] dis = new int[n];
+        Arrays.fill(dis, INF);
+        dis[k - 1] = 0;
+        boolean[] done = new boolean[n];
+        int maxDis = 0;
+        while (true) {
+            int index = -1;
+            for (int i = 0; i < n; i++) {
+                if ((index < 0 || dis[i] < dis[index]) && !done[i]) {
+                    index = i;
+                }
+            }
+            if (index < 0) {
+                return maxDis;
+            }
+            if (dis[index] == INF) {
+                return -1;
+            }
+            maxDis = Math.max(maxDis, dis[index]);
+            done[index] = true;
+            for (int i = 0; i < n; i++) {
+                if (g[index][i] != Integer.MAX_VALUE) {
+                    dis[i] = Math.min(dis[index] + g[index][i], dis[i]);
+                }
+            }
+        }
     }
 
     /**
@@ -74,7 +120,7 @@ public class Solution {
         for (int i = 0; i < s.length(); i++) {
             char charAt = s.charAt(i);
             stringBuffer.append(charAt);
-            backtrack(combinations, phoneMap, digits, index+1, stringBuffer);
+            backtrack(combinations, phoneMap, digits, index + 1, stringBuffer);
             stringBuffer.deleteCharAt(index);
         }
     }
