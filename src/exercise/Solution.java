@@ -43,7 +43,65 @@ public class Solution {
 //        List<String> stringList = new Solution().letterCombinations("3");
 //        System.out.println(stringList);
 
+        List<List<Integer>> lists = new Solution().fourSum(new int[]{1000000000,1000000000,1000000000,1000000000}, -294967296);
+        System.out.println(lists);
 
+    }
+
+    /**
+     * 四数之和.
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        int length = nums.length;
+        for (int i = 0; i < length - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            List<List<Integer>> lists = threeSum(nums, i + 1, target - nums[i]);
+            if (lists.size() != 0) {
+                for (List<Integer> list : lists) {
+                    list.add(0, nums[i]);
+                    result.add(list);
+                }
+            }
+        }
+        return result;
+    }
+
+    private List<List<Integer>> threeSum(int[] nums, int index, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = index; i < nums.length - 2; i++) {
+            if (i > index && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int left = i + 1;
+            int right = nums.length - 1;
+            while (left < right) {
+                long num = (long) nums[left] + nums[right] + nums[i];
+                if (num == target) {
+                    ArrayList<Integer> integers = new ArrayList<>();
+                    integers.add(nums[i]);
+                    integers.add(nums[left]);
+                    integers.add(nums[right]);
+                    result.add(integers);
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+                    left++;
+                    right--;
+                } else if (num < target) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        return result;
     }
 
     /**
