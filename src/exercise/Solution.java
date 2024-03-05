@@ -34,8 +34,49 @@ public class Solution {
 //        int lviii = new Solution().romanToIntOptimized("MCMXCIV");
 //        System.out.println(lviii);
 
-        boolean match = new Solution().isMatch("aa", "a*");
-        System.out.println(match);
+//        boolean match = new Solution().isMatch("aa", "a*");
+//        System.out.println(match);
+
+        List<String> stringList = new Solution().letterCombinations("3");
+        System.out.println(stringList);
+    }
+
+    /**
+     * 电话号码的字母组合.
+     */
+    public List<String> letterCombinations(String digits) {
+        List<String> combinations = new ArrayList<String>();
+        if (digits == null || digits.length() == 0) {
+            return combinations;
+        }
+        Map<Character, String> phoneMap = new HashMap<Character, String>() {{
+            put('2', "abc");
+            put('3', "def");
+            put('4', "ghi");
+            put('5', "jkl");
+            put('6', "mno");
+            put('7', "pqrs");
+            put('8', "tuv");
+            put('9', "wxyz");
+        }};
+
+        backtrack(combinations, phoneMap, digits, 0, new StringBuffer());
+        return combinations;
+    }
+
+    private void backtrack(List<String> combinations, Map<Character, String> phoneMap, String digits, int index, StringBuffer stringBuffer) {
+        if (index == digits.length()) {
+            combinations.add(stringBuffer.toString());
+            return;
+        }
+        char ch = digits.charAt(index);
+        String s = phoneMap.get(ch);
+        for (int i = 0; i < s.length(); i++) {
+            char charAt = s.charAt(i);
+            stringBuffer.append(charAt);
+            backtrack(combinations, phoneMap, digits, index+1, stringBuffer);
+            stringBuffer.deleteCharAt(index);
+        }
     }
 
     /**
@@ -49,19 +90,19 @@ public class Solution {
         boolean[][] dp = new boolean[sLength][pLength];
         dp[0][0] = true;
         for (int i = 2; i < pLength; i++) {
-            dp[0][i] = dp[0][i-2] && p.charAt(i-1) == '*';
+            dp[0][i] = dp[0][i - 2] && p.charAt(i - 1) == '*';
         }
 
         for (int i = 1; i < sLength; i++) {
             for (int j = 1; j < pLength; j++) {
-                if (p.charAt(j-1) == '*') {
-                    dp[i][j] = dp[i][j-2] || (dp[i-1][j] && (s.charAt(i-1) == p.charAt(j-2) || p.charAt(j-2) == '.'));
-                }else {
-                    dp[i][j] = dp[i-1][j-1] && (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.');
+                if (p.charAt(j - 1) == '*') {
+                    dp[i][j] = dp[i][j - 2] || (dp[i - 1][j] && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.'));
+                } else {
+                    dp[i][j] = dp[i - 1][j - 1] && (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '.');
                 }
             }
         }
-        return dp[sLength-1][pLength-1];
+        return dp[sLength - 1][pLength - 1];
     }
 
     /**
