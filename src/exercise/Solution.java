@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * @author: maxinhang.
@@ -53,9 +54,40 @@ public class Solution {
 //        int countPaths = new Solution().countPaths(2, ints);
 //        System.out.println(countPaths);
 
-        int kOr = new Solution().findKOr(new int[]{10,8,5,9,11,6,8}, 1);
-        System.out.println(kOr);
+//        int kOr = new Solution().findKOr(new int[]{10,8,5,9,11,6,8}, 1);
+//        System.out.println(kOr);
+
+        boolean valid = new Solution().isValid("()");
+        System.out.println(valid);
     }
+
+    /**
+     * 有效的括号.
+     */
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '(' || ch == '[' || ch == '{') {
+                stack.push(ch);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                } else {
+                    Character peek = stack.peek();
+                    if ((ch == ')' && peek == '(') || (ch == '}' && peek == '{')
+                            || (ch == ']' && peek == '[')){
+                        stack.pop();
+                    }else{
+                        return false;
+                    }
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
 
     /**
      * 删除链表的倒数第N个结点.
