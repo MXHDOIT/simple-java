@@ -58,6 +58,32 @@ public class Solution {
     }
 
     /**
+     * 删除链表的倒数第N个结点.
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode newHead = new ListNode(-1);
+        newHead.next = head;
+        ListNode prev = newHead;
+        ListNode current = head;
+        ListNode fast = head;
+
+        while (n > 0 && fast != null) {
+            fast = fast.next;
+            n--;
+        }
+        if (n != 0) {
+            return null;
+        }
+        while (fast != null) {
+            prev = prev.next;
+            current = current.next;
+            fast = fast.next;
+        }
+        prev.next = current.next;
+        return newHead.next;
+    }
+
+    /**
      * 找出数组中的K-or值.
      */
     public int findKOr(int[] nums, int k) {
