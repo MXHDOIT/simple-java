@@ -43,15 +43,38 @@ public class Solution {
 //        List<String> stringList = new Solution().letterCombinations("3");
 //        System.out.println(stringList);
 
-        List<List<Integer>> lists = new Solution().fourSum(new int[]{1000000000, 1000000000, 1000000000, 1000000000}, -294967296);
-        System.out.println(lists);
+//        List<List<Integer>> lists = new Solution().fourSum(new int[]{1000000000, 1000000000, 1000000000, 1000000000}, -294967296);
+//        System.out.println(lists);
 
-        int[][] ints = new int[1][3];
-        ints[0][0] = 1;
-        ints[0][1] = 0;
-        ints[0][2] = 10;
-        int countPaths = new Solution().countPaths(2, ints);
-        System.out.println(countPaths);
+//        int[][] ints = new int[1][3];
+//        ints[0][0] = 1;
+//        ints[0][1] = 0;
+//        ints[0][2] = 10;
+//        int countPaths = new Solution().countPaths(2, ints);
+//        System.out.println(countPaths);
+
+        int kOr = new Solution().findKOr(new int[]{10,8,5,9,11,6,8}, 1);
+        System.out.println(kOr);
+    }
+
+    /**
+     * 找出数组中的K-or值.
+     */
+    public int findKOr(int[] nums, int k) {
+        int result = 0;
+        for (int i = 0; i < 32; i++) {
+            int count = 0;
+            for (int num : nums) {
+                int bit = (num >> i) & 1;
+                if (bit == 1){
+                    count++;
+                }
+            }
+            if (count >= k) {
+                result |= 1 << i;
+            }
+        }
+        return result;
     }
 
     /**
