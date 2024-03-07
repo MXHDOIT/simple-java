@@ -65,6 +65,32 @@ public class Solution {
     }
 
     /**
+     * 合并两个有序链表.
+     */
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode head = new ListNode(-1);
+        ListNode currentNode = head;
+
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val){
+                currentNode.next = list1;
+                list1 = list1.next;
+            }else{
+                currentNode.next = list2;
+                list2 = list2.next;
+            }
+            currentNode = currentNode.next;
+        }
+        if (list1 != null) {
+            currentNode.next = list1;
+        }
+        if (list2 != null) {
+            currentNode.next = list2;
+        }
+        return head.next;
+    }
+
+    /**
      * 找出字符串的可整除数组.
      */
     public int[] divisibilityArray(String word, int m) {
