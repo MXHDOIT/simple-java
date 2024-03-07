@@ -59,6 +59,27 @@ public class Solution {
 
         boolean valid = new Solution().isValid("()");
         System.out.println(valid);
+
+        int[] ints = new Solution().divisibilityArray("998244353", 3);
+        System.out.println(ints);
+    }
+
+    /**
+     * 找出字符串的可整除数组.
+     */
+    public int[] divisibilityArray(String word, int m) {
+        int length = word.length();
+        int[] ints = new int[length];
+        long num = 0;
+        for (int i = 0; i < length; i++) {
+            char ch = word.charAt(i);
+            num = num * 10 + (ch - '0');
+            num = num % m;
+            if (num == 0) {
+                ints[i] = 1;
+            }
+        }
+        return ints;
     }
 
     /**
@@ -77,9 +98,9 @@ public class Solution {
                 } else {
                     Character peek = stack.peek();
                     if ((ch == ')' && peek == '(') || (ch == '}' && peek == '{')
-                            || (ch == ']' && peek == '[')){
+                            || (ch == ']' && peek == '[')) {
                         stack.pop();
-                    }else{
+                    } else {
                         return false;
                     }
                 }
@@ -124,7 +145,7 @@ public class Solution {
             int count = 0;
             for (int num : nums) {
                 int bit = (num >> i) & 1;
-                if (bit == 1){
+                if (bit == 1) {
                     count++;
                 }
             }
