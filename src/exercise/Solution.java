@@ -57,11 +57,58 @@ public class Solution {
 //        int kOr = new Solution().findKOr(new int[]{10,8,5,9,11,6,8}, 1);
 //        System.out.println(kOr);
 
-        boolean valid = new Solution().isValid("()");
-        System.out.println(valid);
+//        boolean valid = new Solution().isValid("()");
+//        System.out.println(valid);
+//
+//        int[] ints = new Solution().divisibilityArray("998244353", 3);
+//        System.out.println(ints);
 
-        int[] ints = new Solution().divisibilityArray("998244353", 3);
-        System.out.println(ints);
+        List<String> stringList = new Solution().generateParenthesis(3);
+        System.out.println(stringList);
+    }
+
+    /**
+     * 括号生成.
+     */
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<>();
+        method("", n, n, result);
+        return result;
+    }
+
+    private void method(String s, int left, int right, List<String> result) {
+        if (left == 0 && right == 0) {
+            if (is(s)) {
+                result.add(s);
+            }
+        } else {
+            if (right < left) {
+                return;
+            }
+
+            if (left > 0) {
+                method(s + "(", left - 1, right, result);
+            }
+            if (right > 0) {
+                method(s + ")", left, right - 1, result);
+            }
+        }
+    }
+
+    private boolean is(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '(') {
+                stack.push(ch);
+            } else {
+                if (stack.isEmpty() || stack.pop() == ')') {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
     }
 
     /**
@@ -72,10 +119,10 @@ public class Solution {
         ListNode currentNode = head;
 
         while (list1 != null && list2 != null) {
-            if (list1.val <= list2.val){
+            if (list1.val <= list2.val) {
                 currentNode.next = list1;
                 list1 = list1.next;
-            }else{
+            } else {
                 currentNode.next = list2;
                 list2 = list2.next;
             }
