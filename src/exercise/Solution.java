@@ -66,8 +66,28 @@ public class Solution {
 //        List<String> stringList = new Solution().generateParenthesis(3);
 //        System.out.println(stringList);
 
-        int minimumPossibleSum = new Solution().minimumPossibleSum(1, 1);
-        System.out.println(minimumPossibleSum);
+//        int minimumPossibleSum = new Solution().minimumPossibleSum(1, 1);
+//        System.out.println(minimumPossibleSum);
+
+        int duplicates = new Solution().removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4});
+        System.out.println(duplicates);
+    }
+
+    /**
+     * 删除有序数组中的重复项.
+     */
+    public int removeDuplicates(int[] nums) {
+        int length = nums.length;
+        int index = 1;
+        int endIndex = 1;
+
+        while (index < length) {
+            if (nums[index] != nums[index-1]) {
+                nums[endIndex++] = nums[index];
+            }
+            index++;
+        }
+        return endIndex;
     }
 
     /**
