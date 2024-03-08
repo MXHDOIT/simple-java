@@ -63,8 +63,47 @@ public class Solution {
 //        int[] ints = new Solution().divisibilityArray("998244353", 3);
 //        System.out.println(ints);
 
-        List<String> stringList = new Solution().generateParenthesis(3);
-        System.out.println(stringList);
+//        List<String> stringList = new Solution().generateParenthesis(3);
+//        System.out.println(stringList);
+
+        int minimumPossibleSum = new Solution().minimumPossibleSum(1, 1);
+        System.out.println(minimumPossibleSum);
+    }
+
+    /**
+     * 找出美丽数组的最小和.
+     */
+    public int minimumPossibleSum(int n, int target) {
+        int[] result = new int[n];
+        result[0] = 1;
+        int sum = 1;
+
+        int index = 1;
+        int value = 2;
+        while (index < n) {
+            result[index] = value;
+            if (twoSumNoExistTarget(result, index, target)) {
+                index++;
+                sum += value;
+            }
+            value++;
+        }
+        return sum;
+    }
+
+    public boolean twoSumNoExistTarget(int[] result, int right, int target) {
+        int left = 0;
+        while (left < right) {
+            int num = result[left] + result[right];
+            if (num == target) {
+                return false;
+            } else if (num < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return true;
     }
 
     /**
