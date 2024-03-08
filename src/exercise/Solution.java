@@ -71,6 +71,52 @@ public class Solution {
     }
 
     /**
+     * 翻转链表.
+     */
+    public ListNode reverseList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode prev = null;
+        ListNode current = head;
+        ListNode next;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        return prev;
+    }
+
+    /**
+     * K个一组翻转链表.
+     */
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null) {
+            return null;
+        }
+        ListNode current = head;
+        ListNode prev = head;
+        int index = 0;
+        while (current != null && index < k) {
+            index++;
+            prev = current;
+            current = current.next;
+        }
+        if (index == k) {
+            //翻转
+            prev.next = null;
+            ListNode listNode = reverseList(head);
+            listNode.next = reverseKGroup(current, k);
+            return listNode;
+        } else {
+            return head;
+        }
+    }
+
+    /**
      * 找出美丽数组的最小和.
      */
     public int minimumPossibleSum(int n, int target) {
