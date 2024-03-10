@@ -69,8 +69,42 @@ public class Solution {
 //        int minimumPossibleSum = new Solution().minimumPossibleSum(1, 1);
 //        System.out.println(minimumPossibleSum);
 
-        int duplicates = new Solution().removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4});
-        System.out.println(duplicates);
+//        int duplicates = new Solution().removeDuplicates(new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4});
+//        System.out.println(duplicates);
+
+        String hint = new Solution().getHint("1807", "7810");
+        System.out.println(hint);
+    }
+
+    /**
+     * 猜数字游戏.
+     */
+    public String getHint(String secret, String guess) {
+        Map<Character, Integer> secretChMap = new HashMap<>();
+        Map<Character, Integer> guessChMap = new HashMap<>();
+
+        int aCount = 0;
+        for (int i = 0; i < secret.length(); i++) {
+            char ch1 = secret.charAt(i);
+            char ch2 = guess.charAt(i);
+            if (ch1 == ch2) {
+                aCount++;
+            } else {
+                Integer size1 = secretChMap.getOrDefault(ch1, 0);
+                secretChMap.put(ch1, size1 + 1);
+                Integer size2 = guessChMap.getOrDefault(ch2, 0);
+                guessChMap.put(ch2, size2 + 1);
+            }
+        }
+
+        int bCount = 0;
+        for (Map.Entry<Character, Integer> entry : secretChMap.entrySet()) {
+            Character ch = entry.getKey();
+            Integer value = entry.getValue();
+            Integer value2 = guessChMap.getOrDefault(ch, 0);
+            bCount += Math.min(value, value2);
+        }
+        return aCount + "A" + bCount + "B";
     }
 
     /**
@@ -82,7 +116,7 @@ public class Solution {
         int endIndex = 1;
 
         while (index < length) {
-            if (nums[index] != nums[index-1]) {
+            if (nums[index] != nums[index - 1]) {
                 nums[endIndex++] = nums[index];
             }
             index++;
