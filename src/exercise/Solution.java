@@ -72,8 +72,32 @@ public class Solution {
 //        int duplicates = new Solution().removeDuplicates(new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4});
 //        System.out.println(duplicates);
 
-        String hint = new Solution().getHint("1807", "7810");
-        System.out.println(hint);
+//        String hint = new Solution().getHint("1807", "7810");
+//        System.out.println(hint);
+
+        String capiTalIzeTHeTitLe = new Solution().capitalizeTitle("capiTalIze tHe titLe");
+        System.out.println(capiTalIzeTHeTitLe);
+    }
+
+    /**
+     * 标题首字母大写.
+     */
+    public String capitalizeTitle(String title) {
+        String[] split = title.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < split.length; i++) {
+            String s = split[i];
+            if (s.length() <= 2) {
+                sb.append(s.toLowerCase());
+            } else {
+                sb.append(s.substring(0, 1).toUpperCase());
+                sb.append(s.substring(1).toLowerCase());
+            }
+            if (i != split.length - 1) {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
     }
 
     /**
