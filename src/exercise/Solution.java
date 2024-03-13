@@ -75,8 +75,39 @@ public class Solution {
 //        String hint = new Solution().getHint("1807", "7810");
 //        System.out.println(hint);
 
-        String capiTalIzeTHeTitLe = new Solution().capitalizeTitle("capiTalIze tHe titLe");
-        System.out.println(capiTalIzeTHeTitLe);
+//        String capiTalIzeTHeTitLe = new Solution().capitalizeTitle("capiTalIze tHe titLe");
+//        System.out.println(capiTalIzeTHeTitLe);
+
+        String s = new Solution().maximumOddBinaryNumber("0101100111");
+        System.out.println(s);
+    }
+
+    /**
+     * 最大二进制奇数.
+     */
+    public String maximumOddBinaryNumber(String s) {
+        int length = s.length();
+        int oneSize = 0;
+        for (int i = 0; i < length; i++) {
+            if (s.charAt(i) == '1') {
+                oneSize++;
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            if (i == length - 1) {
+                stringBuilder.append('1');
+            } else {
+                if (oneSize > 1) {
+                    stringBuilder.append('1');
+                    oneSize--;
+                }else {
+                    stringBuilder.append('0');
+                }
+            }
+        }
+        return stringBuilder.toString();
     }
 
     /**
