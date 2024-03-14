@@ -78,8 +78,22 @@ public class Solution {
 //        String capiTalIzeTHeTitLe = new Solution().capitalizeTitle("capiTalIze tHe titLe");
 //        System.out.println(capiTalIzeTHeTitLe);
 
-        String s = new Solution().maximumOddBinaryNumber("0101100111");
-        System.out.println(s);
+//        String s = new Solution().maximumOddBinaryNumber("0101100111");
+//        System.out.println(s);
+
+        long maxArrayValue = new Solution().maxArrayValue(new int[]{2, 3, 7, 9, 3});
+        System.out.println(maxArrayValue);
+    }
+
+    /**
+     * 合并后数组中的最大元素.
+     */
+    public long maxArrayValue(int[] nums) {
+        long sum = nums[nums.length - 1];
+        for (int i = nums.length - 2; i >= 0; i--) {
+            sum = nums[i] <= sum ? nums[i] + sum : nums[i];
+        }
+        return sum;
     }
 
     /**
@@ -102,7 +116,7 @@ public class Solution {
                 if (oneSize > 1) {
                     stringBuilder.append('1');
                     oneSize--;
-                }else {
+                } else {
                     stringBuilder.append('0');
                 }
             }
