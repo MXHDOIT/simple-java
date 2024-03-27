@@ -81,8 +81,40 @@ public class Solution {
 //        String s = new Solution().maximumOddBinaryNumber("0101100111");
 //        System.out.println(s);
 
-        long maxArrayValue = new Solution().maxArrayValue(new int[]{2, 3, 7, 9, 3});
-        System.out.println(maxArrayValue);
+//        long maxArrayValue = new Solution().maxArrayValue(new int[]{2, 3, 7, 9, 3});
+//        System.out.println(maxArrayValue);
+
+        int divide = new Solution().divide(-7, 3);
+        System.out.println(divide);
+    }
+
+    /**
+     * 两数相除.
+     * 减法代替除法；正数边界；
+     */
+    public int divide(int dividend, int divisor) {
+        boolean sign = (dividend > 0) ^ (divisor > 0);
+        int result = 0;
+        if (dividend > 0) {
+            dividend = -dividend;
+        }
+        if (divisor > 0) divisor = -divisor;
+        while (dividend <= divisor) {
+            int temp_result = -1;
+            int temp_divisor = divisor;
+            while (dividend <= (temp_divisor << 1)) {
+                if (temp_divisor <= (Integer.MIN_VALUE >> 1)) break;
+                temp_result = temp_result << 1;
+                temp_divisor = temp_divisor << 1;
+            }
+            dividend = dividend - temp_divisor;
+            result += temp_result;
+        }
+        if (!sign) {
+            if (result <= Integer.MIN_VALUE) return Integer.MAX_VALUE;
+            result = -result;
+        }
+        return result;
     }
 
     /**
