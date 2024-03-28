@@ -87,8 +87,31 @@ public class Solution {
 //        int divide = new Solution().divide(-7, 3);
 //        System.out.println(divide);
 
-        int i = new Solution().strStr("sadbutsad", "ad");
-        System.out.println(i);
+//        int i = new Solution().strStr("sadbutsad", "ad");
+//        System.out.println(i);
+
+        int allRooms = new Solution().firstDayBeenInAllRooms(new int[]{0, 0, 2});
+        System.out.println(allRooms);
+    }
+
+    /**
+     * 访问完所有房间的第一天.
+     */
+    public int firstDayBeenInAllRooms(int[] nextVisit) {
+//        状态机的解决思路
+//                f[i] -> 第一次到i号所需要的时间，注意此时[0,n-1]房间访问次数都为偶数
+//                step1：第一次到i-1号： f[i-1]
+//                step2: 从i-1到next[i-1]: +1
+//                step3: 从next[i-1]到i-1：f[i-1]-f[next[i-1]]
+//                step4: 从i-1到i：+1
+        final long MOD = 1_000_000_007;
+        int n = nextVisit.length;
+        long[] s = new long[n];
+        for (int i = 0; i < n - 1; i++) {
+            int j = nextVisit[i];
+            s[i + 1] = (s[i] * 2 - s[j] + 2 + MOD) % MOD; // + MOD 避免算出负数
+        }
+        return (int) s[n - 1];
     }
 
     /**
@@ -744,6 +767,7 @@ public class Solution {
             this.val = val;
             this.next = next;
         }
+
     }
 
     /**
