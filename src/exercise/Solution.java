@@ -84,8 +84,29 @@ public class Solution {
 //        long maxArrayValue = new Solution().maxArrayValue(new int[]{2, 3, 7, 9, 3});
 //        System.out.println(maxArrayValue);
 
-        int divide = new Solution().divide(-7, 3);
-        System.out.println(divide);
+//        int divide = new Solution().divide(-7, 3);
+//        System.out.println(divide);
+
+        int i = new Solution().strStr("sadbutsad", "ad");
+        System.out.println(i);
+    }
+
+    /**
+     * 找到字符串中第一个匹配项的下标.
+     * 暴力
+     */
+    public int strStr(String haystack, String needle) {
+        int hLength = haystack.length();
+        int nLength = needle.length();
+
+        for (int i = 0; i <= hLength - nLength; i++) {
+            String substring = haystack.substring(i, i + nLength);
+            if (substring.equals(needle)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     /**
