@@ -90,8 +90,44 @@ public class Solution {
 //        int i = new Solution().strStr("sadbutsad", "ad");
 //        System.out.println(i);
 
-        int allRooms = new Solution().firstDayBeenInAllRooms(new int[]{0, 0, 2});
-        System.out.println(allRooms);
+//        int allRooms = new Solution().firstDayBeenInAllRooms(new int[]{0, 0, 2});
+//        System.out.println(allRooms);
+
+        List<Integer> list = new Solution().findSubstring("barfoothefoobarman", new String[]{"foo", "bar"});
+        System.out.println(list);
+    }
+
+    /**
+     * 串联所有单词的子串.
+     */
+    public List<Integer> findSubstring(String s, String[] words) {
+        int sLength = s.length();
+        int wordLength = words[0].length();
+        Map<String, Integer> wordValueMap = new HashMap<>();
+        for (String word : words) {
+            Integer value = wordValueMap.getOrDefault(word, 0);
+            wordValueMap.put(word, value+1);
+        }
+
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i <= sLength - wordLength * words.length; i++) {
+            String substring = s.substring(i, i + wordLength * words.length);
+            Map<String, Integer> subWordValueMap = new HashMap<>();
+            boolean match = true;
+            for (int j = 0; j < substring.length(); j += wordLength) {
+                String string = substring.substring(j, j + wordLength);
+                Integer value = subWordValueMap.getOrDefault(string, 0);
+                subWordValueMap.put(string,value+1);
+                if (wordValueMap.getOrDefault(string, 0) < value+1) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 
     /**
