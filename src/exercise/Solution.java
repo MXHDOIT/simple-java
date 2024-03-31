@@ -93,8 +93,38 @@ public class Solution {
 //        int allRooms = new Solution().firstDayBeenInAllRooms(new int[]{0, 0, 2});
 //        System.out.println(allRooms);
 
-        List<Integer> list = new Solution().findSubstring("barfoothefoobarman", new String[]{"foo", "bar"});
-        System.out.println(list);
+//        List<Integer> list = new Solution().findSubstring("barfoothefoobarman", new String[]{"foo", "bar"});
+//        System.out.println(list);
+
+        int[] ints = {1, 3, 2};
+        new Solution().nextPermutation(ints);
+        System.out.println(ints);
+    }
+
+    /**
+     * 下一个排列.
+     */
+    public void nextPermutation(int[] nums) {
+        //从倒数第二个元素逐个处理：在后面找到大于当前元素的最小值进行交换，如存在交换后将后面的进行升序排序后退出，不存在继续判断。如果数组中不存在这样的元素直接反转数组.
+        for (int i = nums.length - 2; i >= 0; i--) {
+            int currentValue = nums[i];
+            int nextValue = Integer.MAX_VALUE;
+            int nextIndex = -1;
+            for (int j = i + 1; j < nums.length; j++) {
+                int num = nums[j];
+                if (num > currentValue && num < nextValue) {
+                    nextValue = num;
+                    nextIndex = j;
+                }
+            }
+            if (nextIndex != -1) {
+                nums[nextIndex] = nums[i];
+                nums[i] = nextValue;
+                Arrays.sort(nums, i + 1, nums.length);
+                return;
+            }
+        }
+        Arrays.sort(nums);
     }
 
     /**
@@ -106,7 +136,7 @@ public class Solution {
         Map<String, Integer> wordValueMap = new HashMap<>();
         for (String word : words) {
             Integer value = wordValueMap.getOrDefault(word, 0);
-            wordValueMap.put(word, value+1);
+            wordValueMap.put(word, value + 1);
         }
 
         List<Integer> result = new ArrayList<>();
@@ -117,8 +147,8 @@ public class Solution {
             for (int j = 0; j < substring.length(); j += wordLength) {
                 String string = substring.substring(j, j + wordLength);
                 Integer value = subWordValueMap.getOrDefault(string, 0);
-                subWordValueMap.put(string,value+1);
-                if (wordValueMap.getOrDefault(string, 0) < value+1) {
+                subWordValueMap.put(string, value + 1);
+                if (wordValueMap.getOrDefault(string, 0) < value + 1) {
                     match = false;
                     break;
                 }
