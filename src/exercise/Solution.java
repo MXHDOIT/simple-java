@@ -96,9 +96,45 @@ public class Solution {
 //        List<Integer> list = new Solution().findSubstring("barfoothefoobarman", new String[]{"foo", "bar"});
 //        System.out.println(list);
 
-        int[] ints = {1, 3, 2};
-        new Solution().nextPermutation(ints);
+//        int[] ints = {1, 3, 2};
+//        new Solution().nextPermutation(ints);
+//        System.out.println(ints);
+
+        int[] ints = new Solution().searchRange(new int[]{8}, 8);
         System.out.println(ints);
+    }
+
+    /**
+     * 在排序数组中查找元素的第一个和最后一个位置.
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int[] result = new int[2];
+        Arrays.fill(result, -1);
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int value = nums[mid];
+            if (value < target) {
+                left++;
+            } else if (value > target) {
+                right--;
+            } else {
+                result[0] = mid;
+                while (result[0] >= 0 && nums[result[0]] == target) {
+                    result[0]--;
+                }
+                result[0]++;
+                result[1] = mid;
+                while (result[1] < nums.length && nums[result[1]] == target) {
+                    result[1]++;
+                }
+                result[1]--;
+                break;
+            }
+        }
+
+        return result;
     }
 
     /**
