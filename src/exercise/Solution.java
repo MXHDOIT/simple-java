@@ -100,8 +100,31 @@ public class Solution {
 //        new Solution().nextPermutation(ints);
 //        System.out.println(ints);
 
-        int[] ints = new Solution().searchRange(new int[]{8}, 8);
-        System.out.println(ints);
+//        int[] ints = new Solution().searchRange(new int[]{8}, 8);
+//        System.out.println(ints);
+
+        int index = new Solution().searchInsert(new int[]{1,8,70,77}, 9);
+        System.out.println(index);
+    }
+
+    /**
+     * 搜索插入位置.
+     */
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int value = nums[mid];
+            if (value < target) {
+                left++;
+            } else if (value > target) {
+                right--;
+            } else {
+                return mid;
+            }
+        }
+        return left;
     }
 
     /**
