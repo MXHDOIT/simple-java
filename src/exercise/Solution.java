@@ -103,8 +103,63 @@ public class Solution {
 //        int[] ints = new Solution().searchRange(new int[]{8}, 8);
 //        System.out.println(ints);
 
-        int index = new Solution().searchInsert(new int[]{1,8,70,77}, 9);
+        int index = new Solution().searchInsert(new int[]{1, 8, 70, 77}, 9);
         System.out.println(index);
+    }
+
+    /**
+     * 有效的数独.
+     */
+    public boolean isValidSudoku(char[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                char ch = board[i][j];
+                if (ch != '.') {
+                    if (!(row(board, i) && col(board, j) && chunk(board, i, j))) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean row(char[][] board, int i) {
+        Set<Character> characters = new HashSet<>();
+        for (int k = 0; k < board.length; k++) {
+            char c = board[i][k];
+            if (c != '.' && characters.contains(c)) {
+                return false;
+            }
+            characters.add(c);
+        }
+        return true;
+    }
+
+    private boolean col(char[][] board, int j) {
+        Set<Character> characters = new HashSet<>();
+        for (int k = 0; k < board.length; k++) {
+            char c = board[k][j];
+            if (c != '.' && characters.contains(c)) {
+                return false;
+            }
+            characters.add(c);
+        }
+        return true;
+    }
+
+    private boolean chunk(char[][] board, int i, int j) {
+        Set<Character> characters = new HashSet<>();
+        for (int col = i / 3 * 3; col < (i / 3 + 1) * 3; col++) {
+            for (int row = j / 3 * 3; row < (j / 3 + 1) * 3; row++) {
+                char c = board[col][row];
+                if (c != '.' && characters.contains(c)) {
+                    return false;
+                }
+                characters.add(c);
+            }
+        }
+        return true;
     }
 
     /**
