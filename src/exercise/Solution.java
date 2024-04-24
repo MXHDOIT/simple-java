@@ -103,8 +103,33 @@ public class Solution {
 //        int[] ints = new Solution().searchRange(new int[]{8}, 8);
 //        System.out.println(ints);
 
-        int index = new Solution().searchInsert(new int[]{1, 8, 70, 77}, 9);
-        System.out.println(index);
+//        int index = new Solution().searchInsert(new int[]{1, 8, 70, 77}, 9);
+//        System.out.println(index);
+
+        double num = new Solution().myPow(2.00000, -2);
+        System.out.println(num);
+    }
+
+    /**
+     * pow(x, n)
+     */
+
+    public double myPow(double x, int n) {
+        if (n == 0) {
+            return 1;
+        }
+
+        return n < 0 ? 1 / myPowInner(x, n) : myPowInner(x, n);
+    }
+
+    public double myPowInner(double x, int n) {
+        if (n == 0) {
+            return 1;
+        }
+
+
+        double pow = myPowInner(x, n / 2);
+        return n % 2 == 0 ? pow * pow : pow * pow * x;
     }
 
     /**
