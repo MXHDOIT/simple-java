@@ -106,8 +106,25 @@ public class Solution {
 //        int index = new Solution().searchInsert(new int[]{1, 8, 70, 77}, 9);
 //        System.out.println(index);
 
-        double num = new Solution().myPow(2.00000, -2);
-        System.out.println(num);
+//        double num = new Solution().myPow(2.00000, -2);
+//        System.out.println(num);
+
+        int helloWorld = new Solution().lengthOfLastWord("Hello World  ");
+        System.out.println(helloWorld);
+    }
+
+    public int lengthOfLastWord(String s) {
+        int index = s.length()-1;
+        while (index >= 0 && s.charAt(index) == ' ') {
+            index--;
+        }
+
+        int size = 0;
+        while (index >= 0 && s.charAt(index) != ' ') {
+            size++;
+            index--;
+        }
+        return size;
     }
 
     /**
