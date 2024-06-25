@@ -108,13 +108,33 @@ public class Solution {
 
 //        double num = new Solution().myPow(2.00000, -2);
 //        System.out.println(num);
+//
+//        int helloWorld = new Solution().lengthOfLastWord("Hello World  ");
+//        System.out.println(helloWorld);
 
-        int helloWorld = new Solution().lengthOfLastWord("Hello World  ");
-        System.out.println(helloWorld);
+        int[] array = new int[]{1, 1, 1, 2, 2, 3};
+        int duplicates = new Solution().removeDuplicates2(array);
+        System.out.println(duplicates);
+    }
+
+    /**
+     * 删除有序数组中的重复项目.
+     */
+    public int removeDuplicates2(int[] nums) {
+        int left = 2;
+        int right = 2;
+        while (right < nums.length) {
+            if (nums[left-2] != nums[right]) {
+                nums[left] = nums[right];
+                left++;
+            }
+            right++;
+        }
+        return left;
     }
 
     public int lengthOfLastWord(String s) {
-        int index = s.length()-1;
+        int index = s.length() - 1;
         while (index >= 0 && s.charAt(index) == ' ') {
             index--;
         }
