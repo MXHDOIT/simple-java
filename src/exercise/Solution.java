@@ -112,9 +112,43 @@ public class Solution {
 //        int helloWorld = new Solution().lengthOfLastWord("Hello World  ");
 //        System.out.println(helloWorld);
 
-        int[] array = new int[]{1, 1, 1, 2, 2, 3};
-        int duplicates = new Solution().removeDuplicates2(array);
-        System.out.println(duplicates);
+//        int[] array = new int[]{1, 1, 1, 2, 2, 3};
+//        int duplicates = new Solution().removeDuplicates2(array);
+//        System.out.println(duplicates);
+
+        List<List<Integer>> lists = new Solution().combinationSum(new int[]{2,3,5}, 8);
+        System.out.println(lists);
+    }
+
+    /**
+     * 组合总和.
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> result = new ArrayList<>();
+
+        for (int i = 0; i < candidates.length; i++) {
+            if (candidates[i] <= target) {
+                sum(candidates, target, i, new ArrayList<>(), result);
+            }
+        }
+        return result;
+    }
+
+    public void sum(int[] candidates, int target, int index, List<Integer> combined, List<List<Integer>> result) {
+        if (index == candidates.length) {
+            return;
+        }
+        combined.add(candidates[index]);
+        int newTarget = target - candidates[index];
+        if (newTarget == 0) {
+            result.add(new ArrayList<>(combined));
+        } else if (newTarget > 0) {
+            for (int i = index; i < candidates.length; i++) {
+                sum(candidates, newTarget, i, combined, result);
+            }
+        }
+        combined.remove(combined.size() - 1);
     }
 
     /**
@@ -124,7 +158,7 @@ public class Solution {
         int left = 2;
         int right = 2;
         while (right < nums.length) {
-            if (nums[left-2] != nums[right]) {
+            if (nums[left - 2] != nums[right]) {
                 nums[left] = nums[right];
                 left++;
             }
