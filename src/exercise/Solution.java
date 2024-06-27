@@ -116,8 +116,36 @@ public class Solution {
 //        int duplicates = new Solution().removeDuplicates2(array);
 //        System.out.println(duplicates);
 
-        List<List<Integer>> lists = new Solution().combinationSum(new int[]{2,3,5}, 8);
-        System.out.println(lists);
+//        List<List<Integer>> lists = new Solution().combinationSum(new int[]{2,3,5}, 8);
+//        System.out.println(lists);
+
+        String string = new Solution().smallestString("acbbc");
+        System.out.println(string);
+    }
+
+    /**
+     * 执行子串操作后的字典序最小字符串.
+     */
+    public String smallestString(String s) {
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        while (index < s.length() && s.charAt(index) == 'a') {
+            if (index == s.length() - 1) {
+                sb.append('z');
+            } else {
+                sb.append(s.charAt(index));
+            }
+            index++;
+        }
+        while (index < s.length() && s.charAt(index) != 'a') {
+            sb.append((char) (s.charAt(index) - 1));
+            index++;
+        }
+        while (index < s.length()) {
+            sb.append(s.charAt(index));
+            index++;
+        }
+        return sb.toString();
     }
 
     /**
