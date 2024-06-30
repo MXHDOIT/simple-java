@@ -119,8 +119,45 @@ public class Solution {
 //        List<List<Integer>> lists = new Solution().combinationSum(new int[]{2,3,5}, 8);
 //        System.out.println(lists);
 
-        String string = new Solution().smallestString("acbbc");
-        System.out.println(string);
+//        String string = new Solution().smallestString("acbbc");
+//        System.out.println(string);
+
+        int targetSumWays = new Solution().findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
+        System.out.println(targetSumWays);
+    }
+
+    /**
+     * 目标和.
+     */
+    public int findTargetSumWays(int[] nums, int target) {
+        int numSize = nums.length;
+        int sum = 0;
+        for (int i = 0; i < numSize; i++) {
+            sum += nums[i];
+        }
+        if (sum - target < 0 || (sum - target) % 2 != 0) {
+            return 0;
+        }
+        int subTotal = (sum - target) / 2;
+        int[][] dp = new int[numSize + 1][subTotal + 1];
+        for (int i = 0; i < numSize + 1; i++) {
+            for (int j = 0; j < subTotal + 1; j++) {
+                if (i == 0) {
+                    if (j == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        dp[i][j] = 0;
+                    }
+                } else {
+                    if (j < nums[i - 1]) {
+                        dp[i][j] = dp[i - 1][j];
+                    } else {
+                        dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i - 1]];
+                    }
+                }
+            }
+        }
+        return dp[numSize][subTotal];
     }
 
     /**
