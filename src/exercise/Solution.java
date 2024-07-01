@@ -122,8 +122,38 @@ public class Solution {
 //        String string = new Solution().smallestString("acbbc");
 //        System.out.println(string);
 
-        int targetSumWays = new Solution().findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
-        System.out.println(targetSumWays);
+//        int targetSumWays = new Solution().findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
+//        System.out.println(targetSumWays);
+
+        List<List<Integer>> combinationSum2 = new Solution().combinationSum2(new int[]{2, 5, 2, 1, 2}, 5);
+        System.out.println(combinationSum2);
+    }
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        Arrays.sort(candidates);
+        sum2(candidates, target, 0, temp, result);
+        return result;
+    }
+
+    private void sum2(int[] candidates, int target, int index, List<Integer> temp, List<List<Integer>> result) {
+        if (target == 0) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (int i = index; i < candidates.length; i++) {
+            if (target - candidates[i] < 0) {
+                break;
+            }
+            if (i > index && candidates[i] == candidates[i - 1]) {
+                continue;
+            }
+            temp.add(candidates[i]);
+            sum2(candidates, target - candidates[i], i + 1, temp, result);
+            temp.remove(temp.size() - 1);
+        }
     }
 
     int max = 0;
@@ -156,11 +186,11 @@ public class Solution {
                     sum += values[i];
                 }
             }
-            max = Math.max(sum,max);
+            max = Math.max(sum, max);
         }
         Map<Integer, Integer> bDot2TimeMap = dot2DotMap.get(index);
         if (bDot2TimeMap == null) {
-            return ;
+            return;
         }
         for (Map.Entry<Integer, Integer> entry : bDot2TimeMap.entrySet()) {
             Integer dot = entry.getKey();
