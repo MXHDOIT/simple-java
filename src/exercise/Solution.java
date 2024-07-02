@@ -129,6 +129,33 @@ public class Solution {
         System.out.println(combinationSum2);
     }
 
+    public int maximumPrimeDifference(int[] nums) {
+        int beginIndex = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (isPrimeNumber(nums[i])) {
+                beginIndex = i;
+                break;
+            }
+        }
+        int endIndex = 0;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (isPrimeNumber(nums[i])) {
+                endIndex = i;
+                break;
+            }
+        }
+        return endIndex - beginIndex;
+    }
+
+    private boolean isPrimeNumber(int num) {
+        for (int i = 2; i * i <= num; i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return num >= 2;
+    }
+
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> temp = new ArrayList<>();
