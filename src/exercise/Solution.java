@@ -128,9 +128,64 @@ public class Solution {
 //        List<List<Integer>> combinationSum2 = new Solution().combinationSum2(new int[]{2, 5, 2, 1, 2}, 5);
 //        System.out.println(combinationSum2);
 
-        int number = new Solution().sumOfTheDigitsOfHarshadNumber(18);
-        System.out.println(number);
+//        int number = new Solution().sumOfTheDigitsOfHarshadNumber(18);
+//        System.out.println(number);
+
+        String multiply = new Solution().multiply("9", "9");
+        System.out.println(multiply);
+
     }
+
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) { return "0"; }
+        String result = "";
+        for (int i = num2.length() - 1; i >= 0; i--) {
+            String multiply = multiply(num1, num2.charAt(i), num2.length() - 1 - i);
+            result = sum(result, multiply);
+        }
+
+        return result;
+    }
+
+    private String sum(String num1, String num2) {
+        int i = num1.length() - 1, j = num2.length() - 1, add = 0;
+        StringBuffer ans = new StringBuffer();
+        while (i >= 0 || j >= 0 || add != 0) {
+            int x = i >= 0 ? num1.charAt(i) - '0' : 0;
+            int y = j >= 0 ? num2.charAt(j) - '0' : 0;
+            int result = x + y + add;
+            ans.append(result % 10);
+            add = result / 10;
+            i--;
+            j--;
+        }
+        ans.reverse();
+        return ans.toString();
+    }
+
+    private String multiply(String num1, char ch, int zeroSize) {
+        char[] num1CharArray = num1.toCharArray();
+        int num1Index = num1CharArray.length - 1;
+        int carry = 0;
+        int chInt = ch - '0';
+        StringBuilder sb = new StringBuilder();
+        while (zeroSize-- > 0) {
+            sb.append('0');
+        }
+        while (num1Index >= 0) {
+            int num1Char = num1CharArray[num1Index] - '0';
+            int num = num1Char * chInt + carry;
+            char currentChar = (char) (num % 10 + '0');
+            sb.insert(0, currentChar);
+            carry = num / 10;
+            num1Index--;
+        }
+        if (carry != 0){
+            sb.insert(0, carry);
+        }
+        return sb.toString();
+    }
+
 
     public int sumOfTheDigitsOfHarshadNumber(int x) {
         int sum = 0;
