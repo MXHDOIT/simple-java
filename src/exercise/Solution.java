@@ -125,8 +125,21 @@ public class Solution {
 //        int targetSumWays = new Solution().findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3);
 //        System.out.println(targetSumWays);
 
-        List<List<Integer>> combinationSum2 = new Solution().combinationSum2(new int[]{2, 5, 2, 1, 2}, 5);
-        System.out.println(combinationSum2);
+//        List<List<Integer>> combinationSum2 = new Solution().combinationSum2(new int[]{2, 5, 2, 1, 2}, 5);
+//        System.out.println(combinationSum2);
+
+        int number = new Solution().sumOfTheDigitsOfHarshadNumber(18);
+        System.out.println(number);
+    }
+
+    public int sumOfTheDigitsOfHarshadNumber(int x) {
+        int sum = 0;
+        int y = x;
+        while (x != 0) {
+            sum = sum + x % 10;
+            x /= 10;
+        }
+        return y % sum == 0 ? sum : -1;
     }
 
     public int firstMissingPositive(int[] nums) {
