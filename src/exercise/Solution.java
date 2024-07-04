@@ -136,8 +136,23 @@ public class Solution {
 
     }
 
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n / 2; i++) {
+            for (int j = 0; j < (n + 1) / 2; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = temp;
+            }
+        }
+    }
+
     public String multiply(String num1, String num2) {
-        if (num1.equals("0") || num2.equals("0")) { return "0"; }
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
         String result = "";
         for (int i = num2.length() - 1; i >= 0; i--) {
             String multiply = multiply(num1, num2.charAt(i), num2.length() - 1 - i);
@@ -180,7 +195,7 @@ public class Solution {
             carry = num / 10;
             num1Index--;
         }
-        if (carry != 0){
+        if (carry != 0) {
             sb.insert(0, carry);
         }
         return sb.toString();
