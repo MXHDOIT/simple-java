@@ -130,10 +130,55 @@ public class Solution {
 
 //        int number = new Solution().sumOfTheDigitsOfHarshadNumber(18);
 //        System.out.println(number);
+//
+//        String multiply = new Solution().multiply("9", "9");
+//        System.out.println(multiply);
 
-        String multiply = new Solution().multiply("9", "9");
-        System.out.println(multiply);
+        int jump = new Solution().jump(new int[]{0});
+        System.out.println(jump);
 
+    }
+
+
+    public int jump(int[] nums) {
+        int[] dp = new int[nums.length];
+        int endIndex = nums.length - 1;
+        dp[endIndex] = 0;
+        for (int i = endIndex - 1; i >= 0; i--) {
+            int step = endIndex - i;
+            if (nums[i] >= step) {
+                dp[i] = 1;
+            } else {
+                int min = nums.length;
+                for (int j = i + 1; j <= i + nums[i]; j++) {
+                    min = Math.min(min, dp[j]);
+                }
+                dp[i] = min + 1;
+            }
+        }
+        return dp[0];
+    }
+
+    public int jumpError(int[] nums) {
+        if (nums.length == 1) {
+            return 0;
+        }
+        int count = 0;
+        int index = 0;
+        while (true) {
+            count++;
+            int num = nums[index];
+            if (index + num >= nums.length - 1) {
+                return count;
+            }
+            int maxIndex = index + 1;
+            for (int i = index + 1; i <= index + num; i++) {
+                if (nums[maxIndex] <= nums[i]) {
+                    maxIndex = i;
+                }
+            }
+            index = maxIndex;
+        }
     }
 
     public void rotate(int[][] matrix) {
