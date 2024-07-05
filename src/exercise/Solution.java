@@ -134,9 +134,39 @@ public class Solution {
 //        String multiply = new Solution().multiply("9", "9");
 //        System.out.println(multiply);
 
-        int jump = new Solution().jump(new int[]{0});
-        System.out.println(jump);
+//        int jump = new Solution().jump(new int[]{0});
+//        System.out.println(jump);
 
+        List<List<Integer>> permuteUnique = new Solution().permuteUnique(new int[]{1, 1, 3});
+        System.out.println(permuteUnique);
+
+    }
+
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        Arrays.sort(nums);
+        dps(nums, visited, result, temp);
+        return result;
+    }
+
+    private void dps(int[] nums, boolean[] visited, List<List<Integer>> result, List<Integer> temp) {
+        if (temp.size() == nums.length) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i] || (i > 0 && nums[i - 1] == nums[i] && !visited[i - 1])) {
+                continue;
+            }
+            visited[i] = true;
+            temp.add(nums[i]);
+            dps(nums, visited, result, temp);
+            visited[i] = false;
+            temp.remove(temp.size() - 1);
+        }
     }
 
     public int[][] modifiedMatrix(int[][] matrix) {
