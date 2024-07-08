@@ -137,9 +137,33 @@ public class Solution {
 //        int jump = new Solution().jump(new int[]{0});
 //        System.out.println(jump);
 
-        List<List<Integer>> permuteUnique = new Solution().permuteUnique(new int[]{1, 1, 3});
-        System.out.println(permuteUnique);
+//        List<List<Integer>> permuteUnique = new Solution().permuteUnique(new int[]{1, 1, 3});
+//        System.out.println(permuteUnique);
 
+        int index = new Solution().pivotIndex(new int[]{1, 2, 3});
+        System.out.println(index);
+
+    }
+
+    public int pivotIndex(int[] nums) {
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+        }
+
+        int left = 0;
+        int right = sum;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0) {
+                left += nums[i - 1];
+            }
+            right -= nums[i];
+
+            if (left == right) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public List<List<Integer>> permuteUnique(int[] nums) {
