@@ -140,9 +140,44 @@ public class Solution {
 //        List<List<Integer>> permuteUnique = new Solution().permuteUnique(new int[]{1, 1, 3});
 //        System.out.println(permuteUnique);
 
-        int index = new Solution().pivotIndex(new int[]{1, 2, 3});
-        System.out.println(index);
+//        int index = new Solution().pivotIndex(new int[]{1, 2, 3});
+//        System.out.println(index);
 
+        int count = new Solution().incremovableSubarrayCount(new int[]{6, 5, 7, 8});
+        System.out.println(count);
+
+    }
+
+    public int incremovableSubarrayCount(int[] nums) {
+        int result = 0;
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+            for (int j = i; j < length; j++) {
+                if (isIncreasing(nums, i, j)) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean isIncreasing(int[] nums, int l, int r) {
+        for (int i = 0; i < l - 1; i++) {
+            if (nums[i] >= nums[i + 1]) {
+                return false;
+            }
+        }
+
+        for (int i = r + 1; i < nums.length - 1; i++) {
+            if (nums[i] >= nums[i + 1]) {
+                return false;
+            }
+        }
+        if (l > 0 && r < nums.length - 1 && nums[l - 1] >= nums[r + 1]) {
+            return false;
+        }
+
+        return true;
     }
 
     public int pivotIndex(int[] nums) {
