@@ -148,10 +148,35 @@ public class Solution {
 
     }
 
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int index1 = m - 1;
+        int index2 = n - 1;
+        int tail = m + n - 1;
+
+        while (index1 >= 0 || index2 >= 0) {
+            if (index1 == -1) {
+                nums1[tail--] = nums2[index2];
+            } else if (index2 == -1) {
+                nums1[tail--] = nums1[index1];
+            } else {
+                int num1 = nums1[index1];
+                int num2 = nums2[index2];
+                if (num1 > num2) {
+                    index1--;
+                    nums1[tail--] = num1;
+                } else {
+                    index2--;
+                    nums1[tail--] = num2;
+                }
+            }
+        }
+    }
+
     /**
      * 了解数独.
      */
     boolean flag = false;
+
     public void solveSudoku(char[][] board) {
         boolean[][] rows = new boolean[9][9];
         boolean[][] cols = new boolean[9][9];
