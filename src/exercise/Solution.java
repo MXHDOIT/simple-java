@@ -148,6 +148,50 @@ public class Solution {
 
     }
 
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> result = new ArrayList<>();
+        int[] queens = new int[n];
+        Set<Integer> cols = new HashSet<>();
+        Set<Integer> diagonal1 = new HashSet<>();
+        Set<Integer> diagonal2 = new HashSet<>();
+        nQueens(result,queens,0,n,cols,diagonal1,diagonal2);
+        return result;
+    }
+
+    private void nQueens(List<List<String>> result, int[] queens, int row, int n, Set<Integer> cols, Set<Integer> diagonal1, Set<Integer> diagonal2) {
+        if (row == n) {
+            List<String> board = new ArrayList<String>();
+            for (int i = 0; i < n; i++) {
+                char[] rowCh = new char[n];
+                Arrays.fill(rowCh, '.');
+                rowCh[queens[i]] = 'Q';
+                board.add(new String(rowCh));
+            }
+            result.add(board);
+            return;
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (cols.contains(i)) {
+                continue;
+            }
+            if (diagonal1.contains(row - i)) {
+                continue;
+            }
+            if (diagonal2.contains(row + i)) {
+                continue;
+            }
+            queens[row] = i;
+            cols.add(i);
+            diagonal1.add(row - i);
+            diagonal2.add(row + i);
+            nQueens(result, queens, row + 1, n, cols, diagonal1, diagonal2);
+            cols.remove(i);
+            diagonal1.remove(row - i);
+            diagonal2.remove(row + i);
+        }
+    }
+
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int index1 = m - 1;
         int index2 = n - 1;
