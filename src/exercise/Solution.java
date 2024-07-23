@@ -143,9 +143,47 @@ public class Solution {
 //        int index = new Solution().pivotIndex(new int[]{1, 2, 3});
 //        System.out.println(index);
 
-        int count = new Solution().incremovableSubarrayCount(new int[]{6, 5, 7, 8});
-        System.out.println(count);
+//        int count = new Solution().incremovableSubarrayCount(new int[]{6, 5, 7, 8});
+//        System.out.println(count);
 
+        int totalNQueens = new Solution().totalNQueens(1);
+        System.out.println(totalNQueens);
+    }
+
+    int result = 0;
+    public int totalNQueens(int n) {
+        int[] queens = new int[n];
+        Set<Integer> cols = new HashSet<>();
+        Set<Integer> diagonal1 = new HashSet<>();
+        Set<Integer> diagonal2 = new HashSet<>();
+        nQueens(n,0,queens,cols,diagonal1,diagonal2);
+        return result;
+    }
+
+    private void nQueens(int n,int row,int[] queens,Set<Integer> cols ,Set<Integer> diagonal1,Set<Integer> diagonal2){
+        if (row == n) {
+            result++;
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (cols.contains(i)){
+                continue;
+            }
+            if(diagonal1.contains(i - row)) {
+                continue;
+            }
+            if(diagonal2.contains(i + row)) {
+                continue;
+            }
+            queens[row] = i;
+            cols.add(i);
+            diagonal1.add(i-row);
+            diagonal2.add(i+row);
+            nQueens(n,row+1,queens,cols,diagonal1,diagonal2);
+            cols.remove(i);
+            diagonal1.remove(i-row);
+            diagonal2.remove(i+row);
+        }
     }
 
     public List<List<String>> solveNQueens(int n) {
