@@ -150,39 +150,70 @@ public class Solution {
         System.out.println(totalNQueens);
     }
 
+    /**
+     * 通配符匹配.
+     */
+    public boolean isMatchPriority(String s, String p) {
+        int lenP = p.length();
+        int lenS = s.length();
+        boolean[][] dp = new boolean[lenP + 1][lenS + 1];
+        dp[0][0] = true;
+        // 模式串："****"情况
+        for (int i = 1; i <= lenP; i++) {
+            if (p.charAt(i-1) != '*') {
+                break;
+            }
+            dp[i][0] = true;
+        }
+        for (int i = 1; i <= lenP; i++) {
+            for (int j = 1; j <= lenS; j++) {
+                char chP = p.charAt(i - 1);
+                char chS = s.charAt(j - 1);
+                if (chP == '?' || chS == chP) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else if (chP == '*') {
+                    dp[i][j] = dp[i - 1][j] | dp[i][j - 1];
+                }
+            }
+        }
+
+        return dp[lenP][lenS];
+    }
+
     int result = 0;
+
     public int totalNQueens(int n) {
         int[] queens = new int[n];
         Set<Integer> cols = new HashSet<>();
         Set<Integer> diagonal1 = new HashSet<>();
         Set<Integer> diagonal2 = new HashSet<>();
-        nQueens(n,0,queens,cols,diagonal1,diagonal2);
+        nQueens(n, 0, queens, cols, diagonal1, diagonal2);
         return result;
     }
 
-    private void nQueens(int n,int row,int[] queens,Set<Integer> cols ,Set<Integer> diagonal1,Set<Integer> diagonal2){
+    private void nQueens(int n, int row, int[] queens, Set<Integer> cols, Set<Integer> diagonal1, Set<Integer> diagonal2) {
         if (row == n) {
             result++;
             return;
         }
         for (int i = 0; i < n; i++) {
-            if (cols.contains(i)){
+            if (cols.contains(i)) {
                 continue;
             }
-            if(diagonal1.contains(i - row)) {
+            if (diagonal1.contains(i - row)) {
                 continue;
             }
-            if(diagonal2.contains(i + row)) {
+            if (diagonal2.contains(i + row)) {
                 continue;
             }
             queens[row] = i;
             cols.add(i);
-            diagonal1.add(i-row);
-            diagonal2.add(i+row);
-            nQueens(n,row+1,queens,cols,diagonal1,diagonal2);
+            diagonal1.add(i - row);
+            diagonal2.add(i + row);
+            nQueens(n, row + 1, queens, cols, diagonal1, diagonal2);
             cols.remove(i);
-            diagonal1.remove(i-row);
-            diagonal2.remove(i+row);
+            diagonal1.remove(i - row);
+            diagonal2.remove(i + row);
         }
     }
 
@@ -192,7 +223,7 @@ public class Solution {
         Set<Integer> cols = new HashSet<>();
         Set<Integer> diagonal1 = new HashSet<>();
         Set<Integer> diagonal2 = new HashSet<>();
-        nQueens(result,queens,0,n,cols,diagonal1,diagonal2);
+        nQueens(result, queens, 0, n, cols, diagonal1, diagonal2);
         return result;
     }
 
