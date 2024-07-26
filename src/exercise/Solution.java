@@ -146,8 +146,20 @@ public class Solution {
 //        int count = new Solution().incremovableSubarrayCount(new int[]{6, 5, 7, 8});
 //        System.out.println(count);
 
-        int totalNQueens = new Solution().totalNQueens(1);
-        System.out.println(totalNQueens);
+//        int totalNQueens = new Solution().totalNQueens(1);
+//        System.out.println(totalNQueens);
+
+        int valueOfPartition = new Solution().findValueOfPartition(new int[]{1, 3, 2, 4});
+        System.out.println(valueOfPartition);
+    }
+
+    public int findValueOfPartition(int[] nums) {
+        int min = Integer.MAX_VALUE;
+        Arrays.sort(nums);
+        for (int i = 1; i < nums.length; i++) {
+            min = Math.min(min,(nums[i]-nums[i-1]));
+        }
+        return min;
     }
 
     /**
