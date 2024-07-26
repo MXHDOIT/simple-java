@@ -153,6 +153,35 @@ public class Solution {
         System.out.println(valueOfPartition);
     }
 
+    public boolean exist(char[][] board, String word) {
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if(isExist(board, word, 0, visited, i, i)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isExist(char[][] board, String word, int index, boolean[][] visited, int column, int row) {
+        if (index == word.length()) {
+            return true;
+        }
+        if (column < 0 || column >= board.length || row < 0 || row >= board[0].length || visited[column][row]) {
+            return false;
+        }
+        visited[column][row] = true;
+        boolean isExist = word.charAt(index) == board[column][row]
+                && (isExist(board, word, index + 1, visited, column, row - 1)
+                || isExist(board, word, index + 1, visited, column, row + 1)
+                || isExist(board, word, index + 1, visited, column - 1, row)
+                || isExist(board, word, index + 1, visited, column + 1, row));
+        visited[column][row] = false;
+        return isExist;
+    }
+
     public String addBinary(String a, String b) {
         StringBuilder sb = new StringBuilder();
         int carry = 0;
@@ -183,7 +212,7 @@ public class Solution {
         int min = Integer.MAX_VALUE;
         Arrays.sort(nums);
         for (int i = 1; i < nums.length; i++) {
-            min = Math.min(min,(nums[i]-nums[i-1]));
+            min = Math.min(min, (nums[i] - nums[i - 1]));
         }
         return min;
     }
@@ -198,7 +227,7 @@ public class Solution {
         dp[0][0] = true;
         // 模式串："****"情况
         for (int i = 1; i <= lenP; i++) {
-            if (p.charAt(i-1) != '*') {
+            if (p.charAt(i - 1) != '*') {
                 break;
             }
             dp[i][0] = true;
