@@ -153,6 +153,32 @@ public class Solution {
         System.out.println(valueOfPartition);
     }
 
+    public String addBinary(String a, String b) {
+        StringBuilder sb = new StringBuilder();
+        int carry = 0;
+        int indexA = a.length() - 1;
+        int indexB = b.length() - 1;
+
+        while (indexA >= 0 || indexB >= 0 || carry == 1) {
+            int aNum = 0;
+            if (indexA >= 0) {
+                aNum = a.charAt(indexA) - '0';
+            }
+            int bNum = 0;
+            if (indexB >= 0) {
+                bNum = b.charAt(indexB) - '0';
+            }
+            int sum = aNum + bNum + carry;
+            char currentChar = (char) (sum % 2 + '0');
+            sb.insert(0, currentChar); // Insert at the beginning to maintain the correct order
+            carry = sum / 2;
+            indexA--;
+            indexB--;
+        }
+        return sb.toString();
+    }
+
+
     public int findValueOfPartition(int[] nums) {
         int min = Integer.MAX_VALUE;
         Arrays.sort(nums);
