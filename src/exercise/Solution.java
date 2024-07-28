@@ -153,11 +153,20 @@ public class Solution {
         System.out.println(valueOfPartition);
     }
 
+    public int maxSubArray(int[] nums) {
+        int pre = 0, maxAns = nums[0];
+        for (int x : nums) {
+            pre = Math.max(pre + x, x);
+            maxAns = Math.max(maxAns, pre);
+        }
+        return maxAns;
+    }
+
     public boolean exist(char[][] board, String word) {
         boolean[][] visited = new boolean[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if(isExist(board, word, 0, visited, i, i)){
+                if (isExist(board, word, 0, visited, i, i)) {
                     return true;
                 }
             }
