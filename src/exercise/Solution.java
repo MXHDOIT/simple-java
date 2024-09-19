@@ -153,6 +153,25 @@ public class Solution {
         System.out.println(valueOfPartition);
     }
 
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
+        List<int[]> merged = new ArrayList<int[]>();
+        for (int i = 0; i < intervals.length; i++) {
+            if (i == 0) {
+                merged.add(intervals[i]);
+            } else {
+                int[] prevInts = merged.get(merged.size() - 1);
+                int[] interval = intervals[i];
+                if (interval[0] > prevInts[1]) {
+                    merged.add(interval);
+                } else {
+                    prevInts[1] = Math.max(interval[1], prevInts[1]);
+                }
+            }
+        }
+        return merged.toArray(new int[merged.size()][]);
+    }
+
     public int maxSubArray(int[] nums) {
         int pre = 0, maxAns = nums[0];
         for (int x : nums) {
