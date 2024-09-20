@@ -153,6 +153,24 @@ public class Solution {
         System.out.println(valueOfPartition);
     }
 
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode newHead = new ListNode(-1);
+        newHead.next = head;
+        ListNode prev = newHead;
+        for (int i = 0; i < left - 1; i++) {
+            prev = prev.next;
+        }
+        ListNode cur = prev.next;
+        ListNode next = null;
+        for (int i = left; i < right; i++) {
+            next = cur.next;
+            cur.next = next.next;
+            next.next = prev.next;
+            prev.next= next;
+        }
+        return newHead.next;
+    }
+
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
         List<int[]> merged = new ArrayList<int[]>();
