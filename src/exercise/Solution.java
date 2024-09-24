@@ -153,6 +153,34 @@ public class Solution {
         System.out.println(valueOfPartition);
     }
 
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> result = new ArrayList<>();
+        for (int[] interval : intervals) {
+            if (null == newInterval) {
+                result.add(interval);
+                continue;
+            }
+            int min = interval[0];
+            int max = interval[1];
+            if (max < newInterval[0]) {
+                result.add(interval);
+                continue;
+            }
+            if (min > newInterval[1]) {
+                result.add(newInterval);
+                newInterval = null;
+                result.add(interval);
+                continue;
+            }
+            newInterval[0] = Math.min(min, newInterval[0]);
+            newInterval[1] = Math.max(max, newInterval[1]);
+        }
+        if (newInterval != null) {
+            result.add(newInterval);
+        }
+        return result.toArray(new int[result.size()][]);
+    }
+
     public ListNode reverseBetween(ListNode head, int left, int right) {
         ListNode newHead = new ListNode(-1);
         newHead.next = head;
