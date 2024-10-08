@@ -149,8 +149,44 @@ public class Solution {
 //        int totalNQueens = new Solution().totalNQueens(1);
 //        System.out.println(totalNQueens);
 
-        int valueOfPartition = new Solution().findValueOfPartition(new int[]{1, 3, 2, 4});
-        System.out.println(valueOfPartition);
+//        int valueOfPartition = new Solution().findValueOfPartition(new int[]{1, 3, 2, 4});
+//        System.out.println(valueOfPartition);
+
+        int[][] matrix = new int[][]{{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+        List<Integer> integers = new Solution().spiralOrder(matrix);
+        System.out.println(integers);
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int left = 0;
+        int right = matrix[0].length - 1;
+        int up = 0;
+        int down = matrix.length - 1;
+        List<Integer> result = new ArrayList<>();
+
+        while (left <= right && up <= down) {
+            for (int temp = left; temp <= right; temp++) {
+                result.add(matrix[up][temp]);
+            }
+            up++;
+            for (int temp = up; temp <= down; temp++) {
+                result.add(matrix[temp][right]);
+            }
+            right--;
+            if (up <= down) {
+                for (int temp = right; temp >= left; temp--) {
+                    result.add(matrix[down][temp]);
+                }
+            }
+            down--;
+            if (left <= right) {
+                for (int temp = down; temp >= up; temp--) {
+                    result.add(matrix[temp][left]);
+                }
+            }
+            left++;
+        }
+        return result;
     }
 
     public int[][] insert(int[][] intervals, int[] newInterval) {
