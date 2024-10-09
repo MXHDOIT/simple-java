@@ -152,9 +152,43 @@ public class Solution {
 //        int valueOfPartition = new Solution().findValueOfPartition(new int[]{1, 3, 2, 4});
 //        System.out.println(valueOfPartition);
 
-        int[][] matrix = new int[][]{{1,2,3,4},{5,6,7,8},{9,10,11,12}};
-        List<Integer> integers = new Solution().spiralOrder(matrix);
-        System.out.println(integers);
+//        int[][] matrix = new int[][]{{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+//        List<Integer> integers = new Solution().spiralOrder(matrix);
+//        System.out.println(integers);
+
+        String permutation = new Solution().getPermutation(4, 9);
+        System.out.println(permutation);
+    }
+
+    public String getPermutation(int n, int k) {
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = i + 1;
+        }
+        boolean[] visited = new boolean[n];
+        List<String> list = new ArrayList<>();
+        permutation(nums, visited, list, n, k, new StringBuilder());
+        return list.get(k - 1);
+    }
+
+    private void permutation(int[] nums, boolean[] visited, List<String> list, int n, int k,
+                             StringBuilder stringBuilder) {
+        if (list.size() == k) {
+            return;
+        }
+        if (stringBuilder.length() == n) {
+            list.add(stringBuilder.toString());
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                stringBuilder.append(nums[i]);
+                permutation(nums, visited, list, n, k, stringBuilder);
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+                visited[i] = false;
+            }
+        }
     }
 
     public List<Integer> spiralOrder(int[][] matrix) {
@@ -230,7 +264,7 @@ public class Solution {
             next = cur.next;
             cur.next = next.next;
             next.next = prev.next;
-            prev.next= next;
+            prev.next = next;
         }
         return newHead.next;
     }
