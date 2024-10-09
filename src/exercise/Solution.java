@@ -160,6 +160,24 @@ public class Solution {
         System.out.println(permutation);
     }
 
+    public ListNode rotateRight(ListNode head, int k) {
+        if (k == 0 || head == null || head.next == null) { return head; }
+        ListNode current = head;
+        int length = 1;
+        while (current.next != null) {
+            length++;
+            current = current.next;
+        }
+        length = length % k;
+        int step = k - length;
+        current.next = head;
+
+        while (step-- > 0) {
+            current = current.next;
+        }
+        ListNode ret = current.next; current.next = null; return ret;
+    }
+
     public String getPermutation(int n, int k) {
         int[] nums = new int[n];
         for (int i = 0; i < n; i++) {
