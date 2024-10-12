@@ -160,8 +160,47 @@ public class Solution {
         System.out.println(permutation);
     }
 
+
+    public int uniquePathsWithObstaclesDp(int[][] obstacleGrid) {
+        int m = obstacleGrid.length, n = obstacleGrid[0].length;
+        int[][] dp = new int[m][n];
+        // 定义 dp 数组并初始化第 1 行和第 1 列。
+        for (int i = 0; i < m && obstacleGrid[i][0] == 0; i++) {
+            dp[i][0] = 1;
+        }
+        for (int j = 0; j < n && obstacleGrid[0][j] == 0; j++) {
+            dp[0][j] = 1;
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (obstacleGrid[i][j] == 0) {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                }
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        return uniquePathsWithObstacles(obstacleGrid, 0, 0);
+    }
+
+    public int uniquePathsWithObstacles(int[][] obstacleGrid, int x, int y) {
+        if (x == obstacleGrid.length - 1 && y == obstacleGrid[x].length - 1) {
+            return 1;
+        }
+
+        if (x >= obstacleGrid.length || y >= obstacleGrid[x].length || obstacleGrid[x][y] == 1) {
+            return 0;
+        }
+        return uniquePathsWithObstacles(obstacleGrid, x + 1, y) + uniquePathsWithObstacles(obstacleGrid, x, y + 1);
+    }
+
     public ListNode rotateRight(ListNode head, int k) {
-        if (k == 0 || head == null || head.next == null) { return head; }
+        if (k == 0 || head == null || head.next == null) {
+            return head;
+        }
         ListNode current = head;
         int length = 1;
         while (current.next != null) {
@@ -175,7 +214,9 @@ public class Solution {
         while (step-- > 0) {
             current = current.next;
         }
-        ListNode ret = current.next; current.next = null; return ret;
+        ListNode ret = current.next;
+        current.next = null;
+        return ret;
     }
 
     public String getPermutation(int n, int k) {
