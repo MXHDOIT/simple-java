@@ -156,10 +156,35 @@ public class Solution {
 //        List<Integer> integers = new Solution().spiralOrder(matrix);
 //        System.out.println(integers);
 
-        String permutation = new Solution().getPermutation(4, 9);
-        System.out.println(permutation);
+//        String permutation = new Solution().getPermutation(4, 9);
+//        System.out.println(permutation);
+
+        List<List<Integer>> combine = new Solution().combine(1, 1);
+        System.out.println(combine);
     }
 
+    public List<List<Integer>> combine(int n, int k) {
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = i + 1;
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        combine(nums, new ArrayList<>(), result, k, 0);
+        return result;
+    }
+
+    public void combine(int[] nums, List<Integer> temp, List<List<Integer>> result, int k, int index) {
+        if (temp.size() == k) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (int i = index; i < nums.length; i++) {
+            temp.add(nums[i]);
+            combine(nums, temp, result, k, i + 1);
+            temp.remove(temp.size() - 1);
+        }
+    }
 
     public int uniquePathsWithObstaclesDp(int[][] obstacleGrid) {
         int m = obstacleGrid.length, n = obstacleGrid[0].length;
