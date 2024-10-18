@@ -1,9 +1,11 @@
 package exercise;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -159,8 +161,31 @@ public class Solution {
 //        String permutation = new Solution().getPermutation(4, 9);
 //        System.out.println(permutation);
 
-        List<List<Integer>> combine = new Solution().combine(1, 1);
-        System.out.println(combine);
+//        List<List<Integer>> combine = new Solution().combine(1, 1);
+//        System.out.println(combine);
+        String string = new Solution().simplifyPath("/home/");
+        System.out.println(string);
+    }
+
+    public String simplifyPath(String path) {
+        String[] split = path.split("/");
+        Deque<String> stack = new ArrayDeque<String>();
+        for (String name : split) {
+            if (name.equals("..")) {
+                stack.pollLast();
+            } else if (name.equals(".") || name.isEmpty()) {
+                continue;
+            } else {
+                stack.offerLast(name);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append("/");
+            sb.append(stack.pollFirst());
+        }
+        sb.append("/");
+        return sb.toString();
     }
 
     public int climbStairs(int n) {
@@ -171,8 +196,8 @@ public class Solution {
         int[] dp = new int[n + 1];
         dp[1] = 1;
         dp[2] = 2;
-        for (int i = 3;i < n+1;i++) {
-            dp[i] = dp[i-1] + dp[i-2];
+        for (int i = 3; i < n + 1; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
         }
         return dp[n];
     }
