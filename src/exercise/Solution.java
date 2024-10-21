@@ -167,6 +167,30 @@ public class Solution {
         System.out.println(string);
     }
 
+    public int minDistance(String word1, String word2) {
+        int word1Length = word1.length();
+        int word2Length = word2.length();
+        int[][] dp = new int[word1Length + 1][word2Length + 1];
+        for (int i = 1; i <= word1Length; i++) {
+            dp[i][0] = i;
+        }
+        for (int i = 1; i <= word2Length; i++) {
+            dp[0][i] = i;
+        }
+        for (int i = 1; i <= word1Length; i++) {
+            char ch1 = word1.charAt(i);
+            for (int j = 1; j <= word2Length; j++) {
+                char ch2 = word2.charAt(j);
+                if (ch1 == ch2) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                }
+            }
+        }
+        return dp[word1Length][word2Length];
+    }
+
     //最小差值
     public int smallestRangeII(int[] nums, int k) {
         Arrays.sort(nums);
