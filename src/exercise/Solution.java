@@ -167,6 +167,20 @@ public class Solution {
         System.out.println(string);
     }
 
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        inorderTraversal(root,list);
+        return list;
+    }
+
+    private void inorderTraversal(TreeNode root,List<Integer> list) {
+        if (root == null) return;
+
+        inorderTraversal(root.left,list);
+        list.add(root.val);
+        inorderTraversal(root.right,list);
+    }
+
     public int minDistance(String word1, String word2) {
         int word1Length = word1.length();
         int word2Length = word2.length();
@@ -2135,6 +2149,29 @@ public class Solution {
         }
 
     }
+
+    /**
+     * Definition for a binary tree node.
+     */
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
 
     /**
      * 罗马数字转整形.
