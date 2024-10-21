@@ -167,6 +167,19 @@ public class Solution {
         System.out.println(string);
     }
 
+    //最小差值
+    public int smallestRangeII(int[] nums, int k) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int diff = nums[n - 1] - nums[0];
+        for (int i = 1; i < n; i++) {
+            int max = Math.max(nums[i - 1] + k, nums[n - 1] - k);
+            int min = Math.min(nums[0] + k, nums[i] - k);
+            diff = Math.min(diff, max - min);
+        }
+        return diff;
+    }
+
     public String simplifyPath(String path) {
         String[] split = path.split("/");
         Deque<String> stack = new ArrayDeque<String>();
