@@ -245,6 +245,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[3184]构成整天的下标对数目 I.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[3184]构成整天的下标对数目 I.md" />
+              <option name="frontendQuestionId" value="leetcode.cn3184" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[3184]构成整天的下标对数目 I.java" />
+              <option name="titleSlug" value="count-pairs-that-form-a-complete-day-i" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[3191]使二进制数组全部等于 1 的最少操作次数 I.java">
           <value>
             <LeetcodeEditor>

@@ -167,6 +167,43 @@ public class Solution {
         System.out.println(string);
     }
 
+    public int countCompleteDayPairsOptimized(int[] hours) {
+        int h =24;
+        int count = 0;
+        int[] cnt = new int[h];
+        for (int hour : hours) {
+            count += cnt[(h-hour%h)%h];
+            cnt[hour%h] ++;
+        }
+        return count;
+    }
+
+
+    public int countCompleteDayPairs(int[] hours) {
+        Map<Integer,List<Integer>> map = new HashMap<>();
+        int length = hours.length;
+        for (int i = 0; i < length; i++) {
+            hours[i] = hours[i] % 24;
+            List<Integer> list = map.computeIfAbsent(hours[i], key -> new ArrayList<Integer>());
+            list.add(i);
+        }
+
+        int count = 0;
+        for (int i = 0; i < length; i++) {
+            int hour = hours[i];
+            int needHour = (24 - hour) % 24;
+            List<Integer> list = map.get(needHour);
+            if (list != null) {
+                for (Integer integer : list) {
+                    if (integer > i) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         inorderTraversal(root,list);
