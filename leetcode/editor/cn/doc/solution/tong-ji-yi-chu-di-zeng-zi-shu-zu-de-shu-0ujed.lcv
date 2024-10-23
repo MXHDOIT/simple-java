@@ -1,0 +1,561 @@
+#### 方法一：枚举
+
+**思路与算法**
+
+枚举 $\textit{nums}$ 中的每个子数组并判断是否为移除递增子数组。当枚举的子数组范围是 $[l, r]$ 时，若满足如下条件则该子数组是移除递增子数组：
+
+1. 若 $\textit{nums}[l]$ 左侧有元素，并且这些元素满足严格递增；
+2. 若 $\textit{nums}[r]$ 右侧有元素，并且这些元素满足严格递增；
+3. 若 $\textit{nums}[l]$ 左侧有元素并且 $\textit{nums}[r]$ 右侧有元素，并且 $\textit{nums}[l] < \textit{nums}[r + 1]$。
+
+统计所有满足以上条件的子数组。
+
+**代码**
+
+* [sol1-Python3]
+
+```Python
+class Solution:
+    def incremovableSubarrayCount(self, nums: List[int]) -> int:
+        n = len(nums)
+        return sum([self.isIncreasing(nums[:i] + nums[j+1:]) for i in range(n) for j in range(i, n)])
+    
+    def isIncreasing(self, nums):
+        if len(nums) == 0:
+            return True
+        return all(nums[i] < nums[i + 1] for i in range(len(nums) - 1))
+```
+
+* [sol1-C++]
+
+```C++
+class Solution {
+public:
+    int incremovableSubarrayCount(vector<int>& nums) {
+        int n = nums.size();
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (isIncreasing(nums, i, j)) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    bool isIncreasing(vector<int>& nums, int l, int r) {
+        for (int i = 1; i < nums.size(); i++) {
+            if (i >= l && i <= r + 1) {
+                continue;
+            } 
+            if (nums[i] <= nums[i - 1]) {
+                return false;
+            }
+        }
+        if (l - 1 >= 0 && r + 1 < nums.size() && nums[r + 1] <= nums[l - 1]) {
+            return false;
+        }
+        return true;
+    }
+};
+```
+
+* [sol1-Java]
+
+```Java
+class Solution {
+    public int incremovableSubarrayCount(int[] nums) {
+        int n = nums.length;
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (isIncreasing(nums, i, j)) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public boolean isIncreasing(int[] nums, int l, int r) {
+        for (int i = 1; i < nums.length; i++) {
+            if (i >= l && i <= r + 1) {
+                continue;
+            } 
+            if (nums[i] <= nums[i - 1]) {
+                return false;
+            }
+        }
+        if (l - 1 >= 0 && r + 1 < nums.length && nums[r + 1] <= nums[l - 1]) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+* [sol1-C#]
+
+```C#
+public class Solution {
+    public int IncremovableSubarrayCount(int[] nums) {
+        int n = nums.Length;
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (IsIncreasing(nums, i, j)) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public bool IsIncreasing(int[] nums, int l, int r) {
+        for (int i = 1; i < nums.Length; i++) {
+            if (i >= l && i <= r + 1) {
+                continue;
+            } 
+            if (nums[i] <= nums[i - 1]) {
+                return false;
+            }
+        }
+        if (l - 1 >= 0 && r + 1 < nums.Length && nums[r + 1] <= nums[l - 1]) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+* [sol1-C]
+
+```C
+bool isIncreasing(int* nums, int l, int r, int numsSize) {
+    for (int i = 1; i < numsSize; i++) {
+        if (i >= l && i <= r + 1) {
+            continue;
+        }
+        if (nums[i] <= nums[i - 1]) {
+            return false;
+        }
+    }
+    if (l - 1 >= 0 && r + 1 < numsSize && nums[r + 1] <= nums[l - 1]) {
+        return false;
+    }
+    return true;
+}
+
+int incremovableSubarrayCount(int* nums, int numsSize) {
+    int res = 0;
+    for (int i = 0; i < numsSize; i++) {
+        for (int j = i; j < numsSize; j++) {
+            if (isIncreasing(nums, i, j, numsSize)) {
+                res++;
+            }
+        }
+    }
+
+    return res;
+}
+```
+
+* [sol1-Go]
+
+```Go
+func incremovableSubarrayCount(nums []int) int {
+    n := len(nums)
+    res := 0
+    for i := 0; i < n; i++ {
+        for j := i; j < n; j++ {
+            if isIncreasing(nums, i, j) {
+                res++
+            }
+        }
+    }
+    return res
+}
+
+func isIncreasing(nums []int, l, r int) bool {
+    for i := 1; i < len(nums); i++ {
+        if i >= l && i <= r + 1 {
+            continue
+        }
+        if nums[i] <= nums[i - 1] {
+            return false
+        }
+    }
+    if l - 1 >= 0 && r + 1 < len(nums) && nums[r + 1] <= nums[l - 1] {
+        return false
+    }
+    return true
+}
+```
+
+* [sol1-JavaScript]
+
+```JavaScript
+var incremovableSubarrayCount = function(nums) {
+    let res = 0;
+    for (let i = 0; i < nums.length; i++) {
+        for (let j = i; j < nums.length; j++) {
+            if (isIncreasing(nums, i, j)) {
+                res++;
+            }
+        }
+    }
+    return res;
+};
+
+function isIncreasing(nums, l, r) {
+    for (let i = 1; i < nums.length; i++) {
+        if (i >= l && i <= r + 1) {
+            continue;
+        }
+        if (nums[i] <= nums[i - 1]) {
+            return false;
+        }
+    }
+    if (l - 1 >= 0 && r + 1 < nums.length && nums[r + 1] <= nums[l - 1]) {
+        return false;
+    }
+    return true;
+}
+```
+
+* [sol1-TypeScript]
+
+```TypeScript
+function incremovableSubarrayCount(nums: number[]): number {
+    let res = 0;
+    for (let i = 0; i < nums.length; i++) {
+        for (let j = i; j < nums.length; j++) {
+            if (isIncreasing(nums, i, j)) {
+                res++;
+            }
+        }
+    }
+    return res;
+};
+
+function isIncreasing(nums: number[], l: number, r: number): boolean {
+    for (let i = 1; i < nums.length; i++) {
+        if (i >= l && i <= r + 1) {
+            continue;
+        }
+        if (nums[i] <= nums[i - 1]) {
+            return false;
+        }
+    }
+    if (l - 1 >= 0 && r + 1 < nums.length && nums[r + 1] <= nums[l - 1]) {
+        return false;
+    }
+    return true;
+}
+```
+
+* [sol1-Rust]
+
+```Rust
+impl Solution {
+    pub fn incremovable_subarray_count(nums: Vec<i32>) -> i32 {
+        let mut res = 0;
+        for i in 0..nums.len() {
+            for j in i..nums.len() {
+                if Self::is_increasing(&nums, i, j) {
+                    res += 1;
+                }
+            }
+        }
+        res
+    }
+
+    pub fn is_increasing(nums: &Vec<i32>, l: usize, r: usize) -> bool {
+        for i in 1..nums.len() {
+            if i >= l && i <= r + 1 {
+                continue;
+            }
+            if nums[i] <= nums[i - 1] {
+                return false;
+            }
+        }
+        if l >= 1 && r + 1 < nums.len() && nums[r + 1] <= nums[l - 1] {
+            return false;
+        }
+        true
+    }
+}
+```
+
+**复杂度分析**
+
+- 时间复杂度：$O(n^3)$，其中 $n$ 为 $\textit{nums}$ 的长度。枚举所有子数组的时间复杂度为 $O(n^2)$，判断一个子数组是否为移除递增子数组的时间复杂度为 $O(n)$，因此总体时间复杂度为 $O(n^3)$。
+
+- 空间复杂度：$O(1)$。
+
+#### 方法二：双指针
+
+**思路与算法**
+
+为了方便描述，我们用 $[l, r]$ 表示 $\textit{nums}$ 中下标范围在 $[l, r]$ 的子数组。
+
+容易观察到，若 $[l, r]$ 是移除递增子数组，则 $[l - 1, r]$ 一定也是移除递增子数组。这样一来，对于某个确定的 $r$，只需要找到最大的 $l$ 使 $[l, r]$ 为移除递增子数组，就可以快速的统计答案。
+
+更进一步，随着 $r$ 递减，这样的 $l$ 不可能递增。因为要满足方法一中的条件三：若 $\textit{nums}[l]$ 左侧有元素并且 $\textit{nums}[r]$ 右侧有元素，并且 $\textit{nums}[l] < \textit{nums}[r + 1]$。如果 $\textit{nums}[r]$ 减小，则 $\textit{nums}[l]$ 不可能增加。
+
+因此，由于 $l$ 和 $r$ 存在单调变化的规律，我们可以使用双指针算法快速求解。
+
+我们首先找到最大的 $l$，使得 $[0, l - 1]$ 是单调递增子数组。这样一来，如下子数组都是移除递增子数组：
+
+- $[l - 1, n - 1]$
+- $[l - 2, n - 1]$
+- $\cdots$
+- $[0, n - 1]$
+
+共 $l$ 个，若 $l \lt n$，那么 $[l, n - 1]$ 也是移除递增子数组。
+
+以此为起点，我们从 $n - 2$（$n - 1$ 的情况已计算过） 到 $0$ 去枚举 $r$，并且需要时刻满足 $[r + 1, n - 1]$ 内的元素单调递增。若 $nums[l - 1] >= nums[r + 1]$，则不断的将 $l$ 减去 $1$, 直到条件不被满足。此时，如下子数组都是移除递增子数组：
+
+- $[l - 1, r]$
+- $[l - 2, r]$
+- $\cdots$
+- $[0, r]$
+
+共 $l$ 个，若 $l \le r$，那么 $[l, r]$ 也是移除递增子数组。
+
+**代码**
+
+* [sol2-Python3]
+
+```Python
+class Solution:
+    def incremovableSubarrayCount(self, nums: List[int]) -> int:
+        n = len(nums)
+        res = 0
+        l = 1
+        while l < n and nums[l - 1] < nums[l]:
+            l += 1
+        res += l + (l < n)        
+        for r in range(n - 2, -1, -1):
+            while l > 0 and nums[l - 1] >= nums[r + 1]:
+                l -= 1
+            res += l + (l <= r)
+            if nums[r] >= nums[r + 1]:
+                break
+        return res
+```
+
+* [sol2-C++]
+
+```C++
+class Solution {
+public:
+    int incremovableSubarrayCount(vector<int>& nums) {
+        int n = nums.size();
+        int res = 0;
+        int l = 1;
+        while (l < n && nums[l - 1] < nums[l]) {
+            l++;
+        }
+        res += l + (l < n);
+        for (int r = n - 2; r >= 0; r--) {
+            while (l > 0 && nums[l - 1] >= nums[r + 1]) {
+                l--;
+            }
+            res += l + (l <= r);
+            if (nums[r] >= nums[r + 1]) {
+                break;
+            }
+        }
+        return res;
+    }
+};
+```
+
+* [sol2-Java]
+
+```Java
+class Solution {
+    public int incremovableSubarrayCount(int[] nums) {
+        int n = nums.length;
+        int res = 0;
+        int l = 1;
+        while (l < n && nums[l - 1] < nums[l]) {
+            l++;
+        }
+        res += l + (l < n ? 1 : 0);
+        for (int r = n - 2; r >= 0; r--) {
+            while (l > 0 && nums[l - 1] >= nums[r + 1]) {
+                l--;
+            }
+            res += l + (l <= r ? 1 : 0);
+            if (nums[r] >= nums[r + 1]) {
+                break;
+            }
+        }
+        return res;
+    }
+}
+```
+
+* [sol2-C#]
+
+```C#
+public class Solution {
+    public int IncremovableSubarrayCount(int[] nums) {
+        int n = nums.Length;
+        int res = 0;
+        int l = 1;
+        while (l < n && nums[l - 1] < nums[l]) {
+            l++;
+        }
+        res += l + (l < n ? 1 : 0);
+        for (int r = n - 2; r >= 0; r--) {
+            while (l > 0 && nums[l - 1] >= nums[r + 1]) {
+                l--;
+            }
+            res += l + (l <= r ? 1 : 0);
+            if (nums[r] >= nums[r + 1]) {
+                break;
+            }
+        }
+        return res;
+    }
+}
+```
+
+* [sol2-C]
+
+```C
+int incremovableSubarrayCount(int* nums, int numsSize) {
+    int res = 0;
+    int l = 1;
+    while (l < numsSize && nums[l - 1] < nums[l]) {
+        l++;
+    }
+    res += l + (l < numsSize);
+    for (int r = numsSize - 2; r >= 0; r--) {
+        while (l > 0 && nums[l - 1] >= nums[r + 1]) {
+            l--;
+        }
+        res += l + (l <= r);
+        if (nums[r] >= nums[r + 1]) {
+            break;
+        }
+    }
+    return res;
+}
+```
+
+* [sol2-Go]
+
+```Go
+func incremovableSubarrayCount(nums []int) int {
+    n := len(nums)
+    res := 0
+    l := 1
+    for l < n && nums[l - 1] < nums[l] {
+        l++
+    }
+    
+    res += l
+    if l < n {
+        res += 1
+    }
+    for r := n - 2; r >= 0; r-- {
+        for l > 0 && nums[l - 1] >= nums[r + 1] {
+            l--
+        }
+        res += l
+        if l <= r {
+            res += 1
+        }
+        if nums[r] >= nums[r + 1] {
+            break
+        }
+    }
+    return res
+}
+```
+
+* [sol2-JavaScript]
+
+```JavaScript
+var incremovableSubarrayCount = function(nums) {
+    const n = nums.length;
+    let res = 0;
+    let l = 1;
+    while (l < n && nums[l - 1] < nums[l]) {
+        l++;
+    }
+    res += l + (l < n ? 1 : 0);
+    for (let r = n - 2; r >= 0; r--) {
+        while (l > 0 && nums[l - 1] >= nums[r + 1]) {
+            l--;
+        }
+        res += l + (l <= r ? 1 : 0);
+        if (nums[r] >= nums[r + 1]) {
+            break;
+        }
+    }
+    return res;
+};
+```
+
+* [sol2-TypeScript]
+
+```TypeScript
+function incremovableSubarrayCount(nums: number[]): number {
+    const n = nums.length;
+    let res = 0;
+    let l = 1;
+    while (l < n && nums[l - 1] < nums[l]) {
+        l++;
+    }
+    res += l + (l < n ? 1 : 0);
+    for (let r = n - 2; r >= 0; r--) {
+        while (l > 0 && nums[l - 1] >= nums[r + 1]) {
+            l--;
+        }
+        res += l + (l <= r ? 1 : 0);
+        if (nums[r] >= nums[r + 1]) {
+            break;
+        }
+    }
+    return res;
+};
+```
+
+* [sol2-Rust]
+
+```Rust
+impl Solution {
+    pub fn incremovable_subarray_count(nums: Vec<i32>) -> i32 {
+        let n = nums.len();
+        let mut res = 0;
+        let mut l = 1;
+        while l < n && nums[l - 1] < nums[l] {
+            l += 1;
+        }
+        res += l as i32 + if l < n { 1 } else { 0 };
+        for r in (0..n - 1).rev() {
+            while l > 0 && nums[l - 1] >= nums[r + 1] {
+                l -= 1;
+            }
+            res += l as i32 + if l <= r { 1 } else { 0 };
+            if nums[r] >= nums[r + 1] {
+                break;
+            }
+        }
+        res
+    }
+}
+```
+
+**复杂度分析**
+
+- 时间复杂度：$O(n)$，其中 $n$ 为 $\textit{nums}$ 的长度。过程中 $l$ 的移动次数不超过 $2n$ 次，$r$ 的移动次数不超过 $n$ 次，因此总体时间复杂度为 $O(n)$。
+
+- 空间复杂度：$O(1)$。
+

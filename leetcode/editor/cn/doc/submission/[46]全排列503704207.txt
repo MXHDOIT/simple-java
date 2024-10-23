@@ -1,0 +1,37 @@
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        int length = nums.length;
+        if (length == 0) {
+            return result;
+        }
+
+        List<Integer> list = new ArrayList<>();
+        boolean[] visit = new boolean[length];
+        dfs(nums, 0, list, result, visit);
+
+        return result;
+    }
+
+    private void dfs(int[] nums, int depth, List<Integer> list, List<List<Integer>> result, boolean[] visit) {
+        if (depth == nums.length) {
+            result.add(new ArrayList<>(list));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (!visit[i]) {
+                list.add(nums[i]);
+                visit[i] = true;
+                dfs(nums, depth + 1, list, result, visit);
+                list.remove(list.size()-1);
+                visit[i] = false;
+            }
+        }
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
+
+//runtime:1 ms
+//memory:43.5 MB

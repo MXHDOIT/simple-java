@@ -1,0 +1,166 @@
+#### 方法一：暴力
+
+**思路与算法**
+
+我们可以枚举每一个 $\textit{hours}[i]$，然后遍历剩下的 $\textit{hours}[j]$，如果 $\textit{hours}[i] + \textit{hours}[j]$ 能够被 $24$ 整除，就对答案进行累加。
+
+注意，枚举的方向可以从左往右，也可以从右往左，即对于每一个 $\textit{hours}[i]$，可以查看 $j > i$ 或查看 $j < i$ 时的 $\textit{hours}[j]$ 能否与 $\textit{hours}[i]$ 成对，只需要保证枚举不会重复即可。
+
+**代码**
+
+* [sol1-C++]
+
+```C++
+class Solution {
+public:
+    int countCompleteDayPairs(vector<int>& hours) {
+        int ans = 0;
+        for (int i = 1; i < hours.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if ((hours[i] + hours[j]) % 24 == 0) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+* [sol1-Java]
+
+```Java
+class Solution {
+    public int countCompleteDayPairs(int[] hours) {
+        int ans = 0;
+        for (int i = 1; i < hours.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if ((hours[i] + hours[j]) % 24 == 0) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
+
+* [sol1-Go]
+
+```Go
+func countCompleteDayPairs(hours []int) int {
+    ans := 0
+    for i := 1; i < len(hours); i++ {
+        for j := 0; j < i; j++ {
+            if (hours[i]+hours[j])%24 == 0 {
+                ans++
+            }
+        }
+    }
+    return ans
+}
+```
+
+* [sol1-Python]
+
+```Python
+class Solution:
+    def countCompleteDayPairs(self, hours: List[int]) -> int:
+        ans = 0
+        for i in range(1, len(hours)):
+            for j in range(i):
+                if (hours[i] + hours[j]) % 24 == 0:
+                    ans += 1
+        return ans
+```
+
+* [sol1-C#]
+
+```C#
+public class Solution {
+    public int CountCompleteDayPairs(int[] hours) {
+        int ans = 0;
+        for (int i = 1; i < hours.Length; i++) {
+            for (int j = 0; j < i; j++) {
+                if ((hours[i] + hours[j]) % 24 == 0) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+}
+```
+
+* [sol1-Rust]
+
+```Rust
+impl Solution {
+    pub fn count_complete_day_pairs(hours: Vec<i32>) -> i32 {
+        let mut ans = 0;
+        for i in 1..hours.len() {
+            for j in 0..i {
+                if (hours[i] + hours[j]) % 24 == 0 {
+                    ans += 1;
+                }
+            }
+        }
+        ans
+    }
+}
+```
+
+* [sol1-JavaScript]
+
+```JavaScript
+var countCompleteDayPairs = function(hours) {
+    let ans = 0;
+    for (let i = 1; i < hours.length; i++) {
+        for (let j = 0; j < i; j++) {
+            if ((hours[i] + hours[j]) % 24 === 0) {
+                ans++;
+            }
+        }
+    }
+    return ans;
+};
+```
+
+* [sol1-TypeScript]
+
+```TypeScript
+function countCompleteDayPairs(hours: number[]): number {
+    let ans = 0;
+    for (let i = 1; i < hours.length; i++) {
+        for (let j = 0; j < i; j++) {
+            if ((hours[i] + hours[j]) % 24 === 0) {
+                ans++;
+            }
+        }
+    }
+    return ans;
+};
+```
+
+* [sol1-C]
+
+```C
+int countCompleteDayPairs(int* hours, int hoursSize) {
+    int ans = 0;
+    for (int i = 1; i < hoursSize; i++) {
+        for (int j = 0; j < i; j++) {
+            if ((hours[i] + hours[j]) % 24 == 0) {
+                ans++;
+            }
+        }
+    }
+    return ans;
+}
+```
+
+**复杂度分析**
+
+- 时间复杂度：$O(n^2)$，其中 $n$ 是 `hours` 数组的长度。
+
+- 空间复杂度：$O(1)$。
+

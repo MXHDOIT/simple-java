@@ -1,0 +1,52 @@
+class Solution {
+    int max = 0;
+
+    public int maximalPathQuality(int[] values, int[][] edges, int maxTime) {
+        Map<Integer, Map<Integer, Integer>> dot2DotMap = new HashMap<>();
+        for (int[] edge : edges) {
+            int aDot = edge[0];
+            int bDot = edge[1];
+            int time = edge[2];
+            Map<Integer, Integer> aDot2TimeMap = dot2DotMap.getOrDefault(aDot, new HashMap<>());
+            aDot2TimeMap.put(bDot, time);
+            dot2DotMap.put(aDot, aDot2TimeMap);
+            Map<Integer, Integer> bDot2TimeMap = dot2DotMap.getOrDefault(bDot, new HashMap<>());
+            bDot2TimeMap.put(aDot, time);
+            dot2DotMap.put(bDot, bDot2TimeMap);
+
+        }
+        int[] visitedSizes = new int[values.length];
+        visitedSizes[0]++;
+        visit(values, dot2DotMap, 0, maxTime, visitedSizes);
+        return max;
+    }
+
+    private void visit(int[] values, Map<Integer, Map<Integer, Integer>> dot2DotMap, int index, int maxTime, int[] visitedSizes) {
+        if (index == 0) {
+            int sum = 0;
+            for (int i = 0; i < visitedSizes.length; i++) {
+                if (visitedSizes[i] > 0) {
+                    sum += values[i];
+                }
+            }
+            max = Math.max(sum,max);
+        }
+        Map<Integer, Integer> bDot2TimeMap = dot2DotMap.get(index);
+        if (bDot2TimeMap == null) {
+            return ;
+        }
+        for (Map.Entry<Integer, Integer> entry : bDot2TimeMap.entrySet()) {
+            Integer dot = entry.getKey();
+            Integer time = entry.getValue();
+            if (maxTime >= time) {
+                visitedSizes[dot]++;
+                visit(values, dot2DotMap, dot, maxTime - time, visitedSizes);
+                visitedSizes[dot]--;
+            }
+        }
+    }
+
+}
+
+//runtime:412 ms
+//memory:45.2 MB
