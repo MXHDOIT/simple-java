@@ -167,6 +167,27 @@ public class Solution {
         System.out.println(string);
     }
 
+    public void setZeroes(int[][] matrix) {
+        Set<Integer> colZero = new HashSet<>();
+        Set<Integer> rowZero = new HashSet<>();
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] == 0) {
+                    rowZero.add(i);
+                    colZero.add(j);
+                }
+            }
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (colZero.contains(j) || rowZero.contains(i)) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
     public int countCompleteDayPairsOptimized(int[] hours) {
         int h =24;
         int count = 0;

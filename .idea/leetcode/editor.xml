@@ -245,6 +245,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[3175]找到连续赢 K 场比赛的第一位玩家.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[3175]找到连续赢 K 场比赛的第一位玩家.md" />
+              <option name="frontendQuestionId" value="leetcode.cn3175" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[3175]找到连续赢 K 场比赛的第一位玩家.java" />
+              <option name="titleSlug" value="find-the-first-player-to-win-k-games-in-a-row" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[3184]构成整天的下标对数目 I.java">
           <value>
             <LeetcodeEditor>
@@ -253,6 +264,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[3184]构成整天的下标对数目 I.java" />
               <option name="titleSlug" value="count-pairs-that-form-a-complete-day-i" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[3185]构成整天的下标对数目 II.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[3185]构成整天的下标对数目 II.md" />
+              <option name="frontendQuestionId" value="leetcode.cn3185" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[3185]构成整天的下标对数目 II.java" />
+              <option name="titleSlug" value="count-pairs-that-form-a-complete-day-ii" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -616,6 +638,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[72]编辑距离.java" />
               <option name="titleSlug" value="edit-distance" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[73]矩阵置零.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[73]矩阵置零.md" />
+              <option name="frontendQuestionId" value="leetcode.cn73" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[73]矩阵置零.java" />
+              <option name="titleSlug" value="set-matrix-zeroes" />
             </LeetcodeEditor>
           </value>
         </entry>
