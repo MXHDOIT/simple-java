@@ -167,6 +167,21 @@ public class Solution {
         System.out.println(string);
     }
 
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode newHead = new ListNode(-101);
+        newHead.next = head;
+
+        ListNode currentNode = newHead;
+        while (currentNode.next != null) {
+            if (currentNode.next.val == currentNode.val) {
+                currentNode.next = currentNode.next.next;
+            }else{
+                currentNode = currentNode.next;
+            }
+        }
+        return newHead.next;
+    }
+
     public void setZeroes(int[][] matrix) {
         Set<Integer> colZero = new HashSet<>();
         Set<Integer> rowZero = new HashSet<>();
