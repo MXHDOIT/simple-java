@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -163,9 +164,68 @@ public class Solution {
 
 //        List<List<Integer>> combine = new Solution().combine(1, 1);
 //        System.out.println(combine);
-        String string = new Solution().simplifyPath("/home/");
-        System.out.println(string);
+//        String string = new Solution().simplifyPath("/home/");
+//        System.out.println(string);
+        int[][] matrix = new int[][]{{2, 4}, {0, 2}, {0, 4}};
+        int[] ints = new Solution().shortestDistanceAfterQueries(5, matrix);
+        System.out.println(ints);
     }
+
+    public int[] shortestDistanceAfterQueries(int n, int[][] queries) {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            List<Integer> list = new ArrayList<>();
+            if (i < n-1){
+                list.add(i + 1);
+            }
+            map.put(i, list);
+        }
+
+        int[] result = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int[] query = queries[i];
+            int ui = query[0];
+            int vi = query[1];
+            map.get(ui).add(vi);
+
+            int step = minStep(map,n);
+            result[i] = step;
+        }
+        return result;
+    }
+
+    private int minStep(Map<Integer, List<Integer>> map,int n) {
+        int[] dist = new int[n];
+        for (int i = 1; i < n; i++) {
+            dist[i] = -1;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        q.add(0);
+        while (!q.isEmpty()) {
+            int x = q.poll();
+            for (int y : map.get(x)) {
+                if (dist[y] >= 0) {
+                    continue;
+                }
+                q.add(y);
+                dist[y] = dist[x] + 1;
+            }
+        }
+        return dist[n - 1];
+    }
+
+    private int minStep(int startIndex, int endIndex, Map<Integer, List<Integer>> map) {
+        if (startIndex == endIndex) {
+            return 0;
+        }
+        int minStep = Integer.MAX_VALUE;
+        List<Integer> integers = map.get(startIndex);
+        for (Integer integer : integers) {
+            minStep = Math.min(minStep(integer, endIndex, map), minStep);
+        }
+        return minStep + 1;
+    }
+
 
     public ListNode deleteDuplicates(ListNode head) {
         ListNode newHead = new ListNode(-101);
@@ -175,7 +235,7 @@ public class Solution {
         while (currentNode.next != null) {
             if (currentNode.next.val == currentNode.val) {
                 currentNode.next = currentNode.next.next;
-            }else{
+            } else {
                 currentNode = currentNode.next;
             }
         }
@@ -204,19 +264,19 @@ public class Solution {
     }
 
     public int countCompleteDayPairsOptimized(int[] hours) {
-        int h =24;
+        int h = 24;
         int count = 0;
         int[] cnt = new int[h];
         for (int hour : hours) {
-            count += cnt[(h-hour%h)%h];
-            cnt[hour%h] ++;
+            count += cnt[(h - hour % h) % h];
+            cnt[hour % h]++;
         }
         return count;
     }
 
 
     public int countCompleteDayPairs(int[] hours) {
-        Map<Integer,List<Integer>> map = new HashMap<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
         int length = hours.length;
         for (int i = 0; i < length; i++) {
             hours[i] = hours[i] % 24;
@@ -242,16 +302,16 @@ public class Solution {
 
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
-        inorderTraversal(root,list);
+        inorderTraversal(root, list);
         return list;
     }
 
-    private void inorderTraversal(TreeNode root,List<Integer> list) {
+    private void inorderTraversal(TreeNode root, List<Integer> list) {
         if (root == null) return;
 
-        inorderTraversal(root.left,list);
+        inorderTraversal(root.left, list);
         list.add(root.val);
-        inorderTraversal(root.right,list);
+        inorderTraversal(root.right, list);
     }
 
     public int minDistance(String word1, String word2) {
