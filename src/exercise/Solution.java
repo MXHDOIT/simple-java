@@ -166,16 +166,54 @@ public class Solution {
 //        System.out.println(combine);
 //        String string = new Solution().simplifyPath("/home/");
 //        System.out.println(string);
-        int[][] matrix = new int[][]{{2, 4}, {0, 2}, {0, 4}};
-        int[] ints = new Solution().shortestDistanceAfterQueries(5, matrix);
-        System.out.println(ints);
+//        int[][] matrix = new int[][]{{2, 4}, {0, 2}, {0, 4}};
+//        int[] ints = new Solution().shortestDistanceAfterQueries(5, matrix);
+//        System.out.println(ints);
+
+        int minimumCost = new Solution().minimumCost(3, 2, new int[]{1, 3}, new int[]{5});
+        System.out.println(minimumCost);
+    }
+
+    public int minimumCost(int m, int n, int[] horizontalCut, int[] verticalCut) {
+        return minimumCost(0, m - 1, 0, n - 1, horizontalCut, verticalCut);
+    }
+
+    private int minimumCost(int sRow, int eRow, int sCol, int eCol, int[] horizontalCut, int[] verticalCut) {
+        if (eRow == sRow && eCol == sCol) {
+            return 0;
+        }
+        boolean isH = true;
+        int index = 0;
+        int max = 0;
+        for (int i = sRow; i < eRow; i++) {
+            if (max < horizontalCut[i]) {
+                max = horizontalCut[i];
+                index = i;
+                isH = true;
+            }
+        }
+        for (int i = sCol; i < eCol; i++) {
+            if (max < verticalCut[i]) {
+                max = verticalCut[i];
+                index = i;
+                isH = false;
+            }
+        }
+
+        if (isH) {
+            return max + minimumCost(sRow, index, sCol, eCol, horizontalCut, verticalCut)
+                    + minimumCost(index + 1, eRow, sCol, eCol, horizontalCut, verticalCut);
+        } else {
+            return max + minimumCost(sRow, eRow, sCol, index, horizontalCut, verticalCut)
+                    + minimumCost(sRow, eRow, index + 1, eCol, horizontalCut, verticalCut);
+        }
     }
 
     public int[] shortestDistanceAfterQueries(int n, int[][] queries) {
         Map<Integer, List<Integer>> map = new HashMap<>();
         for (int i = 0; i < n; i++) {
             List<Integer> list = new ArrayList<>();
-            if (i < n-1){
+            if (i < n - 1) {
                 list.add(i + 1);
             }
             map.put(i, list);
@@ -188,13 +226,13 @@ public class Solution {
             int vi = query[1];
             map.get(ui).add(vi);
 
-            int step = minStep(map,n);
+            int step = minStep(map, n);
             result[i] = step;
         }
         return result;
     }
 
-    private int minStep(Map<Integer, List<Integer>> map,int n) {
+    private int minStep(Map<Integer, List<Integer>> map, int n) {
         int[] dist = new int[n];
         for (int i = 1; i < n; i++) {
             dist[i] = -1;
