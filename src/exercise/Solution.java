@@ -170,8 +170,33 @@ public class Solution {
 //        int[] ints = new Solution().shortestDistanceAfterQueries(5, matrix);
 //        System.out.println(ints);
 
-        int minimumCost = new Solution().minimumCost(3, 2, new int[]{1, 3}, new int[]{5});
-        System.out.println(minimumCost);
+//        int minimumCost = new Solution().minimumCost(3, 2, new int[]{1, 3}, new int[]{5});
+//        System.out.println(minimumCost);
+
+        boolean leetcode = new Solution().isSubstringPresent("abcd");
+        System.out.println(leetcode);
+    }
+
+    public boolean isSubstringPresent(String s) {
+        int length = s.length();
+        Map<Character, Set<Character>> map = new HashMap<>();
+        for (int i = length - 1; i > 0; i--) {
+            char ch = s.charAt(i);
+            char lastCh = s.charAt(i - 1);
+            Set<Character> set = map.getOrDefault(ch, new HashSet<>());
+            set.add(lastCh);
+            map.put(ch, set);
+        }
+
+        for (int i = 0; i < length - 1; i++) {
+            char ch = s.charAt(i);
+            char lastCh = s.charAt(i + 1);
+            Set<Character> set = map.getOrDefault(ch, new HashSet<>());
+            if (set.contains(lastCh)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int minimumCost(int m, int n, int[] horizontalCut, int[] verticalCut) {
