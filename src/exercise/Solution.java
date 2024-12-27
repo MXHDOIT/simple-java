@@ -177,6 +177,26 @@ public class Solution {
         System.out.println(leetcode);
     }
 
+    public int[] occurrencesOfElement(int[] nums, int[] queries, int x) {
+        List<Integer> indexs = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == x) {
+                indexs.add(i);
+            }
+        }
+        int[] result = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int index = queries[i];
+            if (index > indexs.size()) {
+                result[i] = -1;
+            } else {
+                result[i] = indexs.get(index-1);
+            }
+        }
+        return result;
+    }
+
     public boolean isSubstringPresent(String s) {
         int length = s.length();
         Map<Character, Set<Character>> map = new HashMap<>();
