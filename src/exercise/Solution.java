@@ -177,6 +177,32 @@ public class Solution {
         System.out.println(leetcode);
     }
 
+    public boolean isSubPath(ListNode head, TreeNode root) {
+        if (head == null) {
+            return true;
+        }
+        if (root == null) {
+            return false;
+        }
+        return dfs(head, root) || isSubPath(head, root.left) || isSubPath(head, root.right);
+    }
+
+    public boolean dfs(ListNode head, TreeNode root) {
+        if (head == null) {
+            return true;
+        }
+        if (root == null) {
+            return false;
+        }
+
+        if (head.val == root.val) {
+            return dfs(head.next, root.left)
+                    || dfs(head.next, root.right);
+        } else {
+            return false;
+        }
+    }
+
     public int[] occurrencesOfElement(int[] nums, int[] queries, int x) {
         List<Integer> indexs = new ArrayList<>();
 
@@ -191,7 +217,7 @@ public class Solution {
             if (index > indexs.size()) {
                 result[i] = -1;
             } else {
-                result[i] = indexs.get(index-1);
+                result[i] = indexs.get(index - 1);
             }
         }
         return result;
