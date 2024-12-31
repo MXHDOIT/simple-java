@@ -177,6 +177,25 @@ public class Solution {
         System.out.println(leetcode);
     }
 
+    public long minimumCost1(int m, int n, int[] horizontalCut, int[] verticalCut) {
+        Arrays.sort(horizontalCut);
+        Arrays.sort(verticalCut);
+        int hIndex = horizontalCut.length-1;
+        int vIndex = verticalCut.length-1;
+        int h = 1;
+        int v = 1;
+        long result = 0;
+        while (hIndex >= 0 || vIndex >= 0) {
+            if (vIndex < 0 || (hIndex >= 0 && horizontalCut[hIndex] > verticalCut[vIndex])) {
+                result += horizontalCut[hIndex--] * v;
+                h++;
+            }else{
+                result += verticalCut[vIndex--] * h;
+                v++;
+            }
+        }
+        return result;
+    }
     public boolean isSubPath(ListNode head, TreeNode root) {
         if (head == null) {
             return true;
