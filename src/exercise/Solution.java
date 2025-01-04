@@ -177,6 +177,24 @@ public class Solution {
         System.out.println(leetcode);
     }
 
+    static class MyCalendar{
+        private List<int[]> intervals = new ArrayList<>();
+        public MyCalendar() {
+
+        }
+
+        public boolean book(int startTime, int endTime) {
+            for (int[] interval : intervals) {
+                int left = interval[0];
+                int right = interval[1];
+                if (startTime >= right || endTime <= left) continue;
+                return false;
+            }
+            intervals.add(new int[]{startTime,endTime});
+            return true;
+        }
+    }
+
     public long minimumCost1(int m, int n, int[] horizontalCut, int[] verticalCut) {
         Arrays.sort(horizontalCut);
         Arrays.sort(verticalCut);
