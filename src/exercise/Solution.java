@@ -205,6 +205,96 @@ public class Solution {
         return dp[length - 1][C];
     }
 
+    /**
+     *我的日程安排表1.
+     * https://lfool.github.io/LFool-Notes/algorithm/%E7%BA%BF%E6%AE%B5%E6%A0%91%E8%AF%A6%E8%A7%A3.html
+     */
+    static class MyCalendar {
+        public MyCalendar() {
+
+        }
+
+        public boolean book(int start, int end) {
+            // 先查询该区间是否为 0
+            if (query(root, 0, N, start, end - 1) != 0) return false;
+            // 更新该区间
+            update(root, 0, N, start, end - 1, 1);
+            return true;
+        }
+
+        class Node {
+            // 左右孩子节点
+            Node left, right;
+            // 当前节点值，以及懒惰标记的值
+            int val, add;
+        }
+
+        private final static int N = (int) 1e9;
+        private final Node root = new Node();
+
+        private void update(Node node, int left, int right, int l, int r, int value) {
+            if (l <= left && r >= right) {
+                node.val += value;
+                node.add += value;
+                return;
+            }
+            pushDown(node);
+            int mid = (right + left) >> 1;
+            if (l <= mid) {
+                update(node, left, mid, l, r, value);
+            }
+            if (r > mid) {
+                update(node, mid + 1, right, l, r, value);
+            }
+            pushUp(node);
+        }
+
+        private int query(Node node, int left, int right, int l, int r) {
+            if (l <= left && r >= right) return node.val;
+            pushDown(node);
+            int mid = (left + right) >> 1, ans = 0;
+            if (l <= mid) ans = query(node.left, left, mid, l, r);
+            if (r > mid) ans = Math.max(ans, query(node.right, mid + 1, right, l, r));
+            return ans;
+        }
+
+        private void pushDown(Node node) {
+            if (node.left == null) node.left = new Node();
+            if (node.right == null) node.right = new Node();
+            if (node.add == 0) return;
+            node.left.val += node.add;
+            node.right.val += node.add;
+            node.left.add += node.add;
+            node.right.add += node.add;
+            node.add = 0;
+        }
+
+        private void pushUp(Node node) {
+            // 每个节点存的是当前区间的最大值
+            node.val = Math.max(node.left.val, node.right.val);
+        }
+
+    }
+
+    static class MyCalendarViolence {
+        private List<int[]> intervals = new ArrayList<>();
+
+        public MyCalendarViolence() {
+
+        }
+
+        public boolean book(int startTime, int endTime) {
+            for (int[] interval : intervals) {
+                int left = interval[0];
+                int right = interval[1];
+                if (startTime >= right || endTime <= left) continue;
+                return false;
+            }
+            intervals.add(new int[]{startTime, endTime});
+            return true;
+        }
+    }
+
     public long minimumCost1(int m, int n, int[] horizontalCut, int[] verticalCut) {
         Arrays.sort(horizontalCut);
         Arrays.sort(verticalCut);
