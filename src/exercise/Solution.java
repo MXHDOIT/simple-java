@@ -173,15 +173,43 @@ public class Solution {
 //        int minimumCost = new Solution().minimumCost(3, 2, new int[]{1, 3}, new int[]{5});
 //        System.out.println(minimumCost);
 
-        boolean leetcode = new Solution().isSubstringPresent("abcd");
-        System.out.println(leetcode);
+//        boolean leetcode = new Solution().isSubstringPresent("abcd");
+//        System.out.println(leetcode);
+        int[] w = {2, 3, 1};
+        int[] v = {3, 4, 2};
+        int C = 5;
+        int i = new Solution().knapsack01(C, w, v);
+        System.out.println(i);
+    }
+
+    public int knapsack01(int C, int[] w, int[] v) {
+        int length = w.length;
+        // 0-i 物品 容量C最大值
+        int[][] dp = new int[length][C + 1];
+        //1. 初始化
+        for (int j = 0; j <= C; j++) {
+            if (w[0] <= j) {
+                dp[0][j] = v[0];
+            }
+        }
+
+        for (int i = 1; i < length; i++) {
+            for (int j = 1; j <= C; j++) {
+                if (w[i] <= j) {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w[i]] + v[i]);
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[length - 1][C];
     }
 
     public long minimumCost1(int m, int n, int[] horizontalCut, int[] verticalCut) {
         Arrays.sort(horizontalCut);
         Arrays.sort(verticalCut);
-        int hIndex = horizontalCut.length-1;
-        int vIndex = verticalCut.length-1;
+        int hIndex = horizontalCut.length - 1;
+        int vIndex = verticalCut.length - 1;
         int h = 1;
         int v = 1;
         long result = 0;
@@ -189,13 +217,14 @@ public class Solution {
             if (vIndex < 0 || (hIndex >= 0 && horizontalCut[hIndex] > verticalCut[vIndex])) {
                 result += horizontalCut[hIndex--] * v;
                 h++;
-            }else{
+            } else {
                 result += verticalCut[vIndex--] * h;
                 v++;
             }
         }
         return result;
     }
+
     public boolean isSubPath(ListNode head, TreeNode root) {
         if (head == null) {
             return true;
