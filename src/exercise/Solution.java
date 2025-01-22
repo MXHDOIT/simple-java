@@ -175,11 +175,27 @@ public class Solution {
 
 //        boolean leetcode = new Solution().isSubstringPresent("abcd");
 //        System.out.println(leetcode);
-        int[] w = {2, 3, 1};
-        int[] v = {3, 4, 2};
-        int C = 5;
-        int i = new Solution().knapsack01(C, w, v);
-        System.out.println(i);
+
+//        int[] w = {2, 3, 1};
+//        int[] v = {3, 4, 2};
+//        int C = 5;
+//        int i = new Solution().knapsack01(C, w, v);
+//        System.out.println(i);
+
+        int maxCoins = new Solution().maxCoins(new int[]{2, 4, 1, 2, 7, 8});
+        System.out.println(maxCoins);
+    }
+
+    public int maxCoins(int[] piles) {
+        Arrays.sort(piles);
+        int n = piles.length / 3;
+        int sum = 0;
+        int index = piles.length - 2;
+        for (int i = 0; i < n; i++) {
+            sum += piles[index];
+            index -= 2;
+        }
+        return sum;
     }
 
     public int knapsack01(int C, int[] w, int[] v) {
@@ -206,7 +222,7 @@ public class Solution {
     }
 
     /**
-     *我的日程安排表1.
+     * 我的日程安排表1.
      * https://lfool.github.io/LFool-Notes/algorithm/%E7%BA%BF%E6%AE%B5%E6%A0%91%E8%AF%A6%E8%A7%A3.html
      */
     static class MyCalendar {
