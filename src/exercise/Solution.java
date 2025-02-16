@@ -186,6 +186,20 @@ public class Solution {
         System.out.println(maxCoins);
     }
 
+    public int[] replaceElements(int[] arr) {
+        int max = 0;
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int temp = arr[i];
+            if (i == arr.length - 1) {
+                arr[i] = -1;
+            } else {
+                arr[i] = max;
+            }
+            max = Math.max(max, temp);
+        }
+        return arr;
+    }
+
     public int maxCoins(int[] piles) {
         Arrays.sort(piles);
         int n = piles.length / 3;
