@@ -186,6 +186,32 @@ public class Solution {
         System.out.println(maxCoins);
     }
 
+    public int findSpecialInteger(int[] arr) {
+        int m = arr.length / 4;
+        for (int i : new int[]{m, m * 2 + 1}) {
+            int x = arr[i];
+            int j = lowerBound(arr, x);
+            if (arr[j + m] == x) {
+                return x;
+            }
+        }
+        return arr[m * 3 + 2];
+    }
+
+    private int lowerBound(int[] arr, int x) {
+        int left = -1;
+        int right = arr.length - 1;
+        while (left + 1 < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] >= x) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        }
+        return right;
+    }
+
     public int[] replaceElements(int[] arr) {
         int max = 0;
         for (int i = arr.length - 1; i >= 0; i--) {
