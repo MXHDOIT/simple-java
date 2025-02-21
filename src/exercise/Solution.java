@@ -182,8 +182,54 @@ public class Solution {
 //        int i = new Solution().knapsack01(C, w, v);
 //        System.out.println(i);
 
-        int maxCoins = new Solution().maxCoins(new int[]{2, 4, 1, 2, 7, 8});
-        System.out.println(maxCoins);
+//        int maxCoins = new Solution().maxCoins(new int[]{2, 4, 1, 2, 7, 8});
+//        System.out.println(maxCoins);
+
+        int whiteTiles = new Solution().minimumWhiteTiles("01111111110111101111001111110111111111101101101111111110111011110111111101101110011110111011001", 72, 1);
+        System.out.println(whiteTiles);
+    }
+
+    public int minimumWhiteTiles1(String floor, int numCarpets, int carpetLen) {
+        int length = floor.length();
+        int[][] dp = new int[numCarpets + 1][length];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1); // -1 表示没有计算过
+        }
+        return dfs1(floor.toCharArray(), length - 1, numCarpets, carpetLen, dp);
+    }
+
+    public int dfs1(char[] floor, int index, int numCarpets, int carpetLen, int[][] dp) {
+        if (numCarpets * carpetLen >= index + 1) {
+            return 0;
+        }
+        if (dp[numCarpets][index] != -1) {
+            return dp[numCarpets][index];
+        }
+
+        // 1. 不覆盖
+        int value = dfs1(floor, index - 1, numCarpets, carpetLen, dp) + (floor[index] - '0');
+        // 2. 覆盖
+        if (numCarpets > 0) {
+            value = Math.min(dfs1(floor, index - carpetLen, numCarpets - 1, carpetLen, dp), value);
+        }
+        return dp[numCarpets][index] = value;
+    }
+
+    public int minimumWhiteTiles(String floor, int numCarpets, int carpetLen) {
+        return dfs(floor.toCharArray(), floor.length() - 1, numCarpets, carpetLen);
+    }
+
+    public int dfs(char[] floor, int index, int numCarpets, int carpetLen) {
+        if (index < 0) {
+            return 0;
+        }
+        // 1. 不覆盖
+        int value = dfs(floor, index - 1, numCarpets, carpetLen) + (floor[index] - '0');
+        // 2. 覆盖
+        if (numCarpets > 0) {
+            value = Math.min(dfs(floor, index - carpetLen, numCarpets - 1, carpetLen), value);
+        }
+        return value;
     }
 
     public int findSpecialInteger(int[] arr) {
