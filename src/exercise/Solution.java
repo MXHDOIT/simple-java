@@ -189,6 +189,30 @@ public class Solution {
         System.out.println(whiteTiles);
     }
 
+    class OrderedStream {
+
+        String[] strings;
+
+        int index = 1;
+
+        public OrderedStream(int n) {
+            strings = new String[n + 1];
+        }
+
+        public List<String> insert(int idKey, String value) {
+            strings[idKey] = value;
+            List<String> result = new ArrayList<>();
+            if (idKey == index){
+                while (idKey < strings.length && strings[idKey] != null) {
+                    result.add(strings[idKey++]);
+                }
+                index = idKey;
+            }
+
+            return result;
+        }
+    }
+
     public int minimumWhiteTiles1(String floor, int numCarpets, int carpetLen) {
         int length = floor.length();
         int[][] dp = new int[numCarpets + 1][length];

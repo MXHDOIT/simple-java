@@ -135,6 +135,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[1656]设计有序流.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[1656]设计有序流.md" />
+              <option name="frontendQuestionId" value="leetcode.cn1656" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[1656]设计有序流.java" />
+              <option name="titleSlug" value="design-an-ordered-stream" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2065]最大化一张图中的路径价值.java">
           <value>
             <LeetcodeEditor>
