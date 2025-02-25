@@ -189,6 +189,46 @@ public class Solution {
         System.out.println(whiteTiles);
     }
 
+    class Allocator {
+
+        int length;
+        int[] arr;
+
+        public Allocator(int n) {
+            length = n;
+            arr = new int[n];
+        }
+
+        public int allocate(int size, int mID) {
+            int count = 0;
+            for (int i = 0; i < length; i++) {
+                if (arr[i] != 0) {
+                    count = 0;
+                } else {
+                    count++;
+                    if (count == size) {
+                        for (int j = i; j >= i - count + 1; j--) {
+                            arr[j] = mID;
+                        }
+                        return i - count + 1;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public int freeMemory(int mID) {
+            int count = 0;
+            for (int i = 0; i < length; i++) {
+                if (arr[i] == mID) {
+                    arr[i] = 0;
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
+
     class OrderedStream {
 
         String[] strings;
@@ -202,7 +242,7 @@ public class Solution {
         public List<String> insert(int idKey, String value) {
             strings[idKey] = value;
             List<String> result = new ArrayList<>();
-            if (idKey == index){
+            if (idKey == index) {
                 while (idKey < strings.length && strings[idKey] != null) {
                     result.add(strings[idKey++]);
                 }
