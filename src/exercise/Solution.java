@@ -185,8 +185,46 @@ public class Solution {
 //        int maxCoins = new Solution().maxCoins(new int[]{2, 4, 1, 2, 7, 8});
 //        System.out.println(maxCoins);
 
-        int whiteTiles = new Solution().minimumWhiteTiles("01111111110111101111001111110111111111101101101111111110111011110111111101101110011110111011001", 72, 1);
-        System.out.println(whiteTiles);
+//        int whiteTiles = new Solution().minimumWhiteTiles("01111111110111101111001111110111111111101101101111111110111011110111111101101110011110111011001", 72, 1);
+//        System.out.println(whiteTiles);
+
+        List<List<String>> partition = new Solution().partition("aab");
+    }
+
+    public List<List<String>> partition(String s) {
+        //x,y x->y是否为回文串
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        for (int i = s.length() - 1; i >= 0; --i) {
+            for (int j = i; j < s.length(); j++) {
+                if (i == j) {
+                    dp[i][j] = true;
+                } else {
+                    if (i + 1 < j - 1) {
+                        dp[i][j] = (s.charAt(i) == s.charAt(j)) & dp[i + 1][j - 1];
+                    } else {
+                        dp[i][j] = s.charAt(i) == s.charAt(j);
+                    }
+                }
+            }
+        }
+        List<List<String>> result = new ArrayList<>();
+        dfs(new ArrayList<>(), result, dp, 0, s);
+        return result;
+    }
+
+    public void dfs(List<String> temp, List<List<String>> result,
+                    boolean[][] dp, int index, String s) {
+        if (index == s.length()) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+        for (int i = index; i < s.length(); i++) {
+            if (dp[index][i]) {
+                temp.add(s.substring(index, i + 1));
+                dfs(temp, result, dp, i + 1, s);
+                temp.remove(temp.size() - 1);
+            }
+        }
     }
 
     class Allocator {
