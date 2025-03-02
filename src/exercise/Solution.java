@@ -191,6 +191,38 @@ public class Solution {
         List<List<String>> partition = new Solution().partition("aab");
     }
 
+    public int minCut(String s) {
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        for (int i = s.length() - 1; i >= 0; --i) {
+            for (int j = i; j < s.length(); j++) {
+                if (i == j) {
+                    dp[i][j] = true;
+                } else {
+                    if (i + 1 < j - 1) {
+                        dp[i][j] = (s.charAt(i) == s.charAt(j)) & dp[i + 1][j - 1];
+                    } else {
+                        dp[i][j] = s.charAt(i) == s.charAt(j);
+                    }
+                }
+            }
+        }
+
+        int[] f = new int[s.length()];
+        Arrays.fill(f, Integer.MAX_VALUE);
+        for (int i = 0; i < s.length(); i++) {
+            if (dp[0][i]) {
+                f[i] = 0;
+            } else {
+                for (int j = 0; j < i; j++) {
+                    if (dp[j + 1][i]) {
+                        f[i] = Math.min(f[i], f[j] + 1);
+                    }
+                }
+            }
+        }
+        return f[s.length() - 1];
+    }
+
     public List<List<String>> partition(String s) {
         //x,y x->y是否为回文串
         boolean[][] dp = new boolean[s.length()][s.length()];
