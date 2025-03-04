@@ -191,6 +191,37 @@ public class Solution {
         List<List<String>> partition = new Solution().partition("aab");
     }
 
+    public int palindromePartition(String s, int k) {
+        int n = s.length();
+        int[][] dp = new int[n][k];
+        // 初始化 dp 数组
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < k; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        // 初始化边界条件
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = getCost(s, 0, i);
+        }
+        // 动态规划过程
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < Math.min(k, i + 1); j++) {
+                for (int l = j; l <= i; l++) {
+                    dp[i][j] = Math.min(dp[i][j], dp[l - 1][j - 1] + getCost(s, l, i));
+                }
+            }
+        }
+        return dp[n - 1][k - 1];
+    }
+
+    public int getCost(String s, int sIndex, int eIndex) {
+        if (sIndex >= eIndex) {
+            return 0;
+        }
+        return s.charAt(sIndex) == s.charAt(eIndex) ? getCost(s, sIndex + 1, eIndex - 1) : getCost(s, sIndex + 1, eIndex - 1) + 1;
+    }
+
     public int minCut(String s) {
         boolean[][] dp = new boolean[s.length()][s.length()];
         for (int i = s.length() - 1; i >= 0; --i) {
