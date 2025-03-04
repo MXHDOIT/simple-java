@@ -188,7 +188,38 @@ public class Solution {
 //        int whiteTiles = new Solution().minimumWhiteTiles("01111111110111101111001111110111111111101101101111111110111011110111111101101110011110111011001", 72, 1);
 //        System.out.println(whiteTiles);
 
-        List<List<String>> partition = new Solution().partition("aab");
+//        List<List<String>> partition = new Solution().partition("aab");
+        boolean bcbddxy = new Solution().checkPartitioning("abcbdd");
+        System.out.println(bcbddxy);
+    }
+
+    public boolean checkPartitioning(String s) {
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (i == j) {
+                    dp[i][j] = true;
+                } else {
+                    if (i + 1 < j - 1) {
+                        dp[i][j] = dp[i + 1][j - 1] && (s.charAt(i) == s.charAt(j));
+                    } else {
+                        dp[i][j] = s.charAt(i) == s.charAt(j);
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (dp[0][i]) {
+                for (int j = i + 1; j < n; j++) {
+                    if (dp[i + 1][j] && j + 1 < n && dp[j + 1][n - 1]) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public int palindromePartition(String s, int k) {
