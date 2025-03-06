@@ -189,8 +189,29 @@ public class Solution {
 //        System.out.println(whiteTiles);
 
 //        List<List<String>> partition = new Solution().partition("aab");
-        boolean bcbddxy = new Solution().checkPartitioning("abcbdd");
-        System.out.println(bcbddxy);
+//        boolean bcbddxy = new Solution().checkPartitioning("abcbdd");
+//        System.out.println(bcbddxy);
+
+        Solution solution = new Solution();
+        long subarrays = solution.beautifulSubarrays(new int[]{4, 3, 1, 2, 4});
+        System.out.println(subarrays);
+    }
+
+    /**
+     * a1 ^ a2 == a1 ^ a2 ^ a3 ^ a4   ===> a3 , a4 美丽子数组
+     * a1 ^ a2 == a1 ^ a2 ^ a3 ^ a4 == a1 ^ a2 ^ a3 ^ a4 ^ a5  ==> a3 , a4 ; a3 , a4 , a5 ; a5 美丽子数组
+     */
+    public long beautifulSubarrays(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int current = 0;
+        long count = 0;
+        map.put(0, 1);
+        for (int num : nums) {
+            current ^= num;
+            count += map.getOrDefault(current, 0);
+            map.put(current, map.getOrDefault(current, 0) + 1);
+        }
+        return count;
     }
 
     public String breakPalindrome(String palindrome) {
@@ -205,7 +226,7 @@ public class Solution {
                 return new String(chars);
             }
         }
-        chars[n-1] = 'b';
+        chars[n - 1] = 'b';
         return new String(chars);
     }
 
