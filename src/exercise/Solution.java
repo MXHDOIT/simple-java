@@ -191,6 +191,34 @@ public class Solution {
 //        List<List<String>> partition = new Solution().partition("aab");
         boolean bcbddxy = new Solution().checkPartitioning("abcbdd");
         System.out.println(bcbddxy);
+        int[] ints = new Solution().maximumBeauty(new int[][]{{1, 2}, {3, 2}, {2, 4}, {5, 6}, {3, 5}}, new int[]{1, 2, 3, 4, 5, 6});
+
+    }
+
+    public int[] maximumBeauty(int[][] items, int[] queries) {
+        //数组排序
+        Arrays.sort(items, (a, b) -> Integer.compare(a[0], b[0]));
+        for (int i = 1; i < items.length; i++) {
+            items[i][1] = Math.max(items[i][1], items[i - 1][1]);
+        }
+        int[] result = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int query = queries[i];
+            int begin = 0;
+            int end = items.length - 1;
+            while (begin < end) {
+                int mid = begin + 1 + (end - begin) / 2;
+                if (items[mid][0] > query) {
+                    end = mid - 1;
+                } else {
+                    begin = mid;
+                }
+            }
+            if (items[begin][0] <= query) {
+                result[i] = items[begin][1];
+            }
+        }
+        return result;
     }
 
     public boolean checkPartitioning(String s) {
