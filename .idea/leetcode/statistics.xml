@@ -7,10 +7,17 @@
           <value>
             <Statistics>
               <option name="easy" value="88" />
+<<<<<<< HEAD
               <option name="hard" value="26" />
               <option name="medium" value="121" />
               <option name="questionTotal" value="3894" />
               <option name="solvedTotal" value="235" />
+=======
+              <option name="hard" value="25" />
+              <option name="medium" value="120" />
+              <option name="questionTotal" value="3894" />
+              <option name="solvedTotal" value="233" />
+>>>>>>> 41d34395a286b52d1af6bdc2234a53893d272297
             </Statistics>
           </value>
         </entry>

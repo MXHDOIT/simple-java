@@ -221,6 +221,39 @@ public class Solution {
         return result;
     }
 
+    /**
+     * a1 ^ a2 == a1 ^ a2 ^ a3 ^ a4   ===> a3 , a4 美丽子数组
+     * a1 ^ a2 == a1 ^ a2 ^ a3 ^ a4 == a1 ^ a2 ^ a3 ^ a4 ^ a5  ==> a3 , a4 ; a3 , a4 , a5 ; a5 美丽子数组
+     */
+    public long beautifulSubarrays(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int current = 0;
+        long count = 0;
+        map.put(0, 1);
+        for (int num : nums) {
+            current ^= num;
+            count += map.getOrDefault(current, 0);
+            map.put(current, map.getOrDefault(current, 0) + 1);
+        }
+        return count;
+    }
+
+    public String breakPalindrome(String palindrome) {
+        int n = palindrome.length();
+        if (n < 2) {
+            return "";
+        }
+        char[] chars = palindrome.toCharArray();
+        for (int i = 0; i < n / 2; i++) {
+            if (chars[i] != 'a') {
+                chars[i] = 'a';
+                return new String(chars);
+            }
+        }
+        chars[n - 1] = 'b';
+        return new String(chars);
+    }
+
     public boolean checkPartitioning(String s) {
         int n = s.length();
         boolean[][] dp = new boolean[n][n];

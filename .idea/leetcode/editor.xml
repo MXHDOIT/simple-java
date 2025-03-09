@@ -124,6 +124,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[1328]破坏回文串.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[1328]破坏回文串.md" />
+              <option name="frontendQuestionId" value="leetcode.cn1328" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[1328]破坏回文串.java" />
+              <option name="titleSlug" value="break-a-palindrome" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[1367]二叉树中的链表.java">
           <value>
             <LeetcodeEditor>
@@ -231,6 +242,17 @@
               <option name="host" value="leetcode.cn" />
               <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[2551]将珠子放入背包中.java" />
               <option name="titleSlug" value="put-marbles-in-bags" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2588]统计美丽子数组数目.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[2588]统计美丽子数组数目.md" />
+              <option name="frontendQuestionId" value="leetcode.cn2588" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[2588]统计美丽子数组数目.java" />
+              <option name="titleSlug" value="count-the-number-of-beautiful-subarrays" />
             </LeetcodeEditor>
           </value>
         </entry>
