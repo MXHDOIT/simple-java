@@ -195,6 +195,22 @@ public class Solution {
 
     }
 
+    public int divisorSubstrings(int num, int k) {
+        int count = 0;
+        char[] chars = String.valueOf(num).toCharArray();
+        int length = chars.length;
+        for (int i = 0; i <= length - k; i++) {
+            int sum = 0;
+            for (int j = i; j < i + k; j++) {
+                sum = sum * 10 + (int) (chars[j] - '0');
+            }
+            if (sum != 0 && num % sum ==0 ){
+                count++;
+            }
+        }
+        return count;
+    }
+
     public int[] maximumBeauty(int[][] items, int[] queries) {
         //数组排序
         Arrays.sort(items, (a, b) -> Integer.compare(a[0], b[0]));
