@@ -195,6 +195,61 @@ public class Solution {
 
     }
 
+    public int sumOfBeauties(int[] nums) {
+        int length = nums.length;
+        int[] state = new int[length];
+        int preMax = nums[0];
+
+        for (int i = 1; i < length - 1; i++) {
+            if (nums[i] > preMax) {
+                state[i] = 1;
+                preMax = nums[i];
+            }
+        }
+        int sum = 0;
+        int lastMin = nums[length - 1];
+        for (int i = length - 2; i > 0; i--) {
+            if (state[i] == 1 && nums[i] < lastMin) {
+                sum += 2;
+            } else if (nums[i - 1] < nums[i] && nums[i] < nums[i + 1]) {
+                sum += 1;
+            }
+            lastMin = Math.min(lastMin,nums[i]);
+        }
+
+        return sum;
+    }
+
+    public int sumOfBeauties1(int[] nums) {
+        int length = nums.length;
+
+        int sum = 0;
+        for (int i = 1; i < length - 1; i++) {
+            if (isBeauties(nums, i)) {
+                sum += 2;
+            } else if (nums[i - 1] < nums[i] && nums[i] < nums[i + 1]) {
+                sum += 1;
+            }
+        }
+        return sum;
+    }
+
+    public boolean isBeauties(int[] nums, int index) {
+        int length = nums.length;
+        int num = nums[index];
+        for (int i = 0; i <= index - 1; i++) {
+            if (nums[i] >= num) {
+                return false;
+            }
+        }
+        for (int i = index + 1; i < length; i++) {
+            if (nums[i] <= num) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int divisorSubstrings(int num, int k) {
         int count = 0;
         char[] chars = String.valueOf(num).toCharArray();
@@ -204,7 +259,7 @@ public class Solution {
             for (int j = i; j < i + k; j++) {
                 sum = sum * 10 + (int) (chars[j] - '0');
             }
-            if (sum != 0 && num % sum ==0 ){
+            if (sum != 0 && num % sum == 0) {
                 count++;
             }
         }

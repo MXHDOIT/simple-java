@@ -179,6 +179,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2012]数组美丽值求和.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[2012]数组美丽值求和.md" />
+              <option name="frontendQuestionId" value="leetcode.cn2012" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[2012]数组美丽值求和.java" />
+              <option name="titleSlug" value="sum-of-beauty-in-the-array" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2065]最大化一张图中的路径价值.java">
           <value>
             <LeetcodeEditor>
