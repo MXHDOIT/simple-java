@@ -498,6 +498,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[3305]元音辅音字符串计数 I.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[3305]元音辅音字符串计数 I.md" />
+              <option name="frontendQuestionId" value="leetcode.cn3305" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[3305]元音辅音字符串计数 I.java" />
+              <option name="titleSlug" value="count-of-substrings-containing-every-vowel-and-k-consonants-i" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[37]解数独.java">
           <value>
             <LeetcodeEditor>

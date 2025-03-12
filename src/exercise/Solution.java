@@ -1,5 +1,7 @@
 package exercise;
 
+import javafx.util.Pair;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -189,10 +191,61 @@ public class Solution {
 //        System.out.println(whiteTiles);
 
 //        List<List<String>> partition = new Solution().partition("aab");
-        boolean bcbddxy = new Solution().checkPartitioning("abcbdd");
-        System.out.println(bcbddxy);
-        int[] ints = new Solution().maximumBeauty(new int[][]{{1, 2}, {3, 2}, {2, 4}, {5, 6}, {3, 5}}, new int[]{1, 2, 3, 4, 5, 6});
+//        boolean bcbddxy = new Solution().checkPartitioning("abcbdd");
+//        System.out.println(bcbddxy);
+//        int[] ints = new Solution().maximumBeauty(new int[][]{{1, 2}, {3, 2}, {2, 4}, {5, 6}, {3, 5}}, new int[]{1, 2, 3, 4, 5, 6});
 
+        int count = new Solution().countOfSubstrings("aeioqq", 1);
+    }
+
+    public int countOfSubstrings(String word, int k) {
+        int minLength = k + 5;
+        int length = word.length();
+        int result = 0;
+        for (int i = 0; i <= length - minLength; i++) {
+            for (int j = i + minLength; j <= length; j++) {
+                String substring = word.substring(i, j);
+                Pair<Boolean, Integer> pair = getPair(substring);
+                Boolean key = pair.getKey();
+                if (!key) {
+                    continue;
+                }
+                Integer value = pair.getValue();
+                if (value == k) {
+                    result++;
+                }
+                if (value > k) {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    public Pair<Boolean, Integer> getPair(String substring) {
+        boolean a = false;
+        boolean e = false;
+        boolean i = false;
+        boolean o = false;
+        boolean u = false;
+        int fuSize = 0;
+        for (int j = 0; j < substring.length(); j++) {
+            char charAt = substring.charAt(j);
+            if (charAt == 'a') {
+                a = true;
+            } else if (charAt == 'e') {
+                e = true;
+            } else if (charAt == 'i') {
+                i = true;
+            } else if (charAt == 'o') {
+                o = true;
+            } else if (charAt == 'u') {
+                u = true;
+            } else {
+                fuSize++;
+            }
+        }
+        return new Pair<>(a & e & i & o & u, fuSize);
     }
 
     public int sumOfBeauties(int[] nums) {
@@ -214,7 +267,7 @@ public class Solution {
             } else if (nums[i - 1] < nums[i] && nums[i] < nums[i + 1]) {
                 sum += 1;
             }
-            lastMin = Math.min(lastMin,nums[i]);
+            lastMin = Math.min(lastMin, nums[i]);
         }
 
         return sum;
