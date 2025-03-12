@@ -195,10 +195,51 @@ public class Solution {
 //        System.out.println(bcbddxy);
 //        int[] ints = new Solution().maximumBeauty(new int[][]{{1, 2}, {3, 2}, {2, 4}, {5, 6}, {3, 5}}, new int[]{1, 2, 3, 4, 5, 6});
 
-        int count = new Solution().countOfSubstrings("aeioqq", 1);
+        int count = new Solution().countOfSubstrings("ieaouqqieaouqq", 1);
+        System.out.println(count);
     }
 
     public int countOfSubstrings(String word, int k) {
+        return f(word, k) - f(word, k + 1);
+    }
+
+    private int f(String word, int k) {
+        Set<Character> set = new HashSet<>();
+        set.add('a');
+        set.add('o');
+        set.add('i');
+        set.add('e');
+        set.add('u');
+        int length = word.length();
+        int left = 0;
+        int fu = 0;
+        int result = 0;
+        Map<Character, Integer> yuanMap = new HashMap<>();
+        for (char ch : word.toCharArray()) {
+            if (set.contains(ch)) {
+                yuanMap.merge(ch, 1, Integer::sum);
+            } else {
+                fu++;
+            }
+            while (yuanMap.size() == 5 && fu >= k) {
+                char charAt = word.charAt(left++);
+                if (set.contains(charAt)){
+                    if (yuanMap.merge(charAt,-1,Integer::sum) == 0) {
+                        yuanMap.remove(charAt);
+                    }
+                }else{
+                    fu--;
+                }
+            }
+
+            result += left;
+        }
+
+        return result;
+    }
+
+
+    public int countOfSubstrings1(String word, int k) {
         int minLength = k + 5;
         int length = word.length();
         int result = 0;
