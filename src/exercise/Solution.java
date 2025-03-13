@@ -199,6 +199,45 @@ public class Solution {
         System.out.println(count);
     }
 
+    public long countOfSubstrings2(String word, int k) {
+        return f2(word, k) - f2(word, k + 1);
+    }
+
+    private long f2(String word, int k) {
+        Set<Character> characterSet = new HashSet<>();
+        characterSet.add('a');
+        characterSet.add('e');
+        characterSet.add('i');
+        characterSet.add('o');
+        characterSet.add('u');
+        int length = word.length();
+        int left = 0;
+        int x = 0;
+        int result = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+            char charAt = word.charAt(i);
+            if (characterSet.contains(charAt)) {
+                map.merge(charAt, 1, Integer::sum);
+            } else {
+                x++;
+            }
+
+            while (x >= k && map.size() == 5) {
+                char c = word.charAt(left++);
+                if (characterSet.contains(c)) {
+                    if (map.merge(c, -1, Integer::sum) == 0) {
+                        map.remove(c);
+                    }
+                } else {
+                    x--;
+                }
+            }
+            result += left;
+        }
+        return result;
+    }
+
     public int countOfSubstrings(String word, int k) {
         return f(word, k) - f(word, k + 1);
     }
@@ -223,11 +262,11 @@ public class Solution {
             }
             while (yuanMap.size() == 5 && fu >= k) {
                 char charAt = word.charAt(left++);
-                if (set.contains(charAt)){
-                    if (yuanMap.merge(charAt,-1,Integer::sum) == 0) {
+                if (set.contains(charAt)) {
+                    if (yuanMap.merge(charAt, -1, Integer::sum) == 0) {
                         yuanMap.remove(charAt);
                     }
-                }else{
+                } else {
                     fu--;
                 }
             }
