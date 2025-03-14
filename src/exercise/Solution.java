@@ -195,8 +195,23 @@ public class Solution {
 //        System.out.println(bcbddxy);
 //        int[] ints = new Solution().maximumBeauty(new int[][]{{1, 2}, {3, 2}, {2, 4}, {5, 6}, {3, 5}}, new int[]{1, 2, 3, 4, 5, 6});
 
-        int count = new Solution().countOfSubstrings("ieaouqqieaouqq", 1);
-        System.out.println(count);
+//        int count = new Solution().countOfSubstrings("ieaouqqieaouqq", 1);
+//        System.out.println(count);
+
+        boolean balanced = new Solution().isBalanced("24123");
+        System.out.println(balanced);
+    }
+
+    public boolean isBalanced(String num) {
+        int sum = 0;
+        for (int i = 0; i < num.length(); i++) {
+            if (i % 2 == 0) {
+                sum += (int) (num.charAt(i) - '0');
+            } else {
+                sum -= (int) (num.charAt(i) - '0');
+            }
+        }
+        return sum == 0;
     }
 
     public long countOfSubstrings2(String word, int k) {
