@@ -202,6 +202,16 @@ public class Solution {
         System.out.println(balanced);
     }
 
+    public int scoreOfString(String s) {
+        int result = 0;
+        for (int i = 0; i < s.length() - 1; i++) {
+            char chA = s.charAt(i);
+            char chB = s.charAt(i + 1);
+            result += Math.abs((int)chA-chB);
+        }
+        return result;
+    }
+
     public boolean isBalanced(String num) {
         int sum = 0;
         for (int i = 0; i < num.length(); i++) {
