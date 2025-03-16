@@ -198,8 +198,37 @@ public class Solution {
 //        int count = new Solution().countOfSubstrings("ieaouqqieaouqq", 1);
 //        System.out.println(count);
 
-        boolean balanced = new Solution().isBalanced("24123");
-        System.out.println(balanced);
+//        boolean balanced = new Solution().isBalanced("24123");
+//        System.out.println(balanced);
+
+        int aababbb = new Solution().largestVariance("aaaaa");
+        System.out.println(aababbb);
+    }
+
+    public int largestVariance(String s) {
+        int result = Integer.MIN_VALUE;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i; j < s.length(); j++) {
+                String substring = s.substring(i, j + 1);
+                result = Math.max(result, f(substring));
+            }
+        }
+        return result;
+    }
+
+    public int f(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for (char c : s.toCharArray()) {
+            Integer size = map.getOrDefault(c, 0);
+            map.put(c, size + 1);
+        }
+        for (Integer value : map.values()) {
+            max = Math.max(value, max);
+            min = Math.min(value, min);
+        }
+        return max - min;
     }
 
     public int scoreOfString(String s) {
@@ -207,7 +236,7 @@ public class Solution {
         for (int i = 0; i < s.length() - 1; i++) {
             char chA = s.charAt(i);
             char chB = s.charAt(i + 1);
-            result += Math.abs((int)chA-chB);
+            result += Math.abs((int) chA - chB);
         }
         return result;
     }
