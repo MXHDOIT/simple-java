@@ -205,6 +205,30 @@ public class Solution {
         System.out.println(aababbb);
     }
 
+    public int minSwaps(String s) {
+        char[] charArray = s.toCharArray();
+        int result = 0;
+        int count = 0;
+        int j = charArray.length - 1;
+        for (char c : charArray) {
+            if (c == '[') {
+                count++;
+            } else {
+                if (count > 0) {
+                    count--;
+                } else {
+                    while (charArray[j] == ']') {
+                        j--;
+                    }
+                    charArray[j] = ']';
+                    count++;
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
     public int largestVariance(String s) {
         int result = Integer.MIN_VALUE;
         for (int i = 0; i < s.length(); i++) {
