@@ -205,6 +205,34 @@ public class Solution {
         System.out.println(aababbb);
     }
 
+    public int diagonalPrime(int[][] nums) {
+        int n = nums.length;
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            if (isPrime(nums[i][i])) {
+                res = Math.max(res, nums[i][i]);
+            }
+            if (isPrime(nums[i][n - i - 1])) {
+                res = Math.max(res, nums[i][n - i - 1]);
+            }
+        }
+        return res;
+    }
+
+    public boolean isPrime(int num) {
+        if (num == 1) {
+            return true;
+        }
+        int factor = 2;
+        while (factor * factor <= num) {
+            if (num % factor == 0) {
+                return true;
+            }
+            factor++;
+        }
+        return false;
+    }
+
     public int minSwaps(String s) {
         char[] charArray = s.toCharArray();
         int result = 0;
