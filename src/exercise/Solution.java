@@ -205,6 +205,29 @@ public class Solution {
         System.out.println(aababbb);
     }
 
+    public List<List<Integer>> findMatrix(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            Integer size = map.getOrDefault(num, 0);
+            map.put(num, size + 1);
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        while (true) {
+            List<Integer> temp = new ArrayList<>();
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                if (entry.getValue() > 0) {
+                    temp.add(entry.getKey());
+                    entry.setValue(entry.getValue()-1);
+                }
+            }
+            if (temp.size() == 0){
+                break;
+            }
+            result.add(temp);
+        }
+        return result;
+    }
+
     public int diagonalPrime(int[][] nums) {
         int n = nums.length;
         int res = 0;

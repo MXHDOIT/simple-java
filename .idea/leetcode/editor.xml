@@ -278,6 +278,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2610]转换二维数组.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[2610]转换二维数组.md" />
+              <option name="frontendQuestionId" value="leetcode.cn2610" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[2610]转换二维数组.java" />
+              <option name="titleSlug" value="convert-an-array-into-a-2d-array-with-conditions" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2614]对角线上的质数.java">
           <value>
             <LeetcodeEditor>
