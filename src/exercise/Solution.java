@@ -205,6 +205,21 @@ public class Solution {
         System.out.println(aababbb);
     }
 
+    public int[] rowAndMaximumOnes(int[][] mat) {
+        int max = 0;
+        int index = -1;
+        for (int i = 0; i < mat.length; i++) {
+            int count = 0;
+            for (int j = 0; j < mat[i].length; j++) {
+                count += mat[i][j];
+            }
+            if (count > max) {
+                index = i;
+            }
+        }
+        return new int[]{index,max};
+    }
+
     public List<List<Integer>> findMatrix(int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
