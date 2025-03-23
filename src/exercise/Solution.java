@@ -205,6 +205,37 @@ public class Solution {
         System.out.println(aababbb);
     }
 
+    public boolean canBeValid(String s, String locked) {
+        char[] charArray = s.toCharArray();
+        char[] lockArray = locked.toCharArray();
+        int min = 0;
+        int max = 0;
+
+        for (int i = 0; i < charArray.length; i++) {
+            char ch = charArray[i];
+            int lock = lockArray[i] - '0';
+            if (lock == 1) {
+                if (ch == '(') {
+                    min++;
+                    max++;
+                } else {
+                    min--;
+                    max--;
+                }
+                if (max < 0) {
+                    return false;
+                }
+            } else {
+                max++;
+                min--;
+            }
+            if (min < 0) {
+                min=1;
+            }
+        }
+        return min == 0;
+    }
+
     public int[] rowAndMaximumOnes(int[][] mat) {
         int max = 0;
         int index = -1;
@@ -217,7 +248,7 @@ public class Solution {
                 index = i;
             }
         }
-        return new int[]{index,max};
+        return new int[]{index, max};
     }
 
     public List<List<Integer>> findMatrix(int[] nums) {
@@ -232,10 +263,10 @@ public class Solution {
             for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
                 if (entry.getValue() > 0) {
                     temp.add(entry.getKey());
-                    entry.setValue(entry.getValue()-1);
+                    entry.setValue(entry.getValue() - 1);
                 }
             }
-            if (temp.size() == 0){
+            if (temp.size() == 0) {
                 break;
             }
             result.add(temp);
