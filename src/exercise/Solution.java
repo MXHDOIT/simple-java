@@ -205,6 +205,37 @@ public class Solution {
         System.out.println(aababbb);
     }
 
+    public long maximumOr(int[] nums, int k) {
+        long fix = 0;
+        long allOr = 0;
+        for (int num : nums) {
+            fix |= allOr & num;
+            allOr |= num;
+        }
+
+        long max = 0;
+        for (int num : nums) {
+            max = Math.max(max,allOr^num | fix | ((long) num << k));
+        }
+        return max;
+    }
+
+    public long maximumOr1(int[] nums, int k) {
+        int n = nums.length;
+        int[] suf = new int[n];
+        for (int i = n - 2; i >= 0; i--) {
+            suf[i] = suf[i + 1] | nums[i + 1];
+        }
+
+        int max = 0;
+        int pre = 0;
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max, (suf[i] | pre | nums[i] << k));
+            pre |= nums[i];
+        }
+        return max;
+    }
+
     public boolean canBeValid(String s, String locked) {
         char[] charArray = s.toCharArray();
         char[] lockArray = locked.toCharArray();
