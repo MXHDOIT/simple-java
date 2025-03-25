@@ -205,6 +205,34 @@ public class Solution {
         System.out.println(aababbb);
     }
 
+    public int[][] differenceOfDistinctValues1(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int[][] result = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                Set<Integer> leftTop = new HashSet<>();
+                int x = i - 1;
+                int y = j - 1;
+                while (x >= 0 && y >= 0) {
+                    leftTop.add(grid[x][y]);
+                    x--;
+                    y--;
+                }
+                Set<Integer> rightBottom = new HashSet<>();
+                x = i + 1;
+                y = j + 1;
+                while (x < n && y < m) {
+                    rightBottom.add(grid[x][y]);
+                    x++;
+                    y++;
+                }
+                result[i][j] = Math.abs(leftTop.size() - rightBottom.size());
+            }
+        }
+        return result;
+    }
+
     public long maximumOr(int[] nums, int k) {
         long fix = 0;
         long allOr = 0;
@@ -215,7 +243,7 @@ public class Solution {
 
         long max = 0;
         for (int num : nums) {
-            max = Math.max(max,allOr^num | fix | ((long) num << k));
+            max = Math.max(max, allOr ^ num | fix | ((long) num << k));
         }
         return max;
     }
@@ -261,7 +289,7 @@ public class Solution {
                 min--;
             }
             if (min < 0) {
-                min=1;
+                min = 1;
             }
         }
         return min == 0;
