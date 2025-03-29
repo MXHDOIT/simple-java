@@ -201,8 +201,56 @@ public class Solution {
 //        boolean balanced = new Solution().isBalanced("24123");
 //        System.out.println(balanced);
 
-        int aababbb = new Solution().largestVariance("aaaaa");
-        System.out.println(aababbb);
+//        int aababbb = new Solution().largestVariance("aaaaa");
+//        System.out.println(aababbb);
+
+        int longestCycle = new Solution().longestCycle(new int[]{7, -1, 5, 14, 9, 3, -1, 4, 2, 15, 12, 9, 2, -1, 17, 10, 15, 7});
+        System.out.println(longestCycle);
+    }
+
+    public int longestCycleOptimized(int[] edges) {
+        int max = -1;
+        int n = edges.length;
+        int[] visitedTimes = new int[n]; //首次访问的时间
+        int currentTime = 1;
+        for (int i = 0; i < edges.length; i++) {
+            int x = i;
+            int startTime = currentTime;
+            while (x != -1 && visitedTimes[x] == 0) {
+                visitedTimes[x] = currentTime++;
+                x = edges[x];
+            }
+            if (x != -1 && visitedTimes[x] >= startTime) {
+                max = Math.max(max, currentTime - visitedTimes[x]);
+            }
+        }
+        return max;
+    }
+
+    public int longestCycle(int[] edges) {
+        int max = -1;
+        Set<Integer> visited = new HashSet<>();
+        for (int i = 0; i < edges.length; i++) {
+            if (visited.contains(i)) {
+                continue;
+            } else {
+                List<Integer> list = new ArrayList<>();
+                list.add(i);
+                int node = edges[i];
+                while (node != -1 && !visited.contains(node)) {
+                    int newNode = edges[node];
+                    if (list.contains(newNode)) {
+                        int index = list.indexOf(newNode);
+                        max = Math.max(list.size() - index + 1, max);
+                        break;
+                    }
+                    list.add(node);
+                    node = newNode;
+                }
+                visited.addAll(list);
+            }
+        }
+        return max;
     }
 
     public int[][] differenceOfDistinctValues1(int[][] grid) {
