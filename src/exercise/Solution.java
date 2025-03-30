@@ -208,6 +208,20 @@ public class Solution {
         System.out.println(longestCycle);
     }
 
+    public String addSpaces(String s, int[] spaces) {
+        Arrays.sort(spaces);
+        int n = spaces.length;
+        int j = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (j < n && spaces[j] == i) {
+                sb.append(" ");
+            }
+            sb.append(s.charAt(i));
+        }
+        return sb.toString();
+    }
+
     public int longestCycleOptimized(int[] edges) {
         int max = -1;
         int n = edges.length;
