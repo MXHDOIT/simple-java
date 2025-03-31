@@ -208,6 +208,18 @@ public class Solution {
         System.out.println(longestCycle);
     }
 
+
+    public int percentageLetter(String s, char letter) {
+        int count = 0;
+        char[] chArray = s.toCharArray();
+        for (char c : chArray) {
+            if (c == letter) {
+                count++;
+            }
+        }
+        return count*100 / s.length();
+    }
+
     public String addSpaces(String s, int[] spaces) {
         Arrays.sort(spaces);
         int n = spaces.length;
