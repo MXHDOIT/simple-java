@@ -1,0 +1,56 @@
+> Problem: [2711. 对角线上不同值的数量差](https://leetcode.cn/problems/difference-of-number-of-distinct-values-on-diagonals/description/)
+
+[TOC]
+
+# 思路
+
+> 讲述看到这一题的思路
+
+# 解题方法
+
+> 描述你的解题方法
+
+# 复杂度
+
+时间复杂度:
+
+> 添加时间复杂度, 示例： $O(n)$
+
+空间复杂度:
+
+> 添加空间复杂度, 示例： $O(n)$
+
+# Code
+
+* []
+
+```C++
+class Solution {
+public:
+    void count_diff(vector<vector<int>> &grid,int start,int end)
+    {
+        int m=grid.size(),n=grid[0].size();
+        for(int i=start;i<end;i++)
+        {
+            unordered_map<int,int> psum;
+            unordered_map<int,int> sum;
+            for(int r=start?i:0,c=start?0:i;r<m&&c<n;r++,c++) sum[grid[r][c]]++;
+            for(int r=start?i:0,c=start?0:i;r<m&&c<n;r++,c++)
+            {
+                int num=grid[r][c];
+                if(--sum[num]==0) sum.erase(num);
+                int diff=sum.size()-psum.size();
+                grid[r][c]=abs(diff);
+                psum[num]++;
+            }
+        }
+    }
+    vector<vector<int>> differenceOfDistinctValues(vector<vector<int>>& grid) {
+        int m=grid.size(),n=grid[0].size();
+        count_diff(grid,0,n);//第一行
+        count_diff(grid,1,m);//第一列
+        return grid;
+    }
+};
+```
+

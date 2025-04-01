@@ -212,6 +212,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2140]解决智力问题.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[2140]解决智力问题.md" />
+              <option name="frontendQuestionId" value="leetcode.cn2140" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[2140]解决智力问题.java" />
+              <option name="titleSlug" value="solving-questions-with-brainpower" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2209]用地毯覆盖后的最少白色砖块.java">
           <value>
             <LeetcodeEditor>

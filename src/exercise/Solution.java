@@ -209,6 +209,41 @@ public class Solution {
     }
 
 
+    public long mostPointsOptimized(int[][] questions) {
+        int n = questions.length;
+        long[] dp = new long[n];
+        for (int i = n - 1; i >= 0; i--) {
+            //选择
+            int[] question = questions[i];
+            int value = question[0];
+            int skipValue = question[1];
+
+            long select = value;
+            if (i + skipValue + 1 < n) {
+                select = value + dp[i + skipValue + 1];
+            }
+            //不选择
+            long notSelect = 0;
+            if (i + 1 < n) {
+                notSelect = dp[i + 1];
+            }
+            dp[i] = Math.max(select,notSelect);
+        }
+        return dp[0];
+    }
+
+    public long mostPoints(int[][] questions) {
+        return mostPoints(questions,0,0);
+    }
+    public long mostPoints(int[][] questions, int index, int result) {
+        if (index >= questions.length) {
+            return result;
+        }
+        long skipNum = mostPoints(questions, index + 1, result);
+        long notSkipNum = mostPoints(questions, index + questions[index][1] + 1, result + questions[index][0]);
+        return Math.max(skipNum, notSkipNum);
+    }
+
     public int percentageLetter(String s, char letter) {
         int count = 0;
         char[] chArray = s.toCharArray();
@@ -217,7 +252,7 @@ public class Solution {
                 count++;
             }
         }
-        return count*100 / s.length();
+        return count * 100 / s.length();
     }
 
     public String addSpaces(String s, int[] spaces) {

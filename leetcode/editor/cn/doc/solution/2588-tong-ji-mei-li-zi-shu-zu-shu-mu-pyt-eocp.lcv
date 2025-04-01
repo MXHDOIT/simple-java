@@ -1,0 +1,32 @@
+> Problem: [2588. 统计美丽子数组数目](https://leetcode.cn/problems/count-the-number-of-beautiful-subarrays/description/)
+
+[TOC]
+
+# 思路
+
+**第一步，求出前缀异或的lst**
+
+按前缀和的思维，建立前缀异或数组，计算nums前i个元素的累计异或值。这里可以手动对nums一次遍历求前缀异或`lst[i] = lst[i - 1] ^ nums[i - 1]`，也可以借助accumulate()函数实现。											
+![image.png](https://pic.leetcode.cn/1678842430-vndteo-image.png)
+
+**第二步，对计算得到的前缀异或数组lst计数，相同数进行计算，返回累计值。**
+
+继续用第一步的示例推导如下，一眼就能看懂：
+
+![image.png](https://pic.leetcode.cn/1678842712-bUuOqt-image.png)
+
+# Code
+
+按上述思路，用python可精练至一行代码实现，简洁清晰。
+
+时间132 ms击败100%；内存36.5 MB击败59.97%
+
+* []
+
+```Python
+class Solution:
+    def beautifulSubarrays(self, nums: List[int]) -> int:
+        return sum(v * (v - 1) >> 1 for v in Counter(accumulate(nums, xor, initial = 0)).values())
+```
+
+**↓ 是否觉得有帮助？ 欢迎点赞、评论、收藏！ ^_^**
