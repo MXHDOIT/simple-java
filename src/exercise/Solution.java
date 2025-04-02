@@ -208,6 +208,45 @@ public class Solution {
         System.out.println(longestCycle);
     }
 
+    public long maximumTripletValueK(int[] nums) {
+        long maxPrefix = 0;
+        long maxDiff = 0;
+        long max = 0;
+        for (int x : nums) {
+            max = Math.max(max, maxDiff * x);
+            maxDiff = Math.max(maxDiff, maxPrefix - x);
+            maxPrefix = Math.max(maxPrefix, x);
+        }
+        return max;
+    }
+
+    public long maximumTripletValuePrefix(int[] nums) {
+        int n = nums.length;
+        int[] suffix = new int[n];
+        for (int i = n - 2; i >= 0; i--) {
+            suffix[i] = Math.max(suffix[i + 1], nums[i + 1]);
+        }
+        int prefix = 0;
+        long max = 0;
+        for (int i = 1; i < n - 1; i++) {
+            prefix = Math.max(prefix, nums[i - 1]);
+            max = Math.max(max, (long) (prefix - nums[i]) * suffix[i]);
+        }
+        return max;
+    }
+
+    public long maximumTripletValue(int[] nums) {
+        int n = nums.length;
+        long max = 0;
+        for (int i = 0; i < n - 2; i++) {
+            for (int j = i + 1; j < n - 1; j++) {
+                for (int k = j + 1; k < n; k++) {
+                    max = Math.max(max, (long) (nums[i] - nums[j]) * nums[k]);
+                }
+            }
+        }
+        return max;
+    }
 
     public long mostPointsOptimized(int[][] questions) {
         int n = questions.length;
@@ -227,14 +266,15 @@ public class Solution {
             if (i + 1 < n) {
                 notSelect = dp[i + 1];
             }
-            dp[i] = Math.max(select,notSelect);
+            dp[i] = Math.max(select, notSelect);
         }
         return dp[0];
     }
 
     public long mostPoints(int[][] questions) {
-        return mostPoints(questions,0,0);
+        return mostPoints(questions, 0, 0);
     }
+
     public long mostPoints(int[][] questions, int index, int result) {
         if (index >= questions.length) {
             return result;
