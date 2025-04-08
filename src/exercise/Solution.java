@@ -208,6 +208,20 @@ public class Solution {
         System.out.println(longestCycle);
     }
 
+    public int minimumOperations(int[] nums) {
+        int n = nums.length;
+        Set<Integer> numSet = new HashSet<>();
+        for (int i = n - 1; i >= 0; i--) {
+            if (numSet.contains(nums[i])) {
+                int i1 = (i + 1) / 3;
+                return (i + 1) % 3 == 0 ? i1 : i1 + 1;
+            } else {
+                numSet.add(nums[i]);
+            }
+        }
+        return 0;
+    }
+
     public long maximumTripletValueK(int[] nums) {
         long maxPrefix = 0;
         long maxDiff = 0;
