@@ -208,6 +208,19 @@ public class Solution {
         System.out.println(longestCycle);
     }
 
+    public int minOperations(int[] nums, int k) {
+        Set<Integer> set = new HashSet<>();
+        int min = Integer.MAX_VALUE;
+        for (int num : nums) {
+            if (num < k) {
+                return -1;
+            }
+            min = Math.min(min, num);
+            set.add(num);
+        }
+        return min == k ? set.size() - 1 : set.size();
+    }
+
     public int minimumOperations(int[] nums) {
         int n = nums.length;
         Set<Integer> numSet = new HashSet<>();
