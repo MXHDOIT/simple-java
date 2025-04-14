@@ -204,8 +204,29 @@ public class Solution {
 //        int aababbb = new Solution().largestVariance("aaaaa");
 //        System.out.println(aababbb);
 
-        int longestCycle = new Solution().longestCycle(new int[]{7, -1, 5, 14, 9, 3, -1, 4, 2, 15, 12, 9, 2, -1, 17, 10, 15, 7});
-        System.out.println(longestCycle);
+//        int longestCycle = new Solution().longestCycle(new int[]{7, -1, 5, 14, 9, 3, -1, 4, 2, 15, 12, 9, 2, -1, 17, 10, 15, 7});
+//        System.out.println(longestCycle);
+        int i = new Solution().countGoodTriplets(new int[]{1, 1, 2, 2, 3}, 0, 0, 1);
+    }
+
+    public int countGoodTriplets(int[] arr, int a, int b, int c) {
+        int count = 0;
+        int n = arr.length;
+        for (int i = 0; i < n - 2; i++) {
+            int num1 = arr[i];
+            for (int j = i + 1; j < n - 1; j++) {
+                int num2 = arr[j];
+                if (Math.abs(num1 - num2) <= a) {
+                    for (int k = j + 1; k < n; k++) {
+                        int num3 = arr[k];
+                        if (Math.abs(num2 - num3) <= b && Math.abs(num1 - num3) <= c) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
     }
 
     public int minOperations(int[] nums, int k) {
