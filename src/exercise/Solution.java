@@ -209,6 +209,26 @@ public class Solution {
         int i = new Solution().countGoodTriplets(new int[]{1, 1, 2, 2, 3}, 0, 0, 1);
     }
 
+    public int countPairs(int[] nums, int k) {
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (map.containsKey(num)) {
+                List<Integer> indexList = map.get(num);
+                for (Integer index : indexList) {
+                    count += (i * index) % k == 0 ? 1 : 0;
+                }
+                indexList.add(i);
+            } else {
+                ArrayList<Integer> list = new ArrayList<>();
+                list.add(i);
+                map.put(num, list);
+            }
+        }
+        return count;
+    }
+
     public int countGoodTriplets(int[] arr, int a, int b, int c) {
         int count = 0;
         int n = arr.length;
