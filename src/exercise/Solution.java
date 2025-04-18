@@ -209,6 +209,19 @@ public class Solution {
         int i = new Solution().countGoodTriplets(new int[]{1, 1, 2, 2, 3}, 0, 0, 1);
     }
 
+    public long countBadPairs(int[] nums) {
+        int n = nums.length;
+        int count = 0;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (j - i != nums[j] - nums[i]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     public int countPairs(int[] nums, int k) {
         Map<Integer, List<Integer>> map = new HashMap<>();
         int count = 0;
