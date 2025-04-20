@@ -209,6 +209,22 @@ public class Solution {
         int i = new Solution().countGoodTriplets(new int[]{1, 1, 2, 2, 3}, 0, 0, 1);
     }
 
+    public int numRabbits(int[] answers) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int answer : answers) {
+            Integer size = map.getOrDefault(answer + 1, 0);
+            map.put(answer + 1, size + 1);
+        }
+        int result = 0;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            Integer num = entry.getKey();
+            Integer size = entry.getValue();
+            result += size % num == 0 ? size : (size / num) * num + num;
+        }
+        return result;
+    }
+
     public long countBadPairs(int[] nums) {
         int n = nums.length;
         int count = 0;
