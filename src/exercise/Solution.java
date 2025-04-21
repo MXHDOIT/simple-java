@@ -206,7 +206,32 @@ public class Solution {
 
 //        int longestCycle = new Solution().longestCycle(new int[]{7, -1, 5, 14, 9, 3, -1, 4, 2, 15, 12, 9, 2, -1, 17, 10, 15, 7});
 //        System.out.println(longestCycle);
-        int i = new Solution().countGoodTriplets(new int[]{1, 1, 2, 2, 3}, 0, 0, 1);
+//        int i = new Solution().countGoodTriplets(new int[]{1, 1, 2, 2, 3}, 0, 0, 1);
+
+        new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
+    }
+
+    public int numberOfArrays(int[] differences, int lower, int upper) {
+        int x = 0;
+        int min = 0;
+        int max = 0;
+        for (int difference : differences) {
+            x += difference;
+            min = Math.min(min, x);
+            max = Math.max(max, x);
+            if (max - min > upper - lower) {
+                return 0;
+            }
+        }
+        int result = 0;
+        for (int i = lower; i <= upper; i++) {
+            if (min + i < lower || max + i > upper) {
+                continue;
+            }
+            result++;
+        }
+        return result;
+//        return upper - (max - min) - lower + 1;
     }
 
     public long countBadPairs(int[] nums) {
