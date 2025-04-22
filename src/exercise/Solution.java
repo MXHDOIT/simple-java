@@ -211,6 +211,32 @@ public class Solution {
         new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
     }
 
+    public int idealArrays(int n, int maxValue) {
+        int MOD = 1000000007;
+        int[][] dp = new int[n + 1][maxValue];
+        for (int i = 1; i <= maxValue; i++) {
+            dp[1][i] = 1;
+        }
+
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <= maxValue; j++) {
+                for (int k = 1; k <= j; k++) {
+                    if (j % k == 0){
+                        dp[i][j] += dp[i-1][k];
+                        dp[i][j] %= MOD;
+                    }
+                }
+            }
+        }
+
+        int result = 0;
+        for (int i = 1; i <= maxValue; i++) {
+            result += dp[n][i];
+            result %= MOD;
+        }
+        return result;
+    }
+
     public int numberOfArrays(int[] differences, int lower, int upper) {
         int x = 0;
         int min = 0;
