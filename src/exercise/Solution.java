@@ -210,6 +210,35 @@ public class Solution {
 
         new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
     }
+    public int countLargestGroup(int n) {
+        // 数组用来统计每个数位和对应的数字个数
+        int[] sumCount = new int[37];
+        for (int i = 1; i <= n; i++) {
+            int sum = getDigitSum(i);
+            sumCount[sum]++;
+        }
+        int maxCount = 0;
+        int largestGroupCount = 0;
+        for (int count : sumCount) {
+            if (count > maxCount) {
+                maxCount = count;
+                largestGroupCount = 1;
+            } else if (count == maxCount) {
+                largestGroupCount++;
+            }
+        }
+        return largestGroupCount;
+    }
+
+    // 辅助方法计算数字的数位和
+    private int getDigitSum(int num) {
+        int sum = 0;
+        while (num > 0) {
+            sum += num % 10;
+            num /= 10;
+        }
+        return sum;
+    }
 
     public int idealArrays(int n, int maxValue) {
         int MOD = 1000000007;
