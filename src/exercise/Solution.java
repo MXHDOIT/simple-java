@@ -210,6 +210,30 @@ public class Solution {
 
         new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
     }
+
+    public int countCompleteSubarrays(int[] nums) {
+        Map<Integer, Integer> numCount = new HashMap<>();
+        for (int num : nums) {
+            numCount.put(num, numCount.getOrDefault(num, 0)+1);
+        }
+        int totalDistinct = numCount.size();
+        numCount.clear();
+        int left = 0;
+        int result = 0;
+        for (int right = 0; right < nums.length; right++) {
+            numCount.put(nums[right], numCount.getOrDefault(nums[right], 0)+1);
+            while (numCount.size() == totalDistinct) {
+                result += nums.length - right;
+                numCount.put(nums[left], numCount.get(nums[left]) - 1);
+                if (numCount.get(nums[left]) == 0) {
+                    numCount.remove(nums[left]);
+                }
+                left++;
+            }
+        }
+        return result;
+    }
+
     public int countLargestGroup(int n) {
         // 数组用来统计每个数位和对应的数字个数
         int[] sumCount = new int[37];
@@ -250,8 +274,8 @@ public class Solution {
         for (int i = 2; i <= n; i++) {
             for (int j = 1; j <= maxValue; j++) {
                 for (int k = 1; k <= j; k++) {
-                    if (j % k == 0){
-                        dp[i][j] += dp[i-1][k];
+                    if (j % k == 0) {
+                        dp[i][j] += dp[i - 1][k];
                         dp[i][j] %= MOD;
                     }
                 }
@@ -1131,8 +1155,7 @@ public class Solution {
         return result;
     }
 
-    public void dfs(List<String> temp, List<List<String>> result,
-                    boolean[][] dp, int index, String s) {
+    public void dfs(List<String> temp, List<List<String>> result, boolean[][] dp, int index, String s) {
         if (index == s.length()) {
             result.add(new ArrayList<>(temp));
             return;
@@ -1457,8 +1480,7 @@ public class Solution {
         }
 
         if (head.val == root.val) {
-            return dfs(head.next, root.left)
-                    || dfs(head.next, root.right);
+            return dfs(head.next, root.left) || dfs(head.next, root.right);
         } else {
             return false;
         }
@@ -1533,11 +1555,9 @@ public class Solution {
         }
 
         if (isH) {
-            return max + minimumCost(sRow, index, sCol, eCol, horizontalCut, verticalCut)
-                    + minimumCost(index + 1, eRow, sCol, eCol, horizontalCut, verticalCut);
+            return max + minimumCost(sRow, index, sCol, eCol, horizontalCut, verticalCut) + minimumCost(index + 1, eRow, sCol, eCol, horizontalCut, verticalCut);
         } else {
-            return max + minimumCost(sRow, eRow, sCol, index, horizontalCut, verticalCut)
-                    + minimumCost(sRow, eRow, index + 1, eCol, horizontalCut, verticalCut);
+            return max + minimumCost(sRow, eRow, sCol, index, horizontalCut, verticalCut) + minimumCost(sRow, eRow, index + 1, eCol, horizontalCut, verticalCut);
         }
     }
 
@@ -1832,24 +1852,11 @@ public class Solution {
     }
 
     enum State {
-        STATE_INITIAL,
-        STATE_INT_SIGN,
-        STATE_INTEGER,
-        STATE_POINT,
-        STATE_POINT_WITHOUT_INT,
-        STATE_FRACTION,
-        STATE_EXP,
-        STATE_EXP_SIGN,
-        STATE_EXP_NUMBER,
-        STATE_END
+        STATE_INITIAL, STATE_INT_SIGN, STATE_INTEGER, STATE_POINT, STATE_POINT_WITHOUT_INT, STATE_FRACTION, STATE_EXP, STATE_EXP_SIGN, STATE_EXP_NUMBER, STATE_END
     }
 
     enum CharType {
-        CHAR_NUMBER,
-        CHAR_EXP,
-        CHAR_POINT,
-        CHAR_SIGN,
-        CHAR_ILLEGAL
+        CHAR_NUMBER, CHAR_EXP, CHAR_POINT, CHAR_SIGN, CHAR_ILLEGAL
     }
 
     public List<List<Integer>> combine(int n, int k) {
@@ -1944,8 +1951,7 @@ public class Solution {
         return list.get(k - 1);
     }
 
-    private void permutation(int[] nums, boolean[] visited, List<String> list, int n, int k,
-                             StringBuilder stringBuilder) {
+    private void permutation(int[] nums, boolean[] visited, List<String> list, int n, int k, StringBuilder stringBuilder) {
         if (list.size() == k) {
             return;
         }
@@ -2090,11 +2096,7 @@ public class Solution {
             return false;
         }
         visited[column][row] = true;
-        boolean isExist = word.charAt(index) == board[column][row]
-                && (isExist(board, word, index + 1, visited, column, row - 1)
-                || isExist(board, word, index + 1, visited, column, row + 1)
-                || isExist(board, word, index + 1, visited, column - 1, row)
-                || isExist(board, word, index + 1, visited, column + 1, row));
+        boolean isExist = word.charAt(index) == board[column][row] && (isExist(board, word, index + 1, visited, column, row - 1) || isExist(board, word, index + 1, visited, column, row + 1) || isExist(board, word, index + 1, visited, column - 1, row) || isExist(board, word, index + 1, visited, column + 1, row));
         visited[column][row] = false;
         return isExist;
     }
@@ -3337,8 +3339,7 @@ public class Solution {
                     return false;
                 } else {
                     Character peek = stack.peek();
-                    if ((ch == ')' && peek == '(') || (ch == '}' && peek == '{')
-                            || (ch == ']' && peek == '[')) {
+                    if ((ch == ')' && peek == '(') || (ch == '}' && peek == '{') || (ch == ']' && peek == '[')) {
                         stack.pop();
                     } else {
                         return false;
