@@ -211,17 +211,33 @@ public class Solution {
         new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
     }
 
+    public int countSubarrays(int[] nums) {
+        int count = 0;
+        int n = nums.length;
+        int left = 0;
+        int right = 2;
+        while (right < n) {
+            int num = nums[left] + nums[right];
+            if (num * 2 == nums[left + 1]) {
+                count++;
+            }
+            left++;
+            right = left + 2;
+        }
+        return count;
+    }
+
     public int countCompleteSubarrays(int[] nums) {
         Map<Integer, Integer> numCount = new HashMap<>();
         for (int num : nums) {
-            numCount.put(num, numCount.getOrDefault(num, 0)+1);
+            numCount.put(num, numCount.getOrDefault(num, 0) + 1);
         }
         int totalDistinct = numCount.size();
         numCount.clear();
         int left = 0;
         int result = 0;
         for (int right = 0; right < nums.length; right++) {
-            numCount.put(nums[right], numCount.getOrDefault(nums[right], 0)+1);
+            numCount.put(nums[right], numCount.getOrDefault(nums[right], 0) + 1);
             while (numCount.size() == totalDistinct) {
                 result += nums.length - right;
                 numCount.put(nums[left], numCount.get(nums[left]) - 1);
