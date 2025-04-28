@@ -208,7 +208,50 @@ public class Solution {
 //        System.out.println(longestCycle);
 //        int i = new Solution().countGoodTriplets(new int[]{1, 1, 2, 2, 3}, 0, 0, 1);
 
-        new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
+        Solution solution = new Solution();
+//        new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
+        long subarrays = solution.countSubarrays(new int[]{2, 1, 4, 3, 5}, 10);
+        System.out.println(subarrays);
+    }
+
+    /**
+     * 滑动窗口.
+     * * 连续子数组/子串
+     * * 有单调性
+     */
+    public long countSubarrays(int[] nums, long k) {
+        int n = nums.length;
+        long count = 0;
+        long sum = 0;
+        for (int left = 0, right = 0; right < n; right++) {
+            sum += nums[right];
+            while (sum * (right - left + 1) >= k) {
+                sum -= nums[left];
+                left++;
+            }
+            count += right - left + 1;
+        }
+        return count;
+    }
+
+    /**
+     * 暴力.
+     */
+    public long countSubarrays1(int[] nums, long k) {
+        int n = nums.length;
+        long count = 0;
+        for (int i = 0; i < n; i++) {
+            long sum = 0;
+            for (int j = i; j < n; j++) {
+                sum += nums[j];
+                if (sum * (j - i + 1) < k) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+        }
+        return count;
     }
 
     public int countSubarrays(int[] nums) {
