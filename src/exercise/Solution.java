@@ -210,8 +210,33 @@ public class Solution {
 
         Solution solution = new Solution();
 //        new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
-        long subarrays = solution.countSubarrays(new int[]{2, 1, 4, 3, 5}, 10);
-        System.out.println(subarrays);
+//        long subarrays = solution.countSubarrays(new int[]{2, 1, 4, 3, 5}, 10);
+//        System.out.println(subarrays);
+        long countSubarrays = solution.countSubarrays(new int[]{1, 1, 2, 2, 2, 1, 1}, 3);
+        System.out.println(countSubarrays);
+    }
+
+    public long countSubarrays(int[] nums, int k) {
+        int mx = 0;
+        for (int x : nums) {
+            mx = Math.max(mx, x);
+        }
+
+        long ans = 0;
+        int cntMx = 0, left = 0;
+        for (int x : nums) {
+            if (x == mx) {
+                cntMx++;
+            }
+            while (cntMx == k) {
+                if (nums[left] == mx) {
+                    cntMx--;
+                }
+                left++;
+            }
+            ans += left;
+        }
+        return ans;
     }
 
     /**
