@@ -216,6 +216,16 @@ public class Solution {
         System.out.println(countSubarrays);
     }
 
+    public int findNumbers(int[] nums) {
+        int count = 0;
+        for (int num : nums) {
+            if ((num >= 10 && num < 100) || (num >= 1000 && num < 10000) || num == 100000) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public long countSubarrays(int[] nums, int k) {
         int mx = 0;
         for (int x : nums) {
