@@ -212,8 +212,56 @@ public class Solution {
 //        new Solution().numberOfArrays(new int[]{1, -3, 4}, 1, 6);
 //        long subarrays = solution.countSubarrays(new int[]{2, 1, 4, 3, 5}, 10);
 //        System.out.println(subarrays);
-        long countSubarrays = solution.countSubarrays(new int[]{1, 1, 2, 2, 2, 1, 1}, 3);
-        System.out.println(countSubarrays);
+//        long countSubarrays = solution.countSubarrays(new int[]{1, 1, 2, 2, 2, 1, 1}, 3);
+//        System.out.println(countSubarrays);
+
+        int timeToReach = solution.minTimeToReach(new int[][]{{0, 0,0}, {0,0,0}});
+        System.out.println(timeToReach);
+    }
+
+    public int minTimeToReach(int[][] moveTime) {
+        int n = moveTime.length;
+        int m = moveTime[0].length;
+        boolean[][] visited = new boolean[n][m];
+        PriorityQueue<State1> priorityQueue = new PriorityQueue<>();
+        State1 state = new State1(0, 0, 0);
+        priorityQueue.add(state);
+        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+        while (!priorityQueue.isEmpty()) {
+            State1 state1 = priorityQueue.poll();
+            if (visited[state1.x][state1.y]) {
+                continue;
+            }
+            visited[state1.x][state1.y] = true;
+            if (state1.x == n - 1 && state1.y == m-1) {
+                return state1.dis;
+            }
+            for (int[] dir : dirs) {
+                int x = state1.x + dir[0];
+                int y = state1.y + dir[1];
+                if (x >= 0 && x < n && y >= 0 && y < m && !visited[x][y]) {
+                    int step = Math.max(state1.dis, moveTime[x][y]) + 1;
+                    priorityQueue.add(new State1(x, y, step));
+                }
+            }
+        }
+        return -1;
+    }
+
+    static class State1 implements Comparable<State1> {
+        int x, y, dis;
+
+        State1(int x, int y, int dis) {
+            this.x = x;
+            this.y = y;
+            this.dis = dis;
+        }
+
+        @Override
+        public int compareTo(State1 other) {
+            return Integer.compare(this.dis, other.dis);
+        }
     }
 
     public int findNumbers(int[] nums) {
