@@ -215,8 +215,37 @@ public class Solution {
 //        long countSubarrays = solution.countSubarrays(new int[]{1, 1, 2, 2, 2, 1, 1}, 3);
 //        System.out.println(countSubarrays);
 
-        int timeToReach = solution.minTimeToReach(new int[][]{{0, 0,0}, {0,0,0}});
+        int timeToReach = solution.minTimeToReach(new int[][]{{0, 0, 0}, {0, 0, 0}});
         System.out.println(timeToReach);
+    }
+
+    public int minTimeToReach2(int[][] moveTime) {
+        int n = moveTime.length;
+        int m = moveTime[0].length;
+        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        boolean[][] visited = new boolean[n][m];
+        Queue<State1> priorityQueue = new PriorityQueue<>();
+        priorityQueue.add(new State1(0, 0, 0, 1));
+        while (!priorityQueue.isEmpty()) {
+            State1 poll = priorityQueue.poll();
+            if (visited[poll.x][poll.y]) {
+                continue;
+            }
+            if (poll.x == n - 1 && poll.y == m - 1) {
+                return poll.dis;
+            }
+            visited[poll.x][poll.y] = true;
+            for (int[] dir : dirs) {
+                int x = poll.x + dir[0];
+                int y = poll.y + dir[1];
+
+                if (x >= 0 && x < n && y >= 0 && y < m && !visited[x][y]) {
+                    int dis = Math.max(poll.dis, moveTime[x][y]) + poll.step;
+                    priorityQueue.add(new State1(x, y, dis, (poll.step == 1 ? 2 : 1)));
+                }
+            }
+        }
+        return -1;
     }
 
     public int minTimeToReach(int[][] moveTime) {
@@ -234,7 +263,7 @@ public class Solution {
                 continue;
             }
             visited[state1.x][state1.y] = true;
-            if (state1.x == n - 1 && state1.y == m-1) {
+            if (state1.x == n - 1 && state1.y == m - 1) {
                 return state1.dis;
             }
             for (int[] dir : dirs) {
@@ -250,12 +279,19 @@ public class Solution {
     }
 
     static class State1 implements Comparable<State1> {
-        int x, y, dis;
+        int x, y, dis, step;
 
         State1(int x, int y, int dis) {
             this.x = x;
             this.y = y;
             this.dis = dis;
+        }
+
+        State1(int x, int y, int dis, int step) {
+            this.x = x;
+            this.y = y;
+            this.dis = dis;
+            this.step = step;
         }
 
         @Override
