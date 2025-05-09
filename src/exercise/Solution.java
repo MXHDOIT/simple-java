@@ -219,6 +219,24 @@ public class Solution {
         System.out.println(timeToReach);
     }
 
+    public int maxProduct(int[] nums) {
+        int length = nums.length;
+        int[] maxDp = new int[length];
+        int[] minDp = new int[length];
+        maxDp[0] = nums[0];
+        minDp[0] = nums[0];
+
+        for (int i = 1; i < length; i++) {
+            maxDp[i] = Math.max(nums[i], Math.max(maxDp[i - 1] * nums[i], minDp[i - 1] * nums[i]));
+            minDp[i] = Math.min(nums[i], Math.min(maxDp[i - 1] * nums[i], minDp[i - 1] * nums[i]));
+        }
+        int max = maxDp[0];
+        for (int i = 0; i < length; i++) {
+            max = Math.max(max, maxDp[i]);
+        }
+        return max;
+    }
+
     public int minTimeToReach2(int[][] moveTime) {
         int n = moveTime.length;
         int m = moveTime[0].length;
