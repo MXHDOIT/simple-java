@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -215,8 +216,42 @@ public class Solution {
 //        long countSubarrays = solution.countSubarrays(new int[]{1, 1, 2, 2, 2, 1, 1}, 3);
 //        System.out.println(countSubarrays);
 
-        int timeToReach = solution.minTimeToReach(new int[][]{{0, 0, 0}, {0, 0, 0}});
-        System.out.println(timeToReach);
+//        int timeToReach = solution.minTimeToReach(new int[][]{{0, 0, 0}, {0, 0, 0}});
+//        System.out.println(timeToReach);
+        int[] evenNumbers = solution.findEvenNumbers(new int[]{2, 1, 3, 0});
+        System.out.println(evenNumbers);
+    }
+
+    public int[] findEvenNumbers(int[] digits) {
+        int n = digits.length;
+        Arrays.sort(digits);
+        Set<Integer> sets = new LinkedHashSet<>();
+        for (int i = 0; i < n; i++) {
+            if (digits[i] == 0) {
+                continue;
+            }
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    continue;
+                }
+                for (int k = 0; k < n; k++) {
+                    if (i == k || j == k) {
+                        continue;
+                    }
+                    if ((digits[k] & 1) == 1) {
+                        continue;
+                    }
+                    int num = digits[i] * 100 + digits[j] * 10 + digits[k];
+                    sets.add(num);
+                }
+            }
+        }
+        int[] result = new int[sets.size()];
+        int index = 0;
+        for (Integer set : sets) {
+            result[index++] = set;
+        }
+        return result;
     }
 
     public int maxProduct(int[] nums) {

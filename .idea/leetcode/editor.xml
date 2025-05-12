@@ -234,6 +234,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2094]找出 3 位偶数.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/[2094]找出 3 位偶数.md" />
+              <option name="frontendQuestionId" value="leetcode.cn2094" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/[2094]找出 3 位偶数.java" />
+              <option name="titleSlug" value="finding-3-digit-even-numbers" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/leetcode/editor/cn/[2140]解决智力问题.java">
           <value>
             <LeetcodeEditor>
