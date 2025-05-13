@@ -222,6 +222,52 @@ public class Solution {
         System.out.println(evenNumbers);
     }
 
+
+    private static final int MOD = 1000000007;
+
+    public int lengthAfterTransformations(String s, int t) {
+        int[] cnt = new int[26];
+        for (char ch : s.toCharArray()) {
+            ++cnt[ch - 'a'];
+        }
+
+        for (int i = 0; i < t; i++) {
+            int[] count = new int[26];
+            count[0] = cnt[25];
+            count[1] = (cnt[25] + cnt[0]) % MOD;
+            for (int j = 2; j < 26; j++) {
+                count[j] = cnt[j - 1];
+            }
+            cnt = count;
+        }
+        int sum = 0;
+        for (int i = 0; i < 26; i++) {
+            sum = (sum + cnt[i]) % MOD;
+        }
+        return sum;
+    }
+
+    public int lengthAfterTransformations1(String s, int t) {
+        int sum = 0;
+        for (char ch : s.toCharArray()) {
+            int transform = transform(ch, t);
+            sum += transform;
+        }
+        return sum;
+    }
+
+    public int transform(char ch, int t) {
+        if (t == 0) {
+            return 1;
+        }
+        if (ch == 'z') {
+            return transform('a', t - 1) + transform('b', t + 1);
+        } else {
+            char nextCh = (char) (ch + 1);
+            return transform(nextCh, t - 1);
+        }
+    }
+
     public int[] findEvenNumbers(int[] digits) {
         int n = digits.length;
         Arrays.sort(digits);
