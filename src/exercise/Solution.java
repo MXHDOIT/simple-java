@@ -222,6 +222,68 @@ public class Solution {
         System.out.println(evenNumbers);
     }
 
+    public int lengthAfterTransformations1(String s, int t, List<Integer> nums) {
+        int[] cnt = new int[26];
+        for (char ch : s.toCharArray()) {
+            ++cnt[ch - 'a'];
+        }
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < nums.size(); i++) {
+            Integer step = nums.get(i);
+            for (int j = 1; j <= step; j++) {
+                int index = (j + i) % 26;
+                List<Integer> list = map.getOrDefault(index, new ArrayList<>());
+                list.add(i);
+                map.put(index,list);
+            }
+        }
+
+        for (int i = 0; i < t; i++) {
+            int[] count = new int[26];
+            for (int j = 0; j < 26; j++) {
+                List<Integer> list = map.get(j);
+                if (list == null || list.isEmpty()){
+                    continue;
+                }
+                for (Integer index : list) {
+                    count[j] = (count[j] + cnt[index]) % MOD;
+                }
+            }
+            cnt = count;
+        }
+        int sum = 0;
+        for (int i : cnt) {
+            sum = (sum + i) % MOD;
+        }
+        return sum;
+    }
+
+    public int lengthAfterTransformations(String s, int t, List<Integer> nums) {
+        int[] cnt = new int[26];
+        for (char ch : s.toCharArray()) {
+            ++cnt[ch - 'a'];
+        }
+        for (int i = 0; i < t; i++) {
+            int[] count = new int[26];
+            for (int j = 0; j < 26; j++) {
+                int size = cnt[j];
+                if (size == 0) {
+                    continue;
+                }
+                Integer nextSize = nums.get(j);
+                for (int k = 1; k <= nextSize; k++) {
+                    int index = (j + k) % 26;
+                    count[index] = (count[index] + size) % MOD;
+                }
+            }
+            cnt = count;
+        }
+        int sum = 0;
+        for (int i : cnt) {
+            sum = (sum + i) % MOD;
+        }
+        return sum;
+    }
 
     private static final int MOD = 1000000007;
 
