@@ -222,6 +222,34 @@ public class Solution {
         System.out.println(evenNumbers);
     }
 
+    public List<String> getLongestSubsequence(String[] words, int[] groups) {
+        List<Integer> zeroStartIndexs = new ArrayList<>();
+        List<Integer> oneStartIndexs = new ArrayList<>();
+        int zeroStartValue = 0;
+        int oneStartValue = 1;
+        for (int i = 0; i < groups.length; i++) {
+            int value = groups[i];
+            if (value == zeroStartValue) {
+                zeroStartIndexs.add(i);
+                zeroStartValue = (zeroStartValue + 1) % 2;
+            } else if (value == oneStartValue) {
+                oneStartIndexs.add(i);
+                oneStartValue = (oneStartValue + 1) % 2;
+            }
+        }
+        List<String> result = new ArrayList<>();
+        if (zeroStartIndexs.size() > oneStartIndexs.size()) {
+            for (Integer zeroStartIndex : zeroStartIndexs) {
+                result.add(words[zeroStartIndex]);
+            }
+        }else{
+            for (Integer oneStartIndex : oneStartIndexs) {
+                result.add(words[oneStartIndex]);
+            }
+        }
+        return result;
+    }
+
     public int lengthAfterTransformations1(String s, int t, List<Integer> nums) {
         int[] cnt = new int[26];
         for (char ch : s.toCharArray()) {
@@ -234,7 +262,7 @@ public class Solution {
                 int index = (j + i) % 26;
                 List<Integer> list = map.getOrDefault(index, new ArrayList<>());
                 list.add(i);
-                map.put(index,list);
+                map.put(index, list);
             }
         }
 
@@ -242,7 +270,7 @@ public class Solution {
             int[] count = new int[26];
             for (int j = 0; j < 26; j++) {
                 List<Integer> list = map.get(j);
-                if (list == null || list.isEmpty()){
+                if (list == null || list.isEmpty()) {
                     continue;
                 }
                 for (Integer index : list) {
