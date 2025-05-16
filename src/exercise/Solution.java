@@ -222,6 +222,65 @@ public class Solution {
         System.out.println(evenNumbers);
     }
 
+    public List<String> getWordsInLongestSubsequence(String[] words, int[] groups) {
+        int n = words.length;
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i+1; j < n; j++) {
+                if (words[i].length() == words[j].length() && groups[i] != groups[j]
+                        && hammingDistance(words[i],words[j]) == 1) {
+                    graph.get(i).add(j);
+                }
+            }
+        }
+
+        int[] dp = new int[n];
+        int[] prevIndex = new int[n];
+        Arrays.fill(dp,1);
+        Arrays.fill(prevIndex,-1);
+        for (int i = 0; i < n; i++) {
+            for (Integer index : graph.get(0)) {
+                if (dp[i] + 1 > dp[index]) {
+                    dp[index] = dp[i] + 1;
+                    prevIndex[index] = i;
+                }
+            }
+        }
+
+        // 找最长路径的末尾
+        int maxLen = 0, endIdx = 0;
+        for (int i = 0; i < n; i++) {
+            if (dp[i] > maxLen) {
+                maxLen = dp[i];
+                endIdx = i;
+            }
+        }
+
+        // 回溯路径
+        List<String> result = new ArrayList<>();
+        while (endIdx != -1) {
+            result.add(words[endIdx]);
+            endIdx = prevIndex[endIdx];
+        }
+        Collections.reverse(result);
+
+        return result;
+    }
+
+    private int hammingDistance(String s1,String s2){
+        int dist = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i)) {
+                dist++;
+            }
+        }
+        return dist;
+    }
+
     public List<String> getLongestSubsequence(String[] words, int[] groups) {
         List<Integer> zeroStartIndexs = new ArrayList<>();
         List<Integer> oneStartIndexs = new ArrayList<>();
