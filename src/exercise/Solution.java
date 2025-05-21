@@ -218,8 +218,73 @@ public class Solution {
 
 //        int timeToReach = solution.minTimeToReach(new int[][]{{0, 0, 0}, {0, 0, 0}});
 //        System.out.println(timeToReach);
-        int[] evenNumbers = solution.findEvenNumbers(new int[]{2, 1, 3, 0});
-        System.out.println(evenNumbers);
+//        int[] evenNumbers = solution.findEvenNumbers(new int[]{2, 1, 3, 0});
+//        System.out.println(evenNumbers);
+
+        solution.minZeroArray(new int[]{2,0,2},new int[][]{{0,2,1},{0,2,1},{1,1,3}});
+    }
+
+    public boolean isZeroArray(int[] nums, int[][] queries) {
+        int n = nums.length;
+        int[] diff = new int[n];
+
+        for (int i = 0; i < queries.length; i++) {
+            int start = queries[i][0];
+            int end = queries[i][1];
+            diff[start] -= 1;
+            if (end + 1 < n) {
+                diff[end + 1] += 1;
+            }
+        }
+        int diffNum = 0;
+        for (int i = 0; i < n; i++) {
+            diffNum += diff[i];
+            nums[i] += diffNum;
+            if (nums[i] > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int minZeroArray(int[] nums, int[][] queries) {
+        int left = 0;
+        int right = queries.length;
+        int answer = -1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (canReduceToZero(nums, queries, mid)) {
+                answer = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return answer;
+    }
+
+    private boolean canReduceToZero(int[] nums, int[][] queries, int k) {
+        int n = nums.length;
+        int[] diff = new int[n];
+
+        for (int i = 0; i < k; i++) {
+            int startIndex = queries[i][0];
+            int endIndex = queries[i][1];
+            int value = queries[i][2];
+            diff[startIndex] -= value;
+            if (endIndex + 1 < n) {
+                diff[endIndex + 1] += value;
+            }
+        }
+
+        int diffNum = 0;
+        for (int i = 0; i < n; i++) {
+            diffNum += diff[i];
+            if (diffNum + nums[i] > 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public List<String> getWordsInLongestSubsequence(String[] words, int[] groups) {
@@ -230,9 +295,8 @@ public class Solution {
         }
 
         for (int i = 0; i < n; i++) {
-            for (int j = i+1; j < n; j++) {
-                if (words[i].length() == words[j].length() && groups[i] != groups[j]
-                        && hammingDistance(words[i],words[j]) == 1) {
+            for (int j = i + 1; j < n; j++) {
+                if (words[i].length() == words[j].length() && groups[i] != groups[j] && hammingDistance(words[i], words[j]) == 1) {
                     graph.get(i).add(j);
                 }
             }
@@ -240,8 +304,8 @@ public class Solution {
 
         int[] dp = new int[n];
         int[] prevIndex = new int[n];
-        Arrays.fill(dp,1);
-        Arrays.fill(prevIndex,-1);
+        Arrays.fill(dp, 1);
+        Arrays.fill(prevIndex, -1);
         for (int i = 0; i < n; i++) {
             for (Integer index : graph.get(0)) {
                 if (dp[i] + 1 > dp[index]) {
@@ -271,7 +335,7 @@ public class Solution {
         return result;
     }
 
-    private int hammingDistance(String s1,String s2){
+    private int hammingDistance(String s1, String s2) {
         int dist = 0;
         for (int i = 0; i < s1.length(); i++) {
             if (s1.charAt(i) != s2.charAt(i)) {
@@ -301,7 +365,7 @@ public class Solution {
             for (Integer zeroStartIndex : zeroStartIndexs) {
                 result.add(words[zeroStartIndex]);
             }
-        }else{
+        } else {
             for (Integer oneStartIndex : oneStartIndexs) {
                 result.add(words[oneStartIndex]);
             }
